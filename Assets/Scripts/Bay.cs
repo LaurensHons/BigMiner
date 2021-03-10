@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
+using Blocks;
 using Grid;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -16,8 +17,6 @@ public class Bay : MonoBehaviour, BayTickObserver
         get => gridSize;
         set => gridSize = value;
     }
-
-    
 
     public float blockScale = .19f;
 
@@ -71,11 +70,11 @@ public class Bay : MonoBehaviour, BayTickObserver
             for (int y = 0; y < gridSize; y++)
             {
                 int randomint = Random.Range(0, 10);
-                if (randomint > 1)
+                if (randomint > 3)
                     continue;
                 if (x == 0 || y == 0)
                     continue;
-                Block block = new Block(x, y, blockPrefab);
+                Block block = new StoneBlock(x, y);
                 pathNodeGrid.GetGridObject(x, y).SetBlock(block);
             }
         }
@@ -107,17 +106,16 @@ public class Bay : MonoBehaviour, BayTickObserver
         return returnList;
     }
 
-    public void DeleteBlock(int x, int y)
+    public PathNode getPathNode(int x, int y, int hit)
     {
-        PathNode endNode = pathNodeGrid.GetGridObject(x, y);
-        endNode.DeleteBlock();
+        return pathNodeGrid.GetGridObject(x, y);
     }
 
-    public void DeleteBlock(Block block)
+    public PathNode getPathNode(Block block)
     {
-        PathNode endNode = pathNodeGrid.GetGridObject(block.transform.position);
-        endNode.DeleteBlock();
+        return pathNodeGrid.GetGridObject(block.transform.position);
     }
+    
     
 
     

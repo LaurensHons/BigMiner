@@ -26,6 +26,7 @@ public class Miner : MonoBehaviour, BayTickObserver
     private bool DoNothing = false;
     
     private float speed { get; set; }
+    private int MinerDamage = 1;
     void Start()
     {
         speed = 0.005f;
@@ -35,6 +36,7 @@ public class Miner : MonoBehaviour, BayTickObserver
 
     private void findNextTarget()
     {
+        Debug.Log("Finding new target");
         if (targetBlock != null) targetBlock.stopHighlightBlock();
         targetBlock = minerStation.getNextTarget();
 
@@ -144,7 +146,10 @@ public class Miner : MonoBehaviour, BayTickObserver
 
     private void MineBlock()
     {
-        minerStation.getBay().DeleteBlock(targetBlock);
-        findNextTarget();
+        minerStation.getBay().getPathNode(targetBlock).MineBlock(MinerDamage, out bool destroyed);
+        if (destroyed || targetBlock == null)
+            findNextTarget();
+        else 
+            StartCoroutine(chargeDrill());
     }
 }

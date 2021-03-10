@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7017707454552552721}
   - component: {fileID: 3825018991735661285}
-  - component: {fileID: -68908413369250138}
   - component: {fileID: 2348211690952216777}
   m_Layer: 0
   m_Name: BlockPrefab
@@ -47,6 +46,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -58,6 +59,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -81,19 +83,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-68908413369250138
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3540749922709843443}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e11a7764c156c0c488ed3464ec510eb4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  miningTime: 1
 --- !u!65 &2348211690952216777
 BoxCollider:
   m_ObjectHideFlags: 0

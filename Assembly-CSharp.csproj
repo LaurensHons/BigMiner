@@ -61,10 +61,10 @@
      <Compile Include="Assets\Scripts\UIController.cs" />
      <Compile Include="Assets\MinerStation.cs" />
      <Compile Include="Assets\CameraController.cs" />
-     <Compile Include="Assets\Blocks\Block.cs" />
-     <Compile Include="Assets\GameController.cs" />
      <Compile Include="Assets\Blocks\DirtBlock.cs" />
-     <Compile Include="Assets\Blocks\BlockType.cs" />
+     <Compile Include="Assets\GameController.cs" />
+     <Compile Include="Assets\Blocks\Block.cs" />
+     <Compile Include="Assets\Blocks\StoneBlock.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.2.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
@@ -686,8 +686,27 @@
  <Reference Include="UnityEngine.Advertisements">
  <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/UnityEngine.Advertisements.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.Addressables">
+ <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/Unity.Addressables.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Addressables.Editor">
+ <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/Unity.Addressables.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.CacheServer">
+ <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/UnityEditor.CacheServer.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ResourceManager">
+ <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/Unity.ResourceManager.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ScriptableBuildPipeline">
+ <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ScriptableBuildPipeline.Editor">
+ <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.Editor.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\.gitignore" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

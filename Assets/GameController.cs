@@ -17,7 +17,7 @@ public class GameController
     public GameObject Bay;
     private float baySpeed;
 
-    public static int baySize = 5;
+    public static int baySize = 8;
     public static float blockScale = 0.19f;
 
     public static List<GameObject> textList = new List<GameObject>();

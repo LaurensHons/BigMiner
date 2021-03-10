@@ -1,17 +1,26 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Dynamic;
+using UnityEditor.SceneTemplate;
+using UnityEngine;
 
-namespace Blocks
+public class DirtBlock : Block
 {
-    public class DirtBlock : MonoBehaviour
-    {
-        public void DestroyBlock()
-        {
-            throw new System.NotImplementedException();
-        }
+    public DirtBlock(float x, float y) : base(x, y) { }
 
-        public void OnMouseDown()
-        {
-            
-        }
+    public override int getMaxHealth()
+    {
+        return 3;
+    }
+
+    public override void addMaterial()
+    {
+        
+    }
+
+    public override string getSpritePath()
+    {
+        return "Assets/Images/DirtBlock.png";
     }
 }

@@ -13,6 +13,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using Grid;
 using UnityEditor;
 using UnityEditor.PackageManager;
@@ -55,12 +56,19 @@ public class PathNode {
         SetIsWalkable(false);
     }
 
-    public void DeleteBlock()
+    public void MineBlock(int hit, out bool returnDestroyed)
     {
+        bool destroyed = true;
         if (block != null)
-            block.Destroy();
-        block = null;
-        SetIsWalkable(true);
+        {
+            block.Mine(hit, out  destroyed);
+            if (destroyed)
+            {
+                block = null;
+                SetIsWalkable(true);
+            }
+        }
+        returnDestroyed = destroyed;
     }
 
     public override string ToString() {
@@ -70,16 +78,9 @@ public class PathNode {
     public override bool Equals(object obj)
     {
         if (obj == null) return false;
-        try
-        {
-            PathNode pathNode = (PathNode) obj;
-            if (pathNode.x == x && pathNode.y == y) return true;
-            else return false;
-        }
-        catch (SyntaxErrorException e)
-        {
-            return false;
-        }
-        return base.Equals(obj);
+        PathNode pathNode = (PathNode) obj;
+        if (pathNode.x == x && pathNode.y == y) return true;
+        else return false;
+        
     }
 }
