@@ -50,7 +50,7 @@ namespace Grid
 
             for (int x = 0; x < gridArray.GetLength(0); x++) {
                 for (int y = 0; y < gridArray.GetLength(1); y++) {
-                    debugTextArray[x, y] = GameController.CreateWorldText(gridArray[x, y]?.ToString(), null, GetWorldPosition(x, y) - Vector3.one * 0.5f + new Vector3(cellSize, cellSize) * .5f, 20, Color.white, TextAnchor.MiddleCenter);
+                    debugTextArray[x, y] = DebugDrawer.CreateWorldText(gridArray[x, y]?.ToString(), null, GetWorldPosition(x, y) - Vector3.one * 0.5f + new Vector3(cellSize, cellSize) * .5f, 20, Color.white, TextAnchor.MiddleCenter);
                     Debug.DrawLine(GetWorldPosition(x, y) - Vector3.one * 0.5f, GetWorldPosition(x, y + 1)- Vector3.one * 0.5f, Color.white, 100f);
                     Debug.DrawLine(GetWorldPosition(x, y)- Vector3.one * 0.5f, GetWorldPosition(x + 1, y)- Vector3.one * 0.5f, Color.white, 100f);
                 }

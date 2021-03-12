@@ -35,7 +35,7 @@ public abstract class Block
         BlockObject.transform.position = new Vector3(x, y);
         BlockObject.transform.localScale = Vector3.one * GameController.blockScale; 
         
-        BlockObject.transform.localScale = Vector3.one * GameController.getScale();
+        BlockObject.transform.localScale = Vector3.one * GameController.getBlockScale();
         
         
 
@@ -62,7 +62,6 @@ public abstract class Block
         else
         {
             HP = HP - hit;
-            Debug.Log("Block got hit, hp = " + HP);
             UpdateHealthBar();
             destroyed = false;
         }
@@ -95,7 +94,11 @@ public abstract class Block
             BlockSprite = handleToCheck.Result;
             
             if (BlockSprite == null) Debug.Log("No block sprite found, maybe file named wrong?");
-            else BlockObject.GetComponent<SpriteRenderer>().sprite = BlockSprite;
+            else
+            {
+                BlockObject.GetComponent<SpriteRenderer>().sprite = BlockSprite;
+                BlockObject.layer = 3;
+            }
         }
     }
 
@@ -117,16 +120,28 @@ public abstract class Block
         BlockObject.GetComponent<SpriteRenderer>().material.SetColor(0, Color.clear);
     }
 
+    public void setParent(Transform parent)
+    {
+        BlockObject.transform.SetParent(parent);
+    }
 
 
     public abstract int getMaxHealth();
     public abstract void addMaterial();
 
     public abstract string getSpritePath();
+
+    public abstract int getSearchCost();
 }
 
-enum BlockTypes
+public enum BlockTypes
 {
-    DirtBlock,
-    StoneBlock
+    DirtBlock ,
+    StoneBlock 
+}
+
+public enum BlockTypeSearchCost
+{
+    DirtBlock = 2, 
+    StoneBlock = 4
 }

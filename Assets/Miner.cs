@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 
-public class Miner : MonoBehaviour, BayTickObserver
+public class Miner : MonoBehaviour
 {
     private MinerStation minerStation;
     public Block targetBlock;
@@ -36,7 +36,7 @@ public class Miner : MonoBehaviour, BayTickObserver
 
     private void findNextTarget()
     {
-        Debug.Log("Finding new target");
+        //Debug.Log("Finding new target");
         if (targetBlock != null) targetBlock.stopHighlightBlock();
         targetBlock = minerStation.getNextTarget();
 
@@ -75,7 +75,9 @@ public class Miner : MonoBehaviour, BayTickObserver
     private void HandleMovement() {
         if (pathVectorList != null && pathVectorList.Count != 0) {
             Vector3 targetPosition = pathVectorList[currentPathIndex];
-            if (Vector3.Distance(transform.position, targetPosition) > 0.01f){
+            if(!minerStation.getBay().getPathNode(pathVectorList[currentPathIndex]).isWalkable)
+                StopMoving();
+            else if (Vector3.Distance(transform.position, targetPosition) > 0.01f){
                 Vector3 moveDir = (targetPosition - transform.position).normalized;
 
                 float distanceBefore = Vector3.Distance(transform.position, targetPosition);
@@ -96,8 +98,11 @@ public class Miner : MonoBehaviour, BayTickObserver
     
     private void StopMoving() {
         pathVectorList = null;
-        Debug.Log("Stopped Moving, Charging drill");
-        StartCoroutine(chargeDrill());
+        Debug.Log("Stopped Moving");
+        if (Vector3.Distance(transform.position, targetBlock.transform.position) <= 1.2f)
+            StartCoroutine(chargeDrill());
+        else 
+            findNextTarget();
     }
 
     public Vector3 GetPosition() {
@@ -106,7 +111,7 @@ public class Miner : MonoBehaviour, BayTickObserver
     
     public void SetTargetPosition(Vector3 targetPosition)
     {
-        Debug.Log("Started pathfinding from " + GetPosition().ToString() + " to " + targetPosition.ToString());
+        //Debug.Log("Started pathfinding from " + GetPosition().ToString() + " to " + targetPosition.ToString());
         currentPathIndex = 0;
         pathVectorList = Pathfinding.Instance.FindPath(new Vector3((int)Math.Round(transform.position.x), (int)Math.Round(transform.position.y), 0), targetPosition);
 
@@ -119,20 +124,8 @@ public class Miner : MonoBehaviour, BayTickObserver
         {
             Debug.DrawLine(pathVectorList[i], pathVectorList[i + 1], Color.white, pathVectorList.Count);
         }
-
-        
     }
     
-    public void bayTick()
-    {
-        if (DoNothing)
-        {
-            DoNothing = false;
-            findNextTarget();
-            Debug.Log("Miner has woken up");
-        }
-    }
-
     public void setMinerStation(MinerStation minerStation)
     {
         this.minerStation = minerStation;

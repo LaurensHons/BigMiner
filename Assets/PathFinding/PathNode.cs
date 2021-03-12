@@ -10,13 +10,8 @@
     --------------------------------------------------
  */
 
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using System.IO;
+
 using Grid;
-using UnityEditor;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class PathNode {
@@ -82,5 +77,10 @@ public class PathNode {
         if (pathNode.x == x && pathNode.y == y) return true;
         else return false;
         
+    }
+
+    public Vector3 getPos()
+    {
+        return new Vector3(x, y, 0);
     }
 }

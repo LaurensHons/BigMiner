@@ -8,21 +8,25 @@ using Grid;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Bay : MonoBehaviour, BayTickObserver
+public class Bay : MonoBehaviour
 {
-    public static int gridSize = 5;
+    public GameObject GameCanvas;
 
-    public int GridSize
-    {
-        get => gridSize;
-        set => gridSize = value;
-    }
-
-    public float blockScale = .19f;
-
-    public float beltSpeed = 0.5f;
+    private List<Miner> minerList = new List<Miner>();
     
-    public GameObject blockPrefab;
+    public int gridSize
+    {
+        get { return GameController.getGridSize(); }
+        set { GameController.setGridSize(value);}
+    }
+    public float blockScale
+    {
+        get { return GameController.getBlockScale(); }
+        set { GameController.setBlockScale(value);}
+    }
+    
+
+    
     
     public Grid<PathNode> pathNodeGrid { get; private set; }
     
@@ -35,8 +39,6 @@ public class Bay : MonoBehaviour, BayTickObserver
 
 
         GenerateBay();
-
-        
     }
 
     private void testPathfinding()
@@ -61,6 +63,50 @@ public class Bay : MonoBehaviour, BayTickObserver
             
         }
     }
+
+    public void spawnBlockType(BlockTypes BlockType)
+    {
+        Debug.Log("Spawning Block:" + BlockType.ToString());
+        List<PathNode> freeNodes = getFreeNodes();
+        if (freeNodes.Count == 0) return;
+        Vector3 pos = freeNodes[Random.Range(0, freeNodes.Count)].getPos();
+        if (pathNodeGrid.GetGridObject(pos).isWalkable)
+        {
+            bool occupied = false;
+            foreach (var miner in minerList)
+            {
+                if (Vector3.Distance(miner.transform.position, pos) < 1.01 ) occupied = true;
+            }
+            
+
+            if (!occupied)
+            {
+                Block block;
+                switch (BlockType)
+                {
+                    case BlockTypes.DirtBlock:
+                    {
+                        block = new DirtBlock(pos.x, pos.y);
+                        break;
+                    }
+                    case BlockTypes.StoneBlock:
+                    {
+                        block = new StoneBlock(pos.x, pos.y);
+                        break;
+                    }
+                    default:
+                    {
+                        block = new DirtBlock(pos.x, pos.y);
+                        break;
+                    }
+                }
+                block.setParent(GameCanvas.transform);
+                pathNodeGrid.GetGridObject((int) pos.x, (int) pos.y).SetBlock(block);
+            }
+        }
+    }
+
+    
     
 
     public void GenerateBay()
@@ -76,6 +122,7 @@ public class Bay : MonoBehaviour, BayTickObserver
                     continue;
                 Block block = new StoneBlock(x, y);
                 pathNodeGrid.GetGridObject(x, y).SetBlock(block);
+                //block.setParent(GameCanvas.transform);
             }
         }
     }
@@ -98,7 +145,7 @@ public class Bay : MonoBehaviour, BayTickObserver
             for (int y = 0; y < gridSize; y++)
             {
                 PathNode b = pathNodeGrid.GetGridObject(x, y);
-                if (pathNodeGrid.GetGridObject(x, y).block != null)
+                if (!pathNodeGrid.GetGridObject(x, y).isWalkable)
                     returnList.Add(b);
             }
         }
@@ -106,7 +153,23 @@ public class Bay : MonoBehaviour, BayTickObserver
         return returnList;
     }
 
-    public PathNode getPathNode(int x, int y, int hit)
+    private List<PathNode> getFreeNodes()
+    {
+        List<PathNode> returnList = new List<PathNode>();
+        for (int x = 0; x < gridSize; x++)
+        {
+            for (int y = 0; y < gridSize; y++)
+            {
+                PathNode b = pathNodeGrid.GetGridObject(x, y);
+                if (b.isWalkable)
+                    returnList.Add(b);
+            }
+        }
+
+        return returnList;
+    }
+
+    public PathNode getPathNode(int x, int y)
     {
         return pathNodeGrid.GetGridObject(x, y);
     }
@@ -114,6 +177,16 @@ public class Bay : MonoBehaviour, BayTickObserver
     public PathNode getPathNode(Block block)
     {
         return pathNodeGrid.GetGridObject(block.transform.position);
+    }
+
+    public PathNode getPathNode(Vector2 pos)
+    {
+        return pathNodeGrid.GetGridObject((int) pos.x, (int) pos.y);
+    }
+
+    public void registerMiner(Miner miner)
+    {
+        minerList.Add(miner);
     }
     
     

@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
-using UnityEditor.SceneTemplate;
 using UnityEngine;
 
 public class DirtBlock : Block
@@ -22,5 +21,10 @@ public class DirtBlock : Block
     public override string getSpritePath()
     {
         return "Assets/Images/DirtBlock.png";
+    }
+
+    public override int getSearchCost()
+    {
+        return (int) BlockTypeSearchCost.DirtBlock;
     }
 }

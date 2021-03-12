@@ -29,13 +29,13 @@ public class MinerStation : MonoBehaviour
         Vector3 pos = this.transform.position + new Vector3(0, 0, 0);
         miner = Instantiate(minerPrefab, Vector3.zero, Quaternion.identity);
         miner.gameObject.transform.SetParent(bay.gameObject.transform);
-        miner.GetComponent<Miner>().setMinerStation(this);
+        Miner m = miner.GetComponent<Miner>();
+        m.setMinerStation(this);
+        bay.registerMiner(m);
     }
 
     public Block getNextTarget()
     {
-
-        
         return MiningStrategy.selectNextBlock(bay.getBlockList());
     }
 

@@ -18,7 +18,6 @@ using UnityEngine;
 public class Pathfinding {
 
     private const int MOVE_STRAIGHT_COST = 10;
-    private const int MOVE_DIAGONAL_COST = 14;
 
     public static Pathfinding Instance { get; private set; }
 
@@ -78,7 +77,7 @@ public class Pathfinding {
         }
 
 
-        GameController.DeleteCreateWorldText();
+        DebugDrawer.DeleteCreateWorldText();
 
         if (startNode == null || endNode == null) {
             // Invalid Path
@@ -128,7 +127,7 @@ public class Pathfinding {
                     neighbourNode.hCost = CalculateDistanceCost(neighbourNode, endNode);
                     neighbourNode.CalculateFCost();
 
-                    GameController.CreateWorldText(neighbourNode.hCost.ToString(), null,
+                    DebugDrawer.CreateWorldText(neighbourNode.hCost.ToString(), null,
                         grid.GetWorldPosition(neighbourNode.x, neighbourNode.y) - Vector3.one * 0.2f +
                         new Vector3(grid.GetCellSize(), grid.GetCellSize()) * .5f, 20, neighbourNode.isWalkable? Color.white : Color.red,
                         TextAnchor.MiddleCenter);
