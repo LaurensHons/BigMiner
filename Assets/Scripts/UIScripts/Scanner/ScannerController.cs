@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Slider = UnityEngine.UI.Slider;
@@ -19,6 +20,9 @@ public class ScannerController : MonoBehaviour
     public GameObject ScannerButton;
     public GameObject ScannerPanel;
     public GameObject ScannerPanelList;
+    
+    public GameObject slider_BlockPrefab;
+    
 
     public List<ScannerSlider> ScannerSliders = new List<ScannerSlider>();
     
@@ -35,6 +39,14 @@ public class ScannerController : MonoBehaviour
         Bay = BayGameObject.GetComponent<Bay>();
 
         ScannerPanel.SetActive(false);
+
+        foreach (var BlockType in Enum.GetNames(typeof(BlockTypes)))
+        {
+            slider_BlockPrefab.gameObject.name = "Slider" + BlockType.ToString();
+            GameObject Slider_BlockPrefab = Instantiate(slider_BlockPrefab, Vector3.zero, Quaternion.identity, ScannerPanelList.transform);
+            Slider_BlockPrefab.name = "Slider" + BlockType.ToString();
+            Slider_BlockPrefab.GetComponent<ScannerSlider>().ScannerController = this;
+        }
         
         
         Vector3 pos = new Vector3(Bay.gridSize/2, Bay.gridSize + .3f);

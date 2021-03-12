@@ -1804,6 +1804,8 @@ MonoBehaviour:
   ScannerButton: {fileID: 1950554389}
   ScannerPanel: {fileID: 1495363579}
   ScannerPanelList: {fileID: 1355643530}
+  Slider_BlockPrefab: {fileID: 4076037047882331739, guid: 71852966bf4ccc34c8c0e003ddd689f6,
+    type: 3}
   ScannerSliders: []
 --- !u!4 &1377944155
 Transform:

@@ -136,7 +136,7 @@ public abstract class Block
 
 public enum BlockTypes
 {
-    DirtBlock ,
+    DirtBlock,
     StoneBlock 
 }
 
