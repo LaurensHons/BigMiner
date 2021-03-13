@@ -26,8 +26,8 @@ public class MinerStation : MonoBehaviour
 
     private void InstantiateMiner()
     {
-        Vector3 pos = this.transform.position + new Vector3(0, 0, 0);
-        miner = Instantiate(minerPrefab, Vector3.zero, Quaternion.identity);
+        Vector3 pos = new Vector3(0, 1, 0);
+        miner = Instantiate(minerPrefab, pos, Quaternion.identity);
         miner.gameObject.transform.SetParent(bay.gameObject.transform);
         Miner m = miner.GetComponent<Miner>();
         m.setMinerStation(this);
@@ -68,6 +68,6 @@ public class RandomMiningStrategy : IMiningStrategy
     public Block selectNextBlock(List<PathNode> pathNodeList)
     {
         if (pathNodeList.Count == 0) return null;
-        return pathNodeList[Random.Range(0, pathNodeList.Count)].block;
+        return pathNodeList[Random.Range(0, pathNodeList.Count)].structure as Block;
     }
 }

@@ -11,6 +11,8 @@
  */
 
 
+using System;
+using System.Collections.Generic;
 using Grid;
 using UnityEngine;
 
@@ -24,46 +26,61 @@ public class PathNode {
     public int hCost;
     public int fCost;
 
-    public bool isWalkable;
+    public bool isWalkable
+    {
+        get
+        {
+            return structure == null;
+        }
+    }
     public PathNode cameFromNode;
 
-    public Block block;
+    public IStructure structure;
 
     public PathNode(Grid<PathNode> grid, int x, int y) {
         this.grid = grid;
         this.x = x;
         this.y = y;
-        isWalkable = true;
     }
 
     public void CalculateFCost() {
         fCost = gCost + hCost;
     }
+    
 
-    public void SetIsWalkable(bool isWalkable) {
-        this.isWalkable = isWalkable;
-        grid.TriggerGridObjectChanged(x, y);
-    }
-
-    public void SetBlock(Block block)
+    public void SetStructure(IStructure structure)
     {
-        this.block = block;
-        SetIsWalkable(false);
+        this.structure = structure;
+        List<PathNode> nodeList = structure.getPathNodeList();
+        nodeList.Remove(this);
+        foreach (var pathNode in nodeList)
+        {
+            pathNode.structure = structure;
+        }
     }
 
-    public void MineBlock(int hit, out bool returnDestroyed)
+    public void MineBlock(int hit, out bool returnDestroyed, out ItemInventory loot)
     {
         bool destroyed = true;
-        if (block != null)
+        loot = new ItemInventory();
+        if (structure != null && structure is Block)
         {
-            block.Mine(hit, out  destroyed);
+            Block b = (Block) structure;
+            
+            b.Mine(hit, out  destroyed);
             if (destroyed)
             {
-                block = null;
-                SetIsWalkable(true);
+                structure = null;
+                
+                loot.addToInventory(ItemType.DirtBlockItem, 1);
             }
         }
         returnDestroyed = destroyed;
+    }
+
+    public bool isMineable()
+    {
+        return structure.isResource();
     }
 
     public override string ToString() {

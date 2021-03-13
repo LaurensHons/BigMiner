@@ -33,6 +33,7 @@ public class ScannerSlider : MonoBehaviour
     
     private void Start()
     {
+        this.transform.position = Vector3.zero;
         slider = GetComponentInChildren<Slider>();
 
         slider.maxValue = accuracy;

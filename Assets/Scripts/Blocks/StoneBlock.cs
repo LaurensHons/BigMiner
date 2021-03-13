@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using System.IO;
+using UnityEngine;
 
 namespace Blocks
 {
     public class StoneBlock: Block
     {
-        public StoneBlock(float x, float y) : base(x, y)
+        public StoneBlock(float x, float y, PathNode pathNode) : base(x, y, pathNode)
         {
         }
 

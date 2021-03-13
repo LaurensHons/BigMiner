@@ -115,7 +115,17 @@ public class Pathfinding {
 
             foreach (PathNode neighbourNode in GetNeighbourList(currentNode)) {
                 if (closedList.Contains(neighbourNode)) continue;
-                if (!neighbourNode.isWalkable ) {
+                /*      Code for optimizing pathfinding with multiblocks;
+                if (neighbourNode.structure is IMultipleNodesStructure)                     //Adding all other occupied nodes from the multiblock to the closedlist;
+                {
+                    List<PathNode> disposableNodes = (neighbourNode.structure as IMultipleNodesStructure).getPathNodeList();
+                    foreach (var node in disposableNodes)
+                    {
+                        closedList.Add(node);
+                    }
+                }
+                */
+                if (!neighbourNode.isWalkable) {
                     closedList.Add(neighbourNode);
                     continue;
                 }

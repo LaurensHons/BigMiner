@@ -29,8 +29,9 @@ public class UIController : MonoBehaviour
     {
         Bay = BayGameObject.GetComponent<Bay>();
 
-        Vector3 middleOfTheGrid = new Vector3(Bay.gridSize/2 , 0, -1);
-        camera.transform.position = middleOfTheGrid;
+        Vector3 cameraPos = new Vector3(Bay.gridSize/2 , 0, -10);
+        camera.transform.position = cameraPos;
+        Vector3 middleOfTheGrid = new Vector3(Bay.gridSize/2 , 0, 1);
         UICanvas.transform.position = middleOfTheGrid;
         
         InstantiateMinerStations();

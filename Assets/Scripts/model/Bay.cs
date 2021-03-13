@@ -35,10 +35,12 @@ public class Bay : MonoBehaviour
     {
         pathNodeGrid = new Grid<PathNode>(gridSize, gridSize, 1f, Vector3.zero,
             (Grid<PathNode> g, int x, int y) => new PathNode(g, x, y));
-        updateGrid();
 
-
-        GenerateBay();
+        Vector2 siloPos = new Vector2(0, 0);
+        new Silo(siloPos.x, siloPos.y, getPathNode(siloPos), this);
+        pathNodeGrid.GetGridObject(siloPos).SetStructure(Silo.Instance);
+        
+        //GenerateBay();
     }
 
     private void testPathfinding()
@@ -50,6 +52,10 @@ public class Bay : MonoBehaviour
         List<PathNode> path = pathfinding.FindPath(0, 0, x, y);
         
     }
+    
+    /*
+    Function made to update walkable status for occupied nodes,
+    seems it works fine without tho
 
     public void updateGrid()
     {
@@ -57,12 +63,14 @@ public class Bay : MonoBehaviour
         {
             for (int y = 0; y < gridSize; y++)
             {
-                if (pathNodeGrid.GetGridObject(x, y).block != null)
+                if (pathNodeGrid.GetGridObject(x, y).structure != null)
                     pathNodeGrid.GetGridObject(new Vector3(x, y)).SetIsWalkable(true);
             }
             
         }
     }
+    
+    */
 
     public void spawnBlockType(BlockTypes BlockType)
     {
@@ -70,7 +78,8 @@ public class Bay : MonoBehaviour
         List<PathNode> freeNodes = getFreeNodes();
         if (freeNodes.Count == 0) return;
         Vector3 pos = freeNodes[Random.Range(0, freeNodes.Count)].getPos();
-        if (pathNodeGrid.GetGridObject(pos).isWalkable)
+        PathNode pathNode = pathNodeGrid.GetGridObject(pos);
+        if (pathNode.isWalkable)
         {
             bool occupied = false;
             foreach (var miner in minerList)
@@ -86,22 +95,22 @@ public class Bay : MonoBehaviour
                 {
                     case BlockTypes.DirtBlock:
                     {
-                        block = new DirtBlock(pos.x, pos.y);
+                        block = new DirtBlock(pos.x, pos.y, pathNode);
                         break;
                     }
                     case BlockTypes.StoneBlock:
                     {
-                        block = new StoneBlock(pos.x, pos.y);
+                        block = new StoneBlock(pos.x, pos.y, pathNode);
                         break;
                     }
                     default:
                     {
-                        block = new DirtBlock(pos.x, pos.y);
+                        block = new DirtBlock(pos.x, pos.y, pathNode);
                         break;
                     }
                 }
                 block.setParent(GameCanvas.transform);
-                pathNodeGrid.GetGridObject((int) pos.x, (int) pos.y).SetBlock(block);
+                pathNodeGrid.GetGridObject((int) pos.x, (int) pos.y).SetStructure(block);
             }
         }
     }
@@ -120,8 +129,8 @@ public class Bay : MonoBehaviour
                     continue;
                 if (x == 0 || y == 0)
                     continue;
-                Block block = new StoneBlock(x, y);
-                pathNodeGrid.GetGridObject(x, y).SetBlock(block);
+                Block block = new StoneBlock(x, y, pathNodeGrid.GetGridObject(x, y));
+                pathNodeGrid.GetGridObject(x, y).SetStructure(block);
                 //block.setParent(GameCanvas.transform);
             }
         }
@@ -130,11 +139,6 @@ public class Bay : MonoBehaviour
     void Update()
     {
         
-    }
-    
-    public void bayTick()
-    {
-        updateGrid();
     }
 
     public List<PathNode> getBlockList()
@@ -172,11 +176,6 @@ public class Bay : MonoBehaviour
     public PathNode getPathNode(int x, int y)
     {
         return pathNodeGrid.GetGridObject(x, y);
-    }
-
-    public PathNode getPathNode(Block block)
-    {
-        return pathNodeGrid.GetGridObject(block.transform.position);
     }
 
     public PathNode getPathNode(Vector2 pos)

@@ -13,7 +13,7 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        
+        new Pathfinding(Bay.GetComponent<Bay>().pathNodeGrid); 
     }
     
     void Update()

@@ -17,13 +17,7 @@ using UnityEngine;
 namespace Grid
 {
     public class Grid<TGridObject> {
-
-    public event EventHandler<OnGridObjectChangedEventArgs> OnGridObjectChanged;
-    public class OnGridObjectChangedEventArgs : EventArgs {
-        public int x;
-        public int y;
-    }
-
+        
     private int width;
     private int height;
     private float cellSize;
@@ -57,10 +51,7 @@ namespace Grid
             }
             Debug.DrawLine(GetWorldPosition(0, height)- Vector3.one * 0.5f, GetWorldPosition(width, height)- Vector3.one * 0.5f, Color.white, 100f);
             Debug.DrawLine(GetWorldPosition(width, 0)- Vector3.one * 0.5f, GetWorldPosition(width, height)- Vector3.one * 0.5f, Color.white, 100f);
-
-            OnGridObjectChanged += (object sender, OnGridObjectChangedEventArgs eventArgs) => {
-                //debugTextArray[eventArgs.x, eventArgs.y].text = gridArray[eventArgs.x, eventArgs.y]?.ToString();
-            };
+            
         }
     }
     
@@ -90,12 +81,7 @@ namespace Grid
     public void SetGridObject(int x, int y, TGridObject value) {
         if (x >= 0 && y >= 0 && x < width && y < height) {
             gridArray[x, y] = value;
-            if (OnGridObjectChanged != null) OnGridObjectChanged(this, new OnGridObjectChangedEventArgs { x = x, y = y });
         }
-    }
-
-    public void TriggerGridObjectChanged(int x, int y) {
-        if (OnGridObjectChanged != null) OnGridObjectChanged(this, new OnGridObjectChangedEventArgs { x = x, y = y });
     }
 
     public void SetGridObject(Vector3 worldPosition, TGridObject value) {
