@@ -41,11 +41,11 @@ public class Pathfinding {
         return grid;
     }
 
-    public List<Vector3> FindPath(Vector3 startWorldPosition, Vector3 endWorldPosition) {
+    public List<Vector3> FindPath(Vector3 startWorldPosition, Vector3 endWorldPosition, bool forced = false) {
         grid.GetXY(startWorldPosition, out int startX, out int startY);
         grid.GetXY(endWorldPosition, out int endX, out int endY);
 
-        List<PathNode> path = FindPath(startX, startY, endX, endY);
+        List<PathNode> path = FindPath(startX, startY, endX, endY, forced);
         if (path == null) {
             return null;
         } else {
@@ -57,7 +57,10 @@ public class Pathfinding {
         }
     }
 
-    public List<PathNode> FindPath(int startX, int startY, int endX, int endY) {
+    public List<PathNode> FindPath(int startX, int startY, int endX, int endY, bool forced = false)
+    {
+        bool isForcing = false;
+        
         PathNode startNode = grid.GetGridObject(startX, startY);
         PathNode endNode = grid.GetGridObject(endX, endY);
         var possibleFinalNodes = GetNeighbourList(endNode);
@@ -100,54 +103,63 @@ public class Pathfinding {
         startNode.hCost = CalculateDistanceCost(startNode, endNode);
         startNode.CalculateFCost();
         
-        
+        DiscoverNodes:
+            while (openList.Count > 0) {
+                PathNode currentNode = GetLowestFCostNode(openList);
+                if (currentNode.Equals(endNode) || possibleFinalNodes.Contains(currentNode)) {
+                    // Reached final node
+                    
+                    return CalculatePath(currentNode);
+                }
 
-        while (openList.Count > 0) {
-            PathNode currentNode = GetLowestFCostNode(openList);
-            if (currentNode.Equals(endNode) || possibleFinalNodes.Contains(currentNode)) {
-                // Reached final node
-                
-                return CalculatePath(currentNode);
-            }
+                openList.Remove(currentNode);
+                closedList.Add(currentNode);
 
-            openList.Remove(currentNode);
-            closedList.Add(currentNode);
-
-            foreach (PathNode neighbourNode in GetNeighbourList(currentNode)) {
-                if (closedList.Contains(neighbourNode)) continue;
-                /*      Code for optimizing pathfinding with multiblocks;
-                if (neighbourNode.structure is IMultipleNodesStructure)                     //Adding all other occupied nodes from the multiblock to the closedlist;
-                {
-                    List<PathNode> disposableNodes = (neighbourNode.structure as IMultipleNodesStructure).getPathNodeList();
-                    foreach (var node in disposableNodes)
+                foreach (PathNode neighbourNode in GetNeighbourList(currentNode)) {
+                    if (closedList.Contains(neighbourNode)) continue;
+                    /*      Code for optimizing pathfinding with multiblocks;
+                    if (neighbourNode.structure is IMultipleNodesStructure)                     //Adding all other occupied nodes from the multiblock to the closedlist;
                     {
-                        closedList.Add(node);
+                        List<PathNode> disposableNodes = (neighbourNode.structure as IMultipleNodesStructure).getPathNodeList();
+                        foreach (var node in disposableNodes)
+                        {
+                            closedList.Add(node);
+                        }
                     }
-                }
-                */
-                if (!neighbourNode.isWalkable) {
-                    closedList.Add(neighbourNode);
-                    continue;
-                }
-
-                int tentativeGCost = currentNode.gCost + CalculateDistanceCost(currentNode, neighbourNode);
-                if (tentativeGCost < neighbourNode.gCost) {
-                    neighbourNode.cameFromNode = currentNode;
-                    neighbourNode.gCost = tentativeGCost;
-                    neighbourNode.hCost = CalculateDistanceCost(neighbourNode, endNode);
-                    neighbourNode.CalculateFCost();
-
-                    DebugDrawer.CreateWorldText(neighbourNode.hCost.ToString(), null,
-                        grid.GetWorldPosition(neighbourNode.x, neighbourNode.y) - Vector3.one * 0.2f +
-                        new Vector3(grid.GetCellSize(), grid.GetCellSize()) * .5f, 20, neighbourNode.isWalkable? Color.white : Color.red,
-                        TextAnchor.MiddleCenter);
-
-                    if (!openList.Contains(neighbourNode)) {
-                        openList.Add(neighbourNode);
+                    */
+                    if (!neighbourNode.isWalkable && !isForcing) {
+                        closedList.Add(neighbourNode);
+                        continue;
                     }
+
+                    int tentativeGCost = currentNode.gCost + CalculateDistanceCost(currentNode, neighbourNode);
+                    if (tentativeGCost < neighbourNode.gCost) {
+                        neighbourNode.cameFromNode = currentNode;
+                        neighbourNode.gCost = tentativeGCost;
+                        neighbourNode.hCost = CalculateDistanceCost(neighbourNode, endNode);
+                        neighbourNode.CalculateFCost();
+
+                        DebugDrawer.CreateWorldText(neighbourNode.hCost.ToString(), null,
+                            grid.GetWorldPosition(neighbourNode.x, neighbourNode.y) - Vector3.one * 0.2f +
+                            new Vector3(grid.GetCellSize(), grid.GetCellSize()) * .5f, 20, neighbourNode.isWalkable? Color.white : Color.red,
+                            TextAnchor.MiddleCenter);
+
+                        if (!openList.Contains(neighbourNode)) {
+                            openList.Add(neighbourNode);
+                        }
+                    }
+                    //PathfindingDebugStepVisual.Instance.TakeSnapshot(grid, currentNode, openList, closedList);
                 }
-                //PathfindingDebugStepVisual.Instance.TakeSnapshot(grid, currentNode, openList, closedList);
             }
+
+        if (forced)
+        {
+            Debug.Log("Forcing from: " + GetLowestHCostNode(closedList));
+            openList.Add(GetLowestHCostNode(closedList));
+            closedList = new List<PathNode>();
+            isForcing = true;
+            forced = false;
+            goto DiscoverNodes;
         }
 
         // Out of nodes on the openList
@@ -211,6 +223,16 @@ public class Pathfinding {
             }
         }
         return lowestFCostNode;
+    }
+    
+    private PathNode GetLowestHCostNode(List<PathNode> pathNodeList) {
+        PathNode lowestHCostNode = pathNodeList[0];
+        for (int i = 1; i < pathNodeList.Count; i++) {
+            if (pathNodeList[i].hCost < lowestHCostNode.hCost) {
+                lowestHCostNode = pathNodeList[i];
+            }
+        }
+        return lowestHCostNode;
     }
 
 }

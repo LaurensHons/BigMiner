@@ -72,7 +72,7 @@ public class PathNode {
             {
                 structure = null;
                 
-                loot.addToInventory(ItemType.DirtBlockItem, 1);
+                loot.addAllItemToInventory(new DirtBlockItem(1), out int actualAmount);
             }
         }
         returnDestroyed = destroyed;
@@ -83,8 +83,11 @@ public class PathNode {
         return structure.isResource();
     }
 
-    public override string ToString() {
-        return x + "," + y;
+    public override string ToString()
+    {
+        String structuretype = "";
+        if (structure != null) structuretype = ", structure: " + structure.GetType();
+        return "[" + x + "," + y + "]" + structuretype;
     }
 
     public override bool Equals(object obj)

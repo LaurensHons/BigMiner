@@ -165,6 +165,12 @@ public abstract class Block : IStructure
         GameObject.Destroy(BlockObject);
     }
 
+    public override string ToString()
+    {
+        return "Block: " + this.GetType().Name + ", HP: " + HP +
+               "\nPathNode:[" + pathNode.x + "," + pathNode.y + "], GameObject:[" + BlockObject.transform.position.x + "," + BlockObject.transform.position.y;
+    }
+
 
     public abstract int getMaxHealth();
     public abstract void addMaterial();

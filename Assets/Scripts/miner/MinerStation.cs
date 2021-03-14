@@ -36,7 +36,8 @@ public class MinerStation : MonoBehaviour
 
     public Block getNextTarget()
     {
-        return MiningStrategy.selectNextBlock(bay.getBlockList());
+        Block b = MiningStrategy.selectNextBlock(bay.getBlockList());
+        return b;
     }
 
     public Grid<PathNode> getNodeGrid()
@@ -67,7 +68,11 @@ public class RandomMiningStrategy : IMiningStrategy
 {
     public Block selectNextBlock(List<PathNode> pathNodeList)
     {
-        if (pathNodeList.Count == 0) return null;
+        if (pathNodeList.Count == 0)
+        {
+            Debug.Log("penisssssss");
+            return null;
+        }
         return pathNodeList[Random.Range(0, pathNodeList.Count)].structure as Block;
     }
 }

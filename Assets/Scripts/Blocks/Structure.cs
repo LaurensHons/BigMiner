@@ -11,9 +11,3 @@ public interface IStructure
 
     public void destroy();
 }
-/*  Code for optimizing pathfinding with multiblocks;
-public interface IMultipleNodesStructure : IStructure
-{
-    public List<PathNode> getPathNodeList();
-}
-*/

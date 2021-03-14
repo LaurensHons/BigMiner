@@ -7,7 +7,13 @@ public abstract class MultiBlock : IStructure
 {
     protected GameObject BlockObject;
 
-    protected PathNode interfaceNode;
+    protected PathNode interfaceNode
+    {
+        get
+        {
+            return getInterfaceNode();
+        }
+    }
 
     private Sprite BlockSprite;
 
@@ -70,6 +76,7 @@ public abstract class MultiBlock : IStructure
 
     public abstract bool isResource();
     public abstract void destroy();
+    public abstract PathNode getInterfaceNode();
     public abstract List<PathNode> getPathNodeList();
     public abstract string getSpritePath();
     public abstract Vector2 getDimensions();

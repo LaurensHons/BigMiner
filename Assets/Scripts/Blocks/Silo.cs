@@ -31,6 +31,11 @@ public class Silo : MultiBlock
         throw new System.NotImplementedException();
     }
 
+    public override PathNode getInterfaceNode()
+    {
+        return bay.getPathNode((int) baseX, (int) baseY);
+    }
+
     public override List<PathNode> getPathNodeList()
     {
         return new List<PathNode>

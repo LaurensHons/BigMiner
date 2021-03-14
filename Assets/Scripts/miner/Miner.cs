@@ -19,10 +19,7 @@ public class Miner : MonoBehaviour, IWalker
 
     private Vector3 lastPos;
     public int newTargetTimeout = 0;
-
-    private bool IeChargeDrill = false;
-    private bool IeDepositItems = false;
-
+    
     public ItemInventory Inventory;
 
     private float speed { get; set; }
@@ -32,27 +29,13 @@ public class Miner : MonoBehaviour, IWalker
         Inventory = new ItemInventory(5);
         speed = 0.005f;
         walker = new Walker(this);
-
     }
     
 
     private void Update()
     {
-        if (walker.getWalkerStatus().Equals(WalkerStatus.TradingItems) && IeDepositItems == false &&
-            Vector2.Distance(transform.position, Silo.Instance.getPathNode().getPos()) < 1.1f)
-            StartCoroutine(IEDepositItems());
-        if (walker.getWalkerStatus().Equals(WalkerStatus.Mining) && walker.targetBlock != null && 
-            IeChargeDrill == false && walker.hasEmptyPathNodeList())
-            StartCoroutine(IEChargeDrill());
-        if (Inventory.getUsedCapacity() >= Inventory.getMaxCapacity())
-        {
-            walker.setStatusGoingToSilo();
-            Debug.Log(Inventory.getUsedCapacity() + ", " + Inventory.getMaxCapacity());
-        }
-            
         bool wakeup = Time.time % 500 == 0 || Time.time < 200;
         walker.Update(wakeup);
-        
     }
     
 
@@ -65,40 +48,60 @@ public class Miner : MonoBehaviour, IWalker
     {
         this.minerStation = minerStation;
     }
+    
+    public void Mine()
+    {
+        if (walker.targetStructure == null)
+        {
+            walker.StopAction();
+        }
+        StartCoroutine(IEChargeDrill());
+    }
 
     private IEnumerator IEChargeDrill()
     {
-        IeChargeDrill = true;
         Debug.Log("Starting drill");
         yield return new WaitForSeconds(.5f);
         MineBlock();
     }
+    
     private void MineBlock()
     {
-        walker.targetBlock.getPathNodeList()[0].MineBlock(MinerDamage, out bool destroyed, out ItemInventory loot);
+        walker.targetStructure.getPathNodeList()[0].MineBlock(MinerDamage, out bool destroyed, out ItemInventory loot);
         if (destroyed)
         {
             Inventory.PullInventory(loot);
-            walker.targetBlock = null;
-            walker.setStatusCollectingBlocks();
-            IeChargeDrill = false;
+            walker.targetStructure = null;
+            walker.StopAction();
         }
         else
             StartCoroutine(IEChargeDrill());
+
+        Debug.Log("Used: " + Inventory.getUsedCapacity() + ", Max:" + Inventory.getMaxCapacity());
     }
     
+    
 
+    public void startDepositingItems()
+    {
+        StartCoroutine(IEDepositItems());
+    }
+    
     private IEnumerator IEDepositItems()
     {
-        IeDepositItems = true;
         yield return new WaitForSeconds(.5f);
         DepositItems();
     }
 
     private void DepositItems()
     {
-        Inventory.safePushInventory(Silo.Instance.Inventory);
-        IeDepositItems = false;
+        Inventory.PushInventory(Silo.Instance.Inventory);
+        walker.StopAction();
+    }
+    
+    public ItemInventory getItemInventory()
+    {
+        return Inventory;
     }
 
     
@@ -112,6 +115,8 @@ public class Miner : MonoBehaviour, IWalker
     {
         return minerStation.getNextTarget();
     }
+
+    
 
     public Bay getBay()
     {
