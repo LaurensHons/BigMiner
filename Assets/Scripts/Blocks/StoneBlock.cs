@@ -14,10 +14,18 @@ namespace Blocks
             return 5;
         }
 
-        public override void addMaterial()
+        public override ItemInventory getLoot()
         {
-            throw new System.NotImplementedException();
+            ItemInventory iteminv = new ItemInventory();
+            iteminv.addItemToInventory(new DirtBlockItem(1), 1, out int actualAmount);
+            return iteminv;
         }
+
+        public override int getXpOnMine()
+        {
+            return 3;
+        }
+
 
         public override string getSpritePath()
         {

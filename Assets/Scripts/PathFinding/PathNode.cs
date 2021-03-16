@@ -26,16 +26,18 @@ public class PathNode {
     public int hCost;
     public int fCost;
 
-    public bool isWalkable
+    public bool isWalkable => Structure == null;
+    public PathNode cameFromNode;
+
+    private IStructure Structure;
+
+    public IStructure structure
     {
         get
         {
-            return structure == null;
+            return Structure;
         }
     }
-    public PathNode cameFromNode;
-
-    public IStructure structure;
 
     public PathNode(Grid<PathNode> grid, int x, int y) {
         this.grid = grid;
@@ -50,19 +52,23 @@ public class PathNode {
 
     public void SetStructure(IStructure structure)
     {
-        this.structure = structure;
+        if (structure == null) return;
+        Structure = structure;
+
         List<PathNode> nodeList = structure.getPathNodeList();
         nodeList.Remove(this);
         foreach (var pathNode in nodeList)
         {
-            pathNode.structure = structure;
+            pathNode.Structure = structure;
+            //Debug.Log("Node: "+  pathNode.x + ", " + pathNode.y + " structure");
         }
     }
 
-    public void MineBlock(int hit, out bool returnDestroyed, out ItemInventory loot)
+    public void MineBlock(int hit, out bool destroyed, out ItemInventory loot, out int xp)
     {
-        bool destroyed = true;
+        destroyed = true;
         loot = new ItemInventory();
+        xp = 0;
         if (structure != null && structure is Block)
         {
             Block b = (Block) structure;
@@ -70,16 +76,16 @@ public class PathNode {
             b.Mine(hit, out  destroyed);
             if (destroyed)
             {
-                structure = null;
-                
-                loot.addAllItemToInventory(new DirtBlockItem(1), out int actualAmount);
+                loot = b.getLoot();
+                xp = b.getXpOnMine();
+                Structure = null;
             }
         }
-        returnDestroyed = destroyed;
     }
 
     public bool isMineable()
     {
+        if (structure == null) return false;
         return structure.isResource();
     }
 

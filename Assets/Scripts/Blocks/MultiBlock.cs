@@ -6,6 +6,8 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public abstract class MultiBlock : IStructure
 {
     protected GameObject BlockObject;
+    protected Bay bay;
+    protected List<PathNode> pathNodeList;
 
     protected PathNode interfaceNode
     {
@@ -20,10 +22,11 @@ public abstract class MultiBlock : IStructure
     protected float baseX;
     protected float baseY;
 
-    protected MultiBlock(float x, float y, PathNode pathNode)
+    protected MultiBlock(float x, float y, Bay bay)
     {
         HandleSpriteLoading();
 
+        this.bay = bay;
         baseX = x;
         baseY = y;
 
@@ -38,7 +41,44 @@ public abstract class MultiBlock : IStructure
         BlockObject.transform.position = new Vector3(x + xOffset, y + yOffset);
         BlockObject.transform.localScale = new Vector3(GameController.getBlockScale() * width,
             GameController.getBlockScale() * height);
+        BlockObject.transform.SetParent(bay.transform);
 
+        
+        setPathNodeList();
+    }
+
+    private void setPathNodeList()
+    {
+        float width = getDimensions().x, height = getDimensions().y;
+
+        List<PathNode> pathNodes = new List<PathNode>();
+
+        for (int x = (int) baseX; x < width; x++)
+        {
+            for (int y = (int) baseY ; y < height; y++)
+            {
+                pathNodes.Add(bay.getPathNode((int) baseX + x, (int) baseY + y));
+            }
+        }
+
+        pathNodeList = pathNodes;
+    }
+
+    public List<PathNode> getPathNodeList()
+    {
+        float width = getDimensions().x, height = getDimensions().y;
+
+        List<PathNode> pathNodes = new List<PathNode>();
+
+        for (int x = (int) baseX; x < width; x++)
+        {
+            for (int y = (int) baseY ; y < height; y++)
+            {
+                pathNodes.Add(bay.getPathNode((int) baseX + x, (int) baseY + y));
+            }
+        }
+
+        return pathNodes;
     }
     
     private void HandleSpriteLoading()
@@ -67,17 +107,14 @@ public abstract class MultiBlock : IStructure
         return interfaceNode.getPos();
     }
 
-    public PathNode getPathNode()
-    {
-        return interfaceNode;
-    }
-
-    public abstract  void setPathNode(PathNode pathNode);
-
-    public abstract bool isResource();
-    public abstract void destroy();
-    public abstract PathNode getInterfaceNode();
-    public abstract List<PathNode> getPathNodeList();
-    public abstract string getSpritePath();
     public abstract Vector2 getDimensions();
+    public abstract bool isResource();
+
+
+
+    public abstract PathNode getInterfaceNode();
+    
+    
+    public abstract void destroy();
+    public abstract string getSpritePath();
 }

@@ -18,7 +18,6 @@ public class ScannerController : MonoBehaviour
     public Scanner Scanner;
     
     public GameObject ScannerButton;
-    public GameObject ScannerPanel;
     public GameObject ScannerPanelList;
     
     public GameObject slider_BlockPrefab;
@@ -38,8 +37,6 @@ public class ScannerController : MonoBehaviour
         
         Bay = BayGameObject.GetComponent<Bay>();
 
-        ScannerPanel.SetActive(false);
-
         foreach (var BlockType in Enum.GetNames(typeof(BlockTypes)))
         {
             slider_BlockPrefab.gameObject.name = "Slider" + BlockType.ToString();
@@ -57,23 +54,9 @@ public class ScannerController : MonoBehaviour
         updateSliders();
     }
 
-    public void OpenScannerMenu()
-    {
-        UIController.hasMenuOpen = true;
+    
 
-        Vector2 pos = UIController.camera.transform.position;
-        ScannerPanel.transform.position = pos;
-        ScannerPanel.SetActive(true);
-        updateSliders();
-    }
-
-    public void CloseScannerMenu()
-    {
-        UIController.hasMenuOpen = false;
-        ScannerPanel.SetActive(false);
-    }
-
-    private void Update()
+    private void FixedUpdate()
     {
         Scanner.Update();
     }
@@ -91,9 +74,7 @@ public class ScannerController : MonoBehaviour
         {
             total += slider.getValue();
         }
-
         
-
         foreach (var slider in ScannerSliders)
         {
             float scaleFactor = slider.getValue() / total;

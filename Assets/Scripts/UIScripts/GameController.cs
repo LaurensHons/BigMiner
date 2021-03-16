@@ -13,7 +13,8 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        new Pathfinding(Bay.GetComponent<Bay>().pathNodeGrid); 
+        new Pathfinding(Bay.GetComponent<Bay>().pathNodeGrid);
+        Time.fixedDeltaTime = 0.02f;
     }
     
     void Update()

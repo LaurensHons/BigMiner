@@ -2,46 +2,143 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 using Grid;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.Serialization;
 
 
-public class Miner : MonoBehaviour, IWalker
+public class Miner : IWalker
 {
     private MinerStation minerStation;
-    private Walker walker;
-    
-    
-    public List<Vector3> pathVectorList = new List<Vector3>();
-    public int currentPathIndex;
 
-    private Vector3 lastPos;
-    public int newTargetTimeout = 0;
-    
-    public ItemInventory Inventory;
+    protected GameObject minerObject;
+    private Sprite minerSprite;
 
-    private float speed { get; set; }
-    private int MinerDamage = 1;
-    void Start()
+    public float speed = 0.1f;
+    public int damage => tool.damage;
+    public int blocksMined = 0;
+
+    public int xp = 0;
+    private int xpThreshHold = 50;      //change this for level calculation
+
+    public MiningStrategy miningStrategy = MiningStrategy.Random;
+
+    public int maxBatteryMinutes = 2;
+    public int Battery = 0;
+    
+    public int maxBattery
     {
-        Inventory = new ItemInventory(5);
-        speed = 0.005f;
-        walker = new Walker(this);
+        get => (int) Math.Round(maxBatteryMinutes * 60 * (1/Time.fixedDeltaTime));
     }
     
-
-    private void Update()
+    public float Speed
     {
+        get
+        {
+            return walker.speed;
+        }
+
+        set
+        {
+            if (value >= 0)
+            {
+                walker.speed = value;
+            }
+        }
+    }
+    
+    public String name
+    {
+        get
+        {
+            return minerObject.name;
+        }
+
+        set
+        {
+            minerObject.name = value;
+        }
+    }
+    
+    private Walker walker;
+
+    private Vector3 lastPos;
+
+    public ItemInventory Inventory;
+
+    public Tool tool;
+    public List<Tool> toolList = new List<Tool>();
+    
+    public Miner(Vector2 pos, MinerStation minerStation)
+    {
+        HandleSpriteLoading();
+
+        Battery = maxBatteryMinutes * 60 * (int) Math.Round(1/Time.fixedDeltaTime);
+
+        this.minerStation = minerStation;
+
+        this.tool = new Pickaxe();
+        toolList.Add(tool);
+        
+        Inventory = new ItemInventory(5);
+        walker = new Walker(this, speed);
+        minerObject = new GameObject("Miner 1");
+        minerObject.transform.localPosition = pos;
+        minerObject.AddComponent<SpriteRenderer>();
+        minerObject.transform.localScale = Vector3.one * GameController.getBlockScale();
+        minerObject.transform.SetParent(getBay().transform);
+    }
+
+    private void HandleSpriteLoading()
+    {
+        AsyncOperationHandle<Sprite> minerSpriteHandler = Addressables.LoadAssetAsync<Sprite>(getSpritePath());
+        minerSpriteHandler.Completed += LoadminerSpriteWhenReady;
+    }
+
+    private void LoadminerSpriteWhenReady(AsyncOperationHandle<Sprite> obj)
+    {
+        if (obj.Status == AsyncOperationStatus.Succeeded)
+        {
+            minerSprite = obj.Result;
+            
+            if (minerSprite == null) throw new Exception("No block sprite found, maybe file named wrong?");
+            minerObject.GetComponent<SpriteRenderer>().sprite = minerSprite;
+        }
+        else throw new Exception("Loading sprite failed");
+    }
+
+
+    private int MININGTIMEMOUT = -1;
+    private int TRADINGTIMEOUT = -1;
+    
+    public void Update(object sender, EventArgs eventArgs)
+    {
+        if (Battery >= 0)
+            Battery -= 1;
+
+        if (MININGTIMEMOUT >= 0)
+        {
+            MININGTIMEMOUT += 1;
+            if (MININGTIMEMOUT >= tool.getSpeed())
+                IEChargeTool();
+        }
+        if (TRADINGTIMEOUT >= 0)
+        {
+            TRADINGTIMEOUT += 1;
+            if (TRADINGTIMEOUT >= 50)
+                IEDepositItems();
+        }
+        
+
         bool wakeup = Time.time % 500 == 0 || Time.time < 200;
         walker.Update(wakeup);
     }
     
-
-    public Vector3 GetPosition() {
-        return transform.position;
-    }
+    
     
     
     public void setMinerStation(MinerStation minerStation)
@@ -54,42 +151,74 @@ public class Miner : MonoBehaviour, IWalker
         if (walker.targetStructure == null)
         {
             walker.StopAction();
+            return;
         }
-        StartCoroutine(IEChargeDrill());
+        MININGTIMEMOUT = 0;
     }
 
-    private IEnumerator IEChargeDrill()
+    private void IEChargeTool()
     {
-        Debug.Log("Starting drill");
-        yield return new WaitForSeconds(.5f);
-        MineBlock();
+        MININGTIMEMOUT = -1;
+        SwingTool();
     }
-    
-    private void MineBlock()
+
+    private void SwingTool()
     {
-        walker.targetStructure.getPathNodeList()[0].MineBlock(MinerDamage, out bool destroyed, out ItemInventory loot);
+        foreach (var v2 in tool.getAdditionalMiningPos())
+        {
+            PathNode blockToMine = getBay().getPathNode(
+                (int) Math.Round(v2.x + walker.targetStructure.getPos().x), 
+                (int) Math.Round(v2.y + walker.targetStructure.getPos().y));
+            if (blockToMine == null || blockToMine.isWalkable) continue;
+            
+            Debug.Log("bonus: " + blockToMine.getPos());
+            MineBlock(blockToMine, out bool d);
+            
+        }
+        Debug.Log("target: " + walker.targetStructure.getPos());
+        MineBlock(getBay().getPathNode(walker.targetStructure.getPos()), out bool destroyed);
         if (destroyed)
         {
-            Inventory.PullInventory(loot);
             walker.targetStructure = null;
             walker.StopAction();
         }
         else
-            StartCoroutine(IEChargeDrill());
+            Mine();
+    }
+    
+    private void MineBlock(PathNode pathNode, out bool destroyed)
+    {
+        pathNode.MineBlock(tool.damage, out destroyed, out ItemInventory loot, out int xp);
+        if (destroyed)
+        {
+            blocksMined++;
+            this.xp += xp;
+            Inventory.PullInventory(loot);   
+        }
 
         Debug.Log("Used: " + Inventory.getUsedCapacity() + ", Max:" + Inventory.getMaxCapacity());
     }
-    
-    
+
+    public bool isBatteryZero()
+    {
+        return Battery <= 0;
+    }
+
+    public int getLevel(out double percentLeft)
+    {
+        double level =  0.5 + Math.Sqrt(1 + 8 * (xp) / (xpThreshHold)) / 2;
+        percentLeft = level % 1;
+        return (int) level;
+    }
 
     public void startDepositingItems()
     {
-        StartCoroutine(IEDepositItems());
+        TRADINGTIMEOUT = 0;
     }
     
-    private IEnumerator IEDepositItems()
+    private void IEDepositItems()
     {
-        yield return new WaitForSeconds(.5f);
+        TRADINGTIMEOUT = -1;
         DepositItems();
     }
 
@@ -108,7 +237,7 @@ public class Miner : MonoBehaviour, IWalker
 
     public Transform getTransform()
     {
-        return transform;
+        return minerObject.transform;
     }
 
     public Block getNextTarget()
@@ -121,5 +250,10 @@ public class Miner : MonoBehaviour, IWalker
     public Bay getBay()
     {
         return minerStation.getBay();
+    }
+
+    public String getSpritePath()
+    {
+        return "Assets/Images/Miner.png";
     }
 }

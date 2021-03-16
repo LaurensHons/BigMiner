@@ -10,7 +10,7 @@ public class Walker
     public List<Vector3> pathVectorList = new List<Vector3>();
     public int currentPathIndex;
 
-    private float speed = 0.01f;
+    public float speed;
 
     public IStructure targetStructure;
 
@@ -24,15 +24,17 @@ public class Walker
         }
     }
 
-    public Walker(IWalker objectToWalk)
+    public Walker(IWalker objectToWalk, float speed)
     {
         this.objectToWalk = objectToWalk;
-
+        this.speed = speed;
+        
         setStatusCollectingBlocks(this, EventArgs.Empty);
     }
 
     public void Update(bool wakeup)
     {
+        if (objectToWalk.isBatteryZero()) return;
         switch (walkerStatus)
         {
             case (WalkerStatus.CollectingBlocks):
@@ -82,16 +84,10 @@ public class Walker
         
     public void setStatusMining(object sender, EventArgs args)
     {
-        if (checkIfInventoryFull())
-        {
-            StopAction();
-            return;
-        }
         Debug.Log("Miner: Mining Block");
         objectToWalk.Mine();
         walkerStatus = WalkerStatus.Mining;
         ActionEnd = setStatusCollectingBlocks;
-        
     }
 
     public void setStatusDepositingItems(object sender, EventArgs args)
@@ -99,37 +95,28 @@ public class Walker
         bool closeEnough = false;
         foreach (var pathNode in targetStructure.getPathNodeList())
         {
-            if (Vector2.Distance(transform.position, pathNode.getPos()) < 1.1f) closeEnough = true;
+            Debug.Log("Distance: " + Vector2.Distance(transform.position, pathNode.getPos()));
+            if (Vector2.Distance(transform.position, pathNode.getPos()) <= 1.1f)
+                closeEnough = true;
+
         }
         if (!closeEnough)
         {
             Debug.Log("You're too far mate");
+           
             ActionEnd = setStatusGoingToTargetBlock;
             StopAction();
-            return;
         }
-        Debug.Log("Miner: Depositing Items");
-        walkerStatus = WalkerStatus.TradingItems;
-        objectToWalk.startDepositingItems();
-        ActionEnd = setStatusCollectingBlocks;
+        else
+        {
+            Debug.Log("Miner: Depositing Items");
+            walkerStatus = WalkerStatus.TradingItems;
+            objectToWalk.startDepositingItems();
+            ActionEnd = setStatusCollectingBlocks;
+        }
     }
 
-    private bool checkNextNode()
-    {
-        if (pathVectorList == null || pathVectorList.Count == 0)
-        {
-            return false;
-        }
-        //Debug.Log("pathVectorList "+ pathVectorList.Count +" index " + currentPathIndex);
-        PathNode pathNode = objectToWalk.getBay().getPathNode(pathVectorList[currentPathIndex]);
-        if (!pathNode.isWalkable)
-        {
-            targetStructure = pathNode.structure;
-            ActionEnd = setStatusMining;
-            return true;
-        }
-        return false;
-    }
+    
 
     private bool checkIfInventoryFull()
     {
@@ -155,6 +142,7 @@ public class Walker
         }
         else
         {
+            Debug.Log("getNextTarget found no target");
             walkerStatus = WalkerStatus.DoingNothing;
         }
     }
@@ -197,11 +185,9 @@ public class Walker
     protected void HandleMovement() {
         
         if (checkNextNode())
-        {
-            StopAction();
             return;
-        }
-
+        
+        //Debug.Log("freee");
         if (pathVectorList != null && pathVectorList.Count != 0) {
             Vector3 targetPosition = pathVectorList[currentPathIndex];
             
@@ -220,6 +206,24 @@ public class Walker
                 }
             }
         }
+    }
+    
+    private bool checkNextNode()
+    {
+        if (pathVectorList != null && pathVectorList.Count > 0)
+        {
+            PathNode pathNode = objectToWalk.getBay().getPathNode(pathVectorList[currentPathIndex]);
+            if (!pathNode.isWalkable)
+            {
+                targetStructure = pathNode.structure;
+                ActionEnd = setStatusMining;
+                StopAction();
+                return true;
+            } 
+        }
+        //Debug.Log("pathVectorList "+ pathVectorList.Count +" index " + currentPathIndex);
+        
+        return false;
     }
     
     public void StopAction()
@@ -246,6 +250,8 @@ public interface IWalker
     public void startDepositingItems();
 
     public Bay getBay();
+
+    public bool isBatteryZero();
 }
 
 public enum WalkerStatus

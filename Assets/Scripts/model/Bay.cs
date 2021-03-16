@@ -10,10 +10,15 @@ using Random = UnityEngine.Random;
 
 public class Bay : MonoBehaviour
 {
-    public GameObject GameCanvas;
-
     private List<Miner> minerList = new List<Miner>();
-    
+    private List<PathNode> blockList = new List<PathNode>();
+
+    public EventHandler UpdateObservers;
+    public void FixedUpdate()
+    {
+        UpdateObservers?.Invoke(this, EventArgs.Empty);
+    }
+
     public int gridSize
     {
         get { return GameController.getGridSize(); }
@@ -37,9 +42,14 @@ public class Bay : MonoBehaviour
             (Grid<PathNode> g, int x, int y) => new PathNode(g, x, y));
 
         Vector2 siloPos = new Vector2(0, 0);
-        new Silo(siloPos.x, siloPos.y, getPathNode(siloPos), this);
+        new Silo(siloPos.x, siloPos.y, this);
         pathNodeGrid.GetGridObject(siloPos).SetStructure(Silo.Instance);
-        
+
+        Vector2 minerStationPos = new Vector2(2, 0);
+        MinerStation minerStation = new MinerStation(minerStationPos.x, minerStationPos.y, this);
+        pathNodeGrid.GetGridObject(minerStationPos).SetStructure(minerStation);
+
+
         //GenerateBay();
     }
 
@@ -74,17 +84,17 @@ public class Bay : MonoBehaviour
 
     public void spawnBlockType(BlockTypes BlockType)
     {
-        Debug.Log("Spawning Block:" + BlockType.ToString());
+        //Debug.Log("Spawning Block:" + BlockType.ToString());
         List<PathNode> freeNodes = getFreeNodes();
         if (freeNodes.Count == 0) return;
         Vector3 pos = freeNodes[Random.Range(0, freeNodes.Count)].getPos();
         PathNode pathNode = pathNodeGrid.GetGridObject(pos);
-        if (pathNode.isWalkable)
+        if (pathNode.isWalkable && pathNode.structure == null)
         {
             bool occupied = false;
             foreach (var miner in minerList)
             {
-                if (Vector3.Distance(miner.transform.position, pos) < 1.01 ) occupied = true;
+                if (Vector3.Distance(miner.getTransform().position, pos) < 1.01 * GameController.blockScale ) occupied = true;
             }
             
 
@@ -109,32 +119,12 @@ public class Bay : MonoBehaviour
                         break;
                     }
                 }
-                block.setParent(GameCanvas.transform);
-                pathNodeGrid.GetGridObject((int) pos.x, (int) pos.y).SetStructure(block);
+                block.setParent(transform);
+                blockList.Add(pathNode);
             }
         }
     }
-
     
-    
-
-    public void GenerateBay()
-    {
-        for (int x = 0; x < gridSize; x++)
-        {
-            for (int y = 0; y < gridSize; y++)
-            {
-                int randomint = Random.Range(0, 10);
-                if (randomint > 3)
-                    continue;
-                if (x == 0 || y == 0)
-                    continue;
-                Block block = new StoneBlock(x, y, pathNodeGrid.GetGridObject(x, y));
-                pathNodeGrid.GetGridObject(x, y).SetStructure(block);
-                //block.setParent(GameCanvas.transform);
-            }
-        }
-    }
 
     void Update()
     {
@@ -149,7 +139,7 @@ public class Bay : MonoBehaviour
             for (int y = 0; y < gridSize; y++)
             {
                 PathNode b = pathNodeGrid.GetGridObject(x, y);
-                if (!pathNodeGrid.GetGridObject(x, y).isWalkable)
+                if (!pathNodeGrid.GetGridObject(x, y).isWalkable && b.structure.isResource())
                     returnList.Add(b);
             }
         }
@@ -186,6 +176,7 @@ public class Bay : MonoBehaviour
     public void registerMiner(Miner miner)
     {
         minerList.Add(miner);
+        UpdateObservers += miner.Update;
     }
     
     

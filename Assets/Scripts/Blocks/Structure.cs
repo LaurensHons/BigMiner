@@ -5,7 +5,6 @@ public interface IStructure
 {
     public Vector2 getPos();
     public List<PathNode> getPathNodeList();
-    public void setPathNode(PathNode pathNode);
 
     public bool isResource();
 

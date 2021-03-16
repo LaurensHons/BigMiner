@@ -27,10 +27,12 @@ public abstract class Block : IStructure
         HandleSpriteLoading();
         
         this.pathNode = pathNode;
-        
+        pathNode.SetStructure(this);
+
         BlockObject = new GameObject("Block [x:"  + x + ", y:" + y + "]");
         BlockObject.transform.position = new Vector3(x, y, 0);
         BlockObject.transform.localScale = Vector3.one;
+        
         
         BlockSpriteRenderer = new GameObject("BlockSpriteRenderer");
         BlockSpriteRenderer.transform.localPosition = new Vector3(0, 0, 0);
@@ -70,6 +72,31 @@ public abstract class Block : IStructure
             destroyed = false;
         }
     }
+    
+    private void LoadBlockSpriteWhenReady(AsyncOperationHandle<Sprite> handleToCheck)
+    {
+        if(handleToCheck.Status == AsyncOperationStatus.Succeeded)
+        {
+            BlockSprite = handleToCheck.Result;
+            
+            if (BlockSprite == null) throw new Exception("No block sprite found, maybe file named wrong?");
+            else
+            {
+                BlockSpriteRenderer.GetComponent<SpriteRenderer>().sprite = BlockSprite;
+            }
+        }
+
+        else throw new Exception("Loading sprite failed");
+    }
+
+    private void LoadHealthBarWhenReady(AsyncOperationHandle<GameObject> handleToCheck)
+    {
+        if(handleToCheck.Status == AsyncOperationStatus.Succeeded)
+        {
+            healthBarPrefab = handleToCheck.Result;
+        }
+        else throw new Exception("Loading sprite failed");
+    }
 
     public void UpdateHealthBar()
     {
@@ -103,27 +130,7 @@ public abstract class Block : IStructure
        
     }
     
-    private void LoadBlockSpriteWhenReady(AsyncOperationHandle<Sprite> handleToCheck)
-    {
-        if(handleToCheck.Status == AsyncOperationStatus.Succeeded)
-        {
-            BlockSprite = handleToCheck.Result;
-            
-            if (BlockSprite == null) Debug.Log("No block sprite found, maybe file named wrong?");
-            else
-            {
-                BlockSpriteRenderer.GetComponent<SpriteRenderer>().sprite = BlockSprite;
-            }
-        }
-    }
-
-    private void LoadHealthBarWhenReady(AsyncOperationHandle<GameObject> handleToCheck)
-    {
-        if(handleToCheck.Status == AsyncOperationStatus.Succeeded)
-        {
-            healthBarPrefab = handleToCheck.Result;
-        }
-    }
+    
     
     public void highLightBlock()
     {
@@ -147,14 +154,9 @@ public abstract class Block : IStructure
 
     public List<PathNode> getPathNodeList()
     {
-        return new List<PathNode>{pathNode};
+        return new List<PathNode>{ pathNode };
     }
 
-    public void setPathNode(PathNode pathNode)
-    {
-        this.pathNode = pathNode;
-    }
-                                                                
     public bool isResource()                                    
     {
         return true;
@@ -167,13 +169,15 @@ public abstract class Block : IStructure
 
     public override string ToString()
     {
-        return "Block: " + this.GetType().Name + ", HP: " + HP +
+        return "Block: " + this.GetType().Name + ", HP: " + HP + ", Structure: " + GetType() + 
                "\nPathNode:[" + pathNode.x + "," + pathNode.y + "], GameObject:[" + BlockObject.transform.position.x + "," + BlockObject.transform.position.y;
     }
 
 
     public abstract int getMaxHealth();
-    public abstract void addMaterial();
+    public abstract ItemInventory getLoot();
+
+    public abstract int getXpOnMine();
 
     public abstract string getSpritePath();
 

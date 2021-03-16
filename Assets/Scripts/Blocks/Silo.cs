@@ -6,20 +6,14 @@ public class Silo : MultiBlock
     public static Silo Instance { get; private set; }
 
     public ItemInventory Inventory;
-    
-    private Bay bay;
-    
-    public Silo(float x, float y, PathNode pathNode, Bay bay) : base(x, y, pathNode)
+
+    public Silo(float x, float y, Bay bay) : base(x, y, bay)
     {
         Instance = this;
         this.bay = bay;
         Inventory = new ItemInventory();
     }
-
-    public override void setPathNode(PathNode pathNode)
-    {
-        throw new System.NotImplementedException();
-    }
+    
 
     public override bool isResource()
     {
@@ -35,16 +29,7 @@ public class Silo : MultiBlock
     {
         return bay.getPathNode((int) baseX, (int) baseY);
     }
-
-    public override List<PathNode> getPathNodeList()
-    {
-        return new List<PathNode>
-        {
-            bay.getPathNode((int) baseX, (int) baseY),
-            bay.getPathNode((int) baseX + 1, (int) baseY)
-        };
-    }
-
+    
     public override string getSpritePath()
     {
         return "Assets/Rounded Blocks/stone.png";

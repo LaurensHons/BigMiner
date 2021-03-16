@@ -13,9 +13,16 @@ public class DirtBlock : Block
         return 3;
     }
 
-    public override void addMaterial()
+    public override ItemInventory getLoot()
     {
-        
+        ItemInventory iteminv = new ItemInventory();
+        iteminv.addItemToInventory(new DirtBlockItem(1), 1, out int actualAmount);
+        return iteminv;
+    }
+
+    public override int getXpOnMine()
+    {
+        return 1;
     }
 
     public override string getSpritePath()
