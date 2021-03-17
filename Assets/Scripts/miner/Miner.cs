@@ -164,18 +164,23 @@ public class Miner : IWalker
 
     private void SwingTool()
     {
-        foreach (var v2 in tool.getAdditionalMiningPos())
+        //String outstring = "Additinal mining pos:\n";
+
+
+
+
+        foreach (var v2 in tool.getAdditionalMiningPos(walker.targetStructure.getPos() - (Vector2) getTransform().position))
         {
+            //outstring += v2 + ", ";
             PathNode blockToMine = getBay().getPathNode(
-                (int) Math.Round(v2.x + walker.targetStructure.getPos().x), 
-                (int) Math.Round(v2.y + walker.targetStructure.getPos().y));
-            if (blockToMine == null || blockToMine.isWalkable) continue;
-            
-            Debug.Log("bonus: " + blockToMine.getPos());
+                (int) Math.Round(walker.targetStructure.getPos().x + v2.x ), 
+                (int) Math.Round(walker.targetStructure.getPos().y + v2.y));
+            if (blockToMine == null || blockToMine.isWalkable || blockToMine.structure.Equals(walker.targetStructure)) continue;
             MineBlock(blockToMine, out bool d);
             
         }
-        Debug.Log("target: " + walker.targetStructure.getPos());
+        //Debug.Log("target: " + walker.targetStructure.getPos());
+        //Debug.Log("Additionals: " + outstring);
         MineBlock(getBay().getPathNode(walker.targetStructure.getPos()), out bool destroyed);
         if (destroyed)
         {

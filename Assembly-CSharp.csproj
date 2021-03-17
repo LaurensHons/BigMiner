@@ -13,7 +13,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{7436f5b3-d585-5763-d42a-85702802d282}</ProjectGuid>
+    <ProjectGuid>{209bd7d6-98d2-3d09-6be2-3d36cfe103d2}</ProjectGuid>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -52,215 +52,33 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\InputFocus.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Primitives\UILineTextureRenderer.cs" />
-     <Compile Include="Assets\Scripts\Blocks\Structure.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\PaginationManager.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\ToolTips\ToolTip.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\MenuSystem\MenuManager.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\VerticalScrollSnap.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\RescalingPanels\RescaleDragPanel.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\ColorPicker\ColorSliderImage.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Primitives\UILineRendererList.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\ColorPicker\Events\HSVChangedEvent.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\ReorderableList\ReorderableListContent.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Effects\CurvedText.cs" />
-     <Compile Include="Assets\Scripts\model\Item.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\ScrollRectEx.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\ComboBox\DropDownList.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\FancyScrollView\ScrollRect\IFancyScrollRectContext.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Primitives\UICornerCut.cs" />
-     <Compile Include="Assets\Scripts\Blocks\Silo.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\FancyScrollView\Scroller\EasingCore.cs" />
-     <Compile Include="Assets\Scripts\Scanner\ScannerController.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Effects\NicerOutline.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\CLZF2.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\InputFieldEnterSubmit.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\SetPropertyUtility.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\Stepper.cs" />
-     <Compile Include="Assets\Scripts\Scanner\Scanner.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\Accordion\Tweening\ITweenValue.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\UI_MagneticInfiniteScroll.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\CurvedLayout.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\ShaderLibrary.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\IScrollSnap.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Effects\ShaderEffects\UIScreenEffect.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\ColorPicker\SVBoxSlider.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\FancyScrollView\GridView\FancyGridViewContext.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Effects\MonoSpacing.cs" />
-     <Compile Include="Assets\Scripts\Scanner\ScannerSlider.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\Accordion\Tweening\FloatTween.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\ReorderableList\ReorderableListElement.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\ExtensionsToggleGroup.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\ColorPicker\Events\ColorChangedEvent.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Effects\Gradient.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Effects\Gradient2.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\FancyScrollView\GridView\FancyCellGroup.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\Accordion\Accordion.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\ToolTips\HoverTooltip.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\ReorderableList\ReorderableList.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\NonDrawingGraphic.cs" />
-     <Compile Include="Assets\Scripts\miner\Tool\ToolPanelScript.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Effects\SoftMaskScript.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\CardUI\2D Cards\CardStack2D.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\TextPic.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\ToolTips\TooltipTrigger.cs" />
-     <Compile Include="Assets\Scripts\miner\Miner.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\SelectionBox\SelectionBox.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\ToolTips\BoundTooltip\BoundTooltipTrigger.cs" />
-     <Compile Include="Assets\Scripts\PathFinding\PathNode.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\ComboBox\ComboBox.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Primitives\UICircle.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\CardUI\3D Cards\CardExpanding3D.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\MenuSystem\Menu.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\UIScrollToSelection.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\UIHighlightable.cs" />
-     <Compile Include="Assets\Scripts\model\Inventory.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\ContentScrollSnapHorizontal.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\ScrollSnapBase.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Primitives\UILineRenderer.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\FancyScrollView\Scroller\MovementType.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Effects\ShaderEffects\UISoftAdditiveEffect.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\MultiTouchScrollRect.cs" />
-     <Compile Include="Assets\Scripts\Scanner\ScannerMainInfoPanel.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\RescalingPanels\RescalePanel.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\ReturnKeyTriggersButton.cs" />
      <Compile Include="Assets\Scripts\miner\MinerStationClickController.cs" />
-     <Compile Include="Assets\Scripts\PathFinding\Grid.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\UI_TweenScale.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\ColorPicker\ColorLabel.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Effects\UIParticleSystem.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\Segment.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\PPIViewer.cs" />
      <Compile Include="Assets\Scripts\miner\Walker.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\UIVerticalScroller.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\FancyScrollView\GridView\IFancyCellGroupContext.cs" />
-     <Compile Include="Assets\Scripts\miner\Tool\Pickaxe.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\ColorPicker\ColorPickerPresets.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\MenuSystem\SimpleMenu.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Effects\UIFlippable.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\ColorPicker\ColorSampler.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\ScrollRectExtensions.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\ColorPicker\TiltWindow.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\ColorPicker\HSVUtil.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\UIScrollToSelectionXY.cs" />
-     <Compile Include="Assets\Scripts\miner\Tool\Tool.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\UI_Knob.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\ReadOnlyAttribute.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Effects\CurlyUI\CUIMisc.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\StepperSide.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\HorizontalScrollSnap.cs" />
-     <Compile Include="Assets\Scripts\Domain\DebugDrawer.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\ScrollRectTweener.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\FancyScrollView\Scroller\Scroller.cs" />
-     <Compile Include="Assets\Scripts\model\Bay.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\SelectionBox\IBoxSelectable.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\ToolTips\BoundTooltip\BoundTooltipItem.cs" />
      <Compile Include="Assets\Scripts\PathFinding\Pathfinding.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Effects\CurlyUI\CUIGraphic.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\UIExtensionMethods.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\TestCompression.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Primitives\UIPolygon.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Effects\ShaderEffects\UILinearDodgeEffect.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Effects\BestFitOutline.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Effects\CurlyUI\CUIBezierCurve.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\ColorPicker\ColorPickerControl.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\ComboBox\DropDownListItem.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\SelectionBox\ExampleSelectable.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Effects\CurlyUI\CUIImage.cs" />
-     <Compile Include="Assets\Scripts\Blocks\StoneBlock.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\FancyScrollView\GridView\IFancyGridViewContext.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\UISelectableExtension.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\BezierPath.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\ScrollRectLinker.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\ColorPicker\ColorValues.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Effects\CylinderText.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\CardUI\2D Cards\CardPopup2D.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\DragCorrector.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\FancyScrollView\GridView\FancyGridView.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\FancyScrollView\ScrollRect\FancyScrollRectContext.cs" />
-     <Compile Include="Assets\Scripts\Blocks\Block.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\FancyScrollView\GridView\FancyGridViewCell.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\ScrollSnapScrollbarHelper.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\switchToRectTransform.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\SelectableScaler.cs" />
      <Compile Include="Assets\Scripts\miner\MinerController.cs" />
+     <Compile Include="Assets\Scripts\miner\Tool\Pickaxe.cs" />
+     <Compile Include="Assets\Scripts\Blocks\Structure.cs" />
      <Compile Include="Assets\Scripts\Blocks\MultiBlock.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\CooldownButton.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\Circle.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Effects\ShineEffector.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\ColorPicker\ColorPickerTester.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\CardUI\Superellipse Creation\Triangulator.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\ReorderableList\ReorderableListDebug.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\FancyScrollView\Core\FancyCell.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Effects\ShineEffect.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Primitives\UISquircle.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\RadialLayout.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\SegmentedControl.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\ScrollPositionController.cs" />
+     <Compile Include="Assets\Scripts\PathFinding\PathNode.cs" />
+     <Compile Include="Assets\Scripts\model\Inventory.cs" />
+     <Compile Include="Assets\Scripts\Blocks\Silo.cs" />
      <Compile Include="Assets\Scripts\Domain\UIController.cs" />
-     <Compile Include="Assets\Scripts\miner\MinerStation.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\FlowLayoutGroup.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Primitives\UIGridRenderer.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\UILineConnector.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\ExtentionMethods.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\CardUI\Superellipse Creation\MeshCreator.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\ComboBox\AutoCompleteComboBox.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Effects\ShaderEffects\UIImageCrop.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\ComboBox\DropDownListButton.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\CardUI\Superellipse Creation\SuperellipsePoints.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\ColorPicker\ColorSlider.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\CardUI\2D Cards\CardExpanding2D.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\FancyScrollView\Core\FancyScrollView.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\RescalingPanels\ResizePanel.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\ExtensionsToggle.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\TileSizeFitter.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Effects\ShaderEffects\UIAdditiveEffect.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\UIWindowBase.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\BoxSlider.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\ColorPicker\HexColorField.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\CableCurve.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\UIExtensionsInputManager.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Effects\LetterSpacing.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\FancyScrollView\ScrollRect\FancyScrollRectCell.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Effects\RaycastMask.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\RadialSlider.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\ScrollConflictManager.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\RangeSlider.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Effects\CurlyUI\CUIText.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\FancyScrollView\Scroller\MovementDirection.cs" />
+     <Compile Include="Assets\Scripts\miner\Tool\ToolPanelScript.cs" />
+     <Compile Include="Assets\Scripts\model\Bay.cs" />
+     <Compile Include="Assets\Scripts\model\Item.cs" />
+     <Compile Include="Assets\Scripts\Blocks\StoneBlock.cs" />
+     <Compile Include="Assets\Scripts\miner\Miner.cs" />
      <Compile Include="Assets\Scripts\Blocks\DirtBlock.cs" />
+     <Compile Include="Assets\Scripts\Scanner\ScannerController.cs" />
+     <Compile Include="Assets\Scripts\Scanner\Scanner.cs" />
+     <Compile Include="Assets\Scripts\PathFinding\Grid.cs" />
+     <Compile Include="Assets\Scripts\Domain\DebugDrawer.cs" />
+     <Compile Include="Assets\Scripts\Scanner\ScannerSlider.cs" />
+     <Compile Include="Assets\Scripts\Scanner\ScannerMainInfoPanel.cs" />
      <Compile Include="Assets\Scripts\UIScripts\GameController.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\Accordion\Tweening\TweenRunner.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\TabNavigationHelper.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\UI_ScrollRectOcclusion.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Effects\ShaderEffects\UIMultiplyEffect.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Primitives\DiamondGraph.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Utilities\UI_InfiniteScroll.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\Accordion\AccordionElement.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\FancyScrollView\Scroller\ScrollDirection.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\FancyScrollView\ScrollRect\FancyScrollRect.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Primitives\UIPrimitiveBase.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\TableLayoutGroup.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Controls\ColorPicker\ColorImage.cs" />
-     <Compile Include="Assets\com.unity.uiextensions\Runtime\Scripts\Layout\ScrollSnap.cs" />
-     <None Include="Assets\com.unity.uiextensions\Runtime\Resources\Shaders\UIAdditive.shader" />
-     <None Include="Assets\com.unity.uiextensions\Runtime\Resources\Shaders\UI Particle Add.shader" />
-     <None Include="Assets\com.unity.uiextensions\Runtime\Resources\Shaders\UIScreen.shader" />
-     <None Include="Assets\com.unity.uiextensions\Runtime\Resources\Shaders\UI Particle Multiply.shader" />
-     <None Include="Assets\com.unity.uiextensions\Runtime\Resources\Shaders\UIMultiply.shader" />
-     <None Include="Assets\com.unity.uiextensions\Runtime\Resources\Shaders\UILinearDodge.shader" />
-     <None Include="Assets\com.unity.uiextensions\Runtime\Resources\Shaders\UI Particle Alpha Blend.shader" />
-     <None Include="Assets\com.unity.uiextensions\Runtime\Resources\Shaders\SoftMaskShader.shader" />
-     <None Include="Assets\com.unity.uiextensions\Runtime\Resources\Shaders\UI Particle Premultiply Blend.shader" />
-     <None Include="Assets\com.unity.uiextensions\Runtime\Resources\Shaders\UI Particle VertexLit Blended.shader" />
-     <None Include="Assets\com.unity.uiextensions\Runtime\Resources\Shaders\UI Particle MultiplyDouble.shader" />
-     <None Include="Assets\com.unity.uiextensions\Runtime\Resources\Shaders\UI Particle AddMultiply.shader" />
-     <None Include="Assets\com.unity.uiextensions\Runtime\Resources\Shaders\UI Particle Blend.shader" />
-     <None Include="Assets\com.unity.uiextensions\Runtime\Resources\Shaders\UISoftAdditive.shader" />
-     <None Include="Assets\com.unity.uiextensions\Runtime\Resources\Shaders\UI Particle AddSmooth.shader" />
-     <None Include="Assets\com.unity.uiextensions\Runtime\Resources\Shaders\UIImageCrop.shader" />
-     <None Include="Assets\com.unity.uiextensions\Runtime\Resources\Shaders\UIParticleHidden.shader" />
+     <Compile Include="Assets\Scripts\miner\MinerStation.cs" />
+     <Compile Include="Assets\Scripts\miner\Tool\Tool.cs" />
+     <Compile Include="Assets\Scripts\Blocks\Block.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.2.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
@@ -473,15 +291,6 @@
  </Reference>
  <Reference Include="UnityEditor.UnityConnectModule">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.2.7f1/Editor/Data/Managed/UnityEngine/UnityEditor.UnityConnectModule.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Analytics.StandardEvents">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/PackageCache/com.unity.analytics@3.5.3/AnalyticsStandardEvents/Unity.Analytics.StandardEvents.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Analytics.Editor">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/PackageCache/com.unity.analytics@3.5.3/Unity.Analytics.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Analytics.Tracker">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/PackageCache/com.unity.analytics@3.5.3/Unity.Analytics.Tracker.dll</HintPath>
  </Reference>
  <Reference Include="netstandard">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.2.7f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
@@ -828,77 +637,110 @@
  <Reference Include="System.Xml.Serialization">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.2.7f1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Serialization.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.2D.Animation.Editor">
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.2D.Animation.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.InternalAPIEngineBridge.001">
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.001.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.VSCode.Editor">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.2D.PixelPerfect">
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.2D.PixelPerfect.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.Tilemap.Editor">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
  </Reference>
- <Reference Include="UnityEngine.Purchasing">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/UnityEngine.Purchasing.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.CacheServer">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/UnityEditor.CacheServer.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Addressables">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/Unity.Addressables.dll</HintPath>
+ <Reference Include="PsdPlugin">
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/PsdPlugin.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro.Editor">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.VisualStudio.Editor">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Timeline">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
  </Reference>
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/UnityEngine.Advertisements.dll</HintPath>
+ <Reference Include="Unity.2D.IK.Editor">
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.2D.IK.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.Sprite.Editor">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
  </Reference>
- <Reference Include="Unity.ResourceManager">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/Unity.ResourceManager.dll</HintPath>
+ <Reference Include="Unity.2D.Psdimporter.Editor">
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.2D.Psdimporter.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.2D.Path.Editor">
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.2D.Path.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.InternalAPIEditorBridge.001">
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.001.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Rider.Editor">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Analytics">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/Analytics.dll</HintPath>
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
- <Reference Include="Unity.Analytics.DataPrivacy">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+ <Reference Include="Unity.Mathematics">
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.2D.IK.Runtime">
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.2D.IK.Runtime.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.2D.Animation.Triangle.Runtime">
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.2D.Animation.Triangle.Runtime.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.2D.Animation.Runtime">
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.2D.Animation.Runtime.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.2D.PixelPerfect.Editor">
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.2D.PixelPerfect.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Timeline.Editor">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
- <Reference Include="UnityEngine.Monetization">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/UnityEngine.Monetization.dll</HintPath>
+ <Reference Include="Unity.Mathematics.Editor">
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
  </Reference>
- <Reference Include="Unity.ScriptableBuildPipeline">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.dll</HintPath>
+ <Reference Include="Unity.2D.Common.Runtime">
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.2D.Common.Runtime.dll</HintPath>
  </Reference>
- <Reference Include="UnityEditor.Purchasing">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/UnityEditor.Purchasing.dll</HintPath>
+ <Reference Include="Unity.2D.SpriteShape.Editor">
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.2D.SpriteShape.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.2D.Common.Editor">
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.2D.Common.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.2D.SpriteShape.Runtime">
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.2D.SpriteShape.Runtime.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Addressables">
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.Addressables.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Addressables.Editor">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/Unity.Addressables.Editor.dll</HintPath>
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.Addressables.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.CacheServer">
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/UnityEditor.CacheServer.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ResourceManager">
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.ResourceManager.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ScriptableBuildPipeline">
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.dll</HintPath>
  </Reference>
  <Reference Include="Unity.ScriptableBuildPipeline.Editor">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.Editor.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Advertisements.Editor">
- <HintPath>F:/Unity Hub/Projects/BigMiner/BigMiner 2D/Library/ScriptAssemblies/UnityEngine.Advertisements.Editor.dll</HintPath>
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.Editor.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

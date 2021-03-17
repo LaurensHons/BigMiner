@@ -7,7 +7,6 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
-using Slider = UnityEngine.UIElements.Slider;
 
 public abstract class Block : IStructure
 {
@@ -36,8 +35,7 @@ public abstract class Block : IStructure
         
         BlockSpriteRenderer = new GameObject("BlockSpriteRenderer");
         BlockSpriteRenderer.transform.localPosition = new Vector3(0, 0, 0);
-        BlockSpriteRenderer.transform.localScale = Vector3.one * GameController.getBlockScale();
-        BlockSpriteRenderer.AddComponent(typeof(SpriteRenderer));
+        BlockSpriteRenderer.AddComponent<Image>();
         BlockSpriteRenderer.layer = 3;
         BlockSpriteRenderer.transform.SetParent(BlockObject.transform, false);
         
@@ -82,7 +80,8 @@ public abstract class Block : IStructure
             if (BlockSprite == null) throw new Exception("No block sprite found, maybe file named wrong?");
             else
             {
-                BlockSpriteRenderer.GetComponent<SpriteRenderer>().sprite = BlockSprite;
+                BlockSpriteRenderer.GetComponent<Image>().sprite = BlockSprite;
+                BlockSpriteRenderer.GetComponent<RectTransform>().sizeDelta = new Vector2(1, 1);
             }
         }
 
@@ -95,12 +94,11 @@ public abstract class Block : IStructure
         {
             healthBarPrefab = handleToCheck.Result;
         }
-        else throw new Exception("Loading sprite failed");
+        else throw new Exception("Loading HealthBar failed");
     }
 
     public void UpdateHealthBar()
     {
-        return;             //TODO
         if (HealthBar == null)
         {
             
@@ -110,24 +108,17 @@ public abstract class Block : IStructure
             HealthBar.transform.position = BlockObject.transform.position;
             HealthBar.layer = 5;
             
-            HealthBar.transform.localScale = new Vector3(0.019f, 0.019f, 0.019f);
-            HealthBar.transform.Translate(0f, 0f,  -2);
-            RectTransform rect = HealthBar.GetComponent<RectTransform>();
-            rect.anchoredPosition = Vector2.zero;
-            rect.rect.Set(0f, 0f, 15f, 5f);
-            HealthBar.GetComponent<RectTransform>().rect.Set(0f, 0f, 15f, 5f);
-
+            HealthBar.transform.localScale = Vector3.one * 0.005517403f;
+            HealthBar.transform.Translate(0f, 0.4f,  0);
+            
             //rect.offsetMax = new Vector2(-10, -5);
             //rect.offsetMin = new Vector2(-10, 50);
 
         }
-        else
-        {
-            //float hpPercentage = HP / (float) getMaxHealth();
-            //HealthBar.GetComponent<Slider>().value = hpPercentage;
-            //HealthBar.transform.localScale = scale;
-        }
-       
+        
+        float hpPercentage = HP / (float) getMaxHealth();
+        HealthBar.GetComponent<Slider>().value = hpPercentage;
+        
     }
     
     

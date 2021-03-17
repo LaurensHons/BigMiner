@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Tool
@@ -22,8 +23,35 @@ public abstract class Tool
         return (int) level;
     }
 
-    public abstract Vector2[] getAdditionalMiningPos();
+    public List<Vector2> getAdditionalMiningPos(Vector2 dir)
+    {
+        List<Vector2> returnList = new List<Vector2>();
+        foreach (var v2 in getSwingArea())
+        {
+            if (v2.x > 0)
+                returnList.Add(new Vector2(-dir.y * Math.Abs(v2.x), dir.x * Math.Abs(v2.x)));       //left of block
+            if (v2.x < 0)
+                returnList.Add(new Vector2(dir.y * Math.Abs(v2.x), -dir.x * Math.Abs(v2.x)));       //right of block
+            if (v2.y > 0)
+                returnList.Add(new Vector2(dir.x * Math.Abs(v2.y), dir.y * Math.Abs(v2.y)));        //behind block
+        }
 
+        return returnList;
+    }
+
+    public abstract List<Vector2> getSwingArea();
+    
+    /*
+     *  Swingarea must be returned in a specific way
+     *  new List with 0 - 3 Vector 2's  
+     *
+     *                       [0, How many blocks above]
+     *  [-How many blocks left]          BLOCK       [How many blocks right, 0]
+     *                                   Miner
+     * 
+     */
+    
+    
     public abstract string getSpritePath();
     
     public abstract float baseDamage();

@@ -1,14 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Pickaxe : Tool
 {
-    public override Vector2[] getAdditionalMiningPos()
+
+    public override List<Vector2> getSwingArea()
     {
-        return new Vector2[]
-        {
-            new Vector2(0, 0),
-            new Vector2(0, 1)
-        };
+        return new List<Vector2>();
     }
 
     public override string getSpritePath()

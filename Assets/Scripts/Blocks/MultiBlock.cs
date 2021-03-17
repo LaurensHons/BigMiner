@@ -70,9 +70,9 @@ public abstract class MultiBlock : IStructure
 
         List<PathNode> pathNodes = new List<PathNode>();
 
-        for (int x = (int) baseX; x < width; x++)
+        for (int x = 0; x < width; x++)
         {
-            for (int y = (int) baseY ; y < height; y++)
+            for (int y = 0 ; y < height; y++)
             {
                 pathNodes.Add(bay.getPathNode((int) baseX + x, (int) baseY + y));
             }

@@ -94,7 +94,7 @@ public class Bay : MonoBehaviour
             bool occupied = false;
             foreach (var miner in minerList)
             {
-                if (Vector3.Distance(miner.getTransform().position, pos) < 1.01 * GameController.blockScale ) occupied = true;
+                if (Vector3.Distance(miner.getTransform().position, pos) < 1.01) occupied = true;
             }
             
 

@@ -1741,7 +1741,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 519420028}
-  hasMenuOpen: 0
   BayGameObject: {fileID: 416115922}
   ScannerController: {fileID: 1377944154}
   MinerController: {fileID: 1192068311}
@@ -1749,6 +1748,7 @@ MonoBehaviour:
   MenuPanel: {fileID: 1495363579}
   ScannerMenu: {fileID: 295312665}
   MinerMenu: {fileID: 761264204}
+  ToolMenu: {fileID: 1008697776}
 --- !u!1 &716802181
 GameObject:
   m_ObjectHideFlags: 0
@@ -2509,7 +2509,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1008697777
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2962,7 +2962,7 @@ MonoBehaviour:
   BatteryImage: {fileID: 1800389549}
   BatteryText: {fileID: 941956401}
   MiningStrategyText: {fileID: 2066984571}
-  ToolList: {fileID: 0}
+  ToolList: {fileID: 1005943160}
   toolPanels: []
 --- !u!4 &1192068312
 Transform:
@@ -3630,8 +3630,7 @@ MonoBehaviour:
   BayGameObject: {fileID: 416115922}
   ScannerButton: {fileID: 1950554389}
   ScannerPanelList: {fileID: 1355643530}
-  slider_BlockPrefab: {fileID: 6161902442441248090, guid: 030a131d40e37c44799e83ff36b991a7,
-    type: 3}
+  slider_BlockPrefab: {fileID: 6161902442441248090, guid: 030a131d40e37c44799e83ff36b991a7, type: 3}
   ScannerSliders: []
 --- !u!4 &1377944155
 Transform:
@@ -4126,7 +4125,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1495363580
 RectTransform:
   m_ObjectHideFlags: 0

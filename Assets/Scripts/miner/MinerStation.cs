@@ -70,7 +70,7 @@ public class MinerStation : MultiBlock
 
     public override string getSpritePath()
     {
-        return "Assets/Rounded Blocks/lava.png";
+        return "Assets/Images/shardRock.png";
     }
 
     public override Vector2 getDimensions()
