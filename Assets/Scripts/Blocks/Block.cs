@@ -19,7 +19,7 @@ public abstract class Block : IStructure
     private Sprite BlockSprite;
     private GameObject healthBarPrefab;
 
-    public int HP;
+    public float HP;
 
     protected Block(float x, float y, PathNode pathNode)
     {
@@ -55,7 +55,7 @@ public abstract class Block : IStructure
         HealthBaPrefabHandler.Completed += LoadHealthBarWhenReady;
     }
     
-    public void Mine(int hit, out bool destroyed)
+    public void Mine(float hit, out bool destroyed)
     {
         if (HP - hit <= 0)
         {

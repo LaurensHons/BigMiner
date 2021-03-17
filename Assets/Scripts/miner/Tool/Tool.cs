@@ -4,21 +4,57 @@ using UnityEngine;
 
 public abstract class Tool
 {
-    public int xp = 0;
-    private int xpThreshHold = 20;
+    public int XP = 0;
+    private int xpThreshHold = 2;
 
-    public int damage = 1;
+    public bool isSelected = false;
+
+    public EventHandler ToolXpUpdate;
+    public EventHandler ToolLevelUpdate;
+
+    public float damage
+    {
+        get => getBaseDamage() + (getBaseDamage() * damageUpgrades * 0.1f);
+    }
+
+    private int DamageUpgrades = 0;
+    public int damageUpgrades
+    {
+        get => DamageUpgrades;
+        set
+        {
+            DamageUpgrades = value;
+            ToolDamageUpdate?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    public EventHandler ToolDamageUpdate;
+    
+    public int xp
+    {
+        get
+        {
+            return XP;
+        }
+        set
+        {
+            int previousLevel = getLevel(out double p);
+            XP = value;
+            ToolXpUpdate?.Invoke(this, EventArgs.Empty);
+            if (getLevel(out  p) > previousLevel)
+                ToolLevelUpdate?.Invoke(this, EventArgs.Empty);
+        }
+    }
     
     public bool isUnlocked => getMinimumLvl() <= getLevel(out double d);
 
     public int getSpeed()
     {
-        return (int) Math.Round(Math.Pow(0.98f, getLevel(out double d)) * (1/Time.fixedDeltaTime));
+        return (int) Math.Round(Math.Pow(0.98f, getLevel(out double d) - 1) * (1/Time.fixedDeltaTime));
     }
     
     public int getLevel(out double percentLeft)
     {
-        double level =  0.5 + Math.Sqrt(1 + 8 * (xp) / (xpThreshHold)) / 2;
+        double level =  0.5 + Math.Sqrt(1f + 8f * (xp) / (xpThreshHold)) / 2f;
         percentLeft = level % 1;
         return (int) level;
     }
@@ -45,16 +81,27 @@ public abstract class Tool
      *  Swingarea must be returned in a specific way
      *  new List with 0 - 3 Vector 2's  
      *
-     *                       [0, How many blocks above]
-     *  [-How many blocks left]          BLOCK       [How many blocks right, 0]
-     *                                   Miner
+     *                          [0, How many blocks above]
+     *  [-How many blocks left, 0]          BLOCK       [How many blocks right, 0]
+     *                                      Miner
      * 
      */
-    
-    
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null) return false;
+        if (obj.GetType() == this.GetType())
+        {
+            Tool t = (Tool) obj;
+            if (getBaseDamage() == t.getBaseDamage() && getMinimumLvl() == t.getMinimumLvl()) return true;
+            else return false;
+        }
+        else return false;
+    }
+
     public abstract string getSpritePath();
     
-    public abstract float baseDamage();
+    public abstract float getBaseDamage();
     public abstract int getMinimumLvl();
 
     public abstract string getDecriptionText();

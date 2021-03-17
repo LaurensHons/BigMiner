@@ -733,7 +733,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 380689787}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 674176485}
+        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
+        m_MethodName: OpenToolMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &380689787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -867,7 +879,7 @@ GameObject:
   - component: {fileID: 416115927}
   - component: {fileID: 416115929}
   m_Layer: 0
-  m_Name: Bay
+  m_Name: BayCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1589,7 +1601,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1640,7 +1652,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 614088861}
-  - component: {fileID: 614088862}
   m_Layer: 5
   m_Name: General Info
   m_TagString: Untagged
@@ -1659,9 +1670,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2046663635}
-  - {fileID: 807069446}
   - {fileID: 1412086258}
+  - {fileID: 807069446}
   - {fileID: 1154132565}
   m_Father: {fileID: 761264205}
   m_RootOrder: 4
@@ -1671,32 +1681,6 @@ RectTransform:
   m_AnchoredPosition: {x: 167.92, y: 431.95}
   m_SizeDelta: {x: 553.66, y: 367.06}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &614088862
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 614088860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 1
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1 &674176483
 GameObject:
   m_ObjectHideFlags: 0
@@ -1744,7 +1728,6 @@ MonoBehaviour:
   BayGameObject: {fileID: 416115922}
   ScannerController: {fileID: 1377944154}
   MinerController: {fileID: 1192068311}
-  UICanvas: {fileID: 1933697942}
   MenuPanel: {fileID: 1495363579}
   ScannerMenu: {fileID: 295312665}
   MinerMenu: {fileID: 761264204}
@@ -1971,7 +1954,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &761264205
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2033,11 +2016,11 @@ RectTransform:
   m_Father: {fileID: 614088861}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -116.2725}
-  m_SizeDelta: {x: 553.66, y: 77.515}
-  m_Pivot: {x: 0, y: 0.5}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -0.33999634, y: 0.94699097}
+  m_SizeDelta: {x: 276.66003, y: 183.05}
+  m_Pivot: {x: 1, y: 0}
 --- !u!114 &807069447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2065,13 +2048,15 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 200
-    m_Alignment: 3
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Damage : 1'
+  m_Text: 'Damage
+
+    1'
 --- !u!222 &807069448
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2796,12 +2781,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 614088861}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: -367.06}
-  m_SizeDelta: {x: 553.66, y: 134.515}
+  m_SizeDelta: {x: 276.66, y: 184}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1154132566
 MonoBehaviour:
@@ -2825,12 +2810,12 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 50
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 200
-    m_Alignment: 0
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -2954,7 +2939,7 @@ MonoBehaviour:
   BigMinerNameText: {fileID: 387230281}
   LVLSlider: {fileID: 454306110}
   levelText: {fileID: 891193294}
-  NameText: {fileID: 2046663636}
+  NameText: {fileID: 0}
   DamageText: {fileID: 807069447}
   SpeedText: {fileID: 1412086259}
   BlocksMinedText: {fileID: 1154132566}
@@ -2963,7 +2948,6 @@ MonoBehaviour:
   BatteryText: {fileID: 941956401}
   MiningStrategyText: {fileID: 2066984571}
   ToolList: {fileID: 1005943160}
-  toolPanels: []
 --- !u!4 &1192068312
 Transform:
   m_ObjectHideFlags: 0
@@ -3755,13 +3739,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 614088861}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 276.83, y: -193.7875}
-  m_SizeDelta: {x: 553.66, y: 77.515}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -0.000030517578, y: -0.000015258789}
+  m_SizeDelta: {x: 277, y: 183.06}
+  m_Pivot: {x: 1, y: 1}
 --- !u!114 &1412086259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3789,13 +3773,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 200
-    m_Alignment: 3
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Speed : 1'
+  m_Text: "Speed \n1"
 --- !u!222 &1412086260
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4125,7 +4109,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1495363580
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5201,7 +5185,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: -1052227359
+  m_SortingLayerID: 0
   m_SortingOrder: 5
   m_TargetDisplay: 0
 --- !u!1 &1950554389
@@ -5373,85 +5357,6 @@ RectTransform:
   m_AnchoredPosition: {x: -2.5, y: 0}
   m_SizeDelta: {x: -15, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &2046663634
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2046663635}
-  - component: {fileID: 2046663637}
-  - component: {fileID: 2046663636}
-  m_Layer: 5
-  m_Name: Name
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2046663635
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2046663634}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 614088861}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 553.66, y: 77.515}
-  m_Pivot: {x: 0, y: 1}
---- !u!114 &2046663636
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2046663634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 50
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 0
-    m_MaxSize: 200
-    m_Alignment: 3
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 'Name : Miner 1'
---- !u!222 &2046663637
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2046663634}
-  m_CullTransparentMesh: 1
 --- !u!1 &2066984569
 GameObject:
   m_ObjectHideFlags: 0

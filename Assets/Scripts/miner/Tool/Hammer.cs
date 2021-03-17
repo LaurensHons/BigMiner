@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Pickaxe : Tool
+public class Hammer : Tool
 {
 
     public override List<Vector2> getSwingArea()
     {
-        return new List<Vector2>();
+        return new List<Vector2>()
+        {
+            new Vector2(1, 0)
+        };
     }
 
     public override string getSpritePath()
@@ -16,7 +19,7 @@ public class Pickaxe : Tool
 
     public override float getBaseDamage()
     {
-        return 1;
+        return 2;
     }
 
     public override int getMinimumLvl()

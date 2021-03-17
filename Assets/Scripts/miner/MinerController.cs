@@ -31,8 +31,9 @@ public class MinerController : MonoBehaviour
     public Text MiningStrategyText;
 
     public GameObject ToolList;
-    public List<ToolPanelScript> toolPanels;
+    public Dictionary<Tool, ToolPanelScript> toolPanels = new Dictionary<Tool, ToolPanelScript>();
     private String ToolPanelPrefabPath = "Assets/Prefabs/ToolPrefab.prefab";
+    private GameObject ToolPanelPrefab;
     
     private MiningStrategy[] miningStrategies = (MiningStrategy[]) Enum.GetValues(typeof(MiningStrategy)).Cast<MiningStrategy>();
     private int miningStrategyIndex = 0;
@@ -44,13 +45,24 @@ public class MinerController : MonoBehaviour
         BatteryImage.gameObject.AddComponent<BatteryClickController>();
         DefaultBatteryWidth = BatteryImage.GetComponent<RectTransform>().rect.width;
         
-        
+        AsyncOperationHandle<GameObject> toolpanelHandler = Addressables.LoadAssetAsync<GameObject>(ToolPanelPrefabPath);
+        toolpanelHandler.Completed += LoadToolPanels;
     }
 
     public void loadTools()
     {
-        AsyncOperationHandle<GameObject> toolpanelHandler = Addressables.LoadAssetAsync<GameObject>(ToolPanelPrefabPath);
-        toolpanelHandler.Completed += LoadToolPanels;
+        if (ToolPanelPrefab == null) throw new Exception("Tool Panel Prefab not found");
+        
+        foreach (var tool in minerstation.Miner.toolList)
+        {
+            if (!toolPanels.ContainsKey(tool))
+            {
+                GameObject ToolPanel = Instantiate(ToolPanelPrefab, ToolList.transform);
+                toolPanels.Add(tool, ToolPanel.GetComponent<ToolPanelScript>());
+            }
+            Debug.Log(tool.GetType());
+            toolPanels[tool].setActive(this, tool, true);
+        }
     }
 
     private void LoadToolPanels(AsyncOperationHandle<GameObject> obj)
@@ -60,15 +72,14 @@ public class MinerController : MonoBehaviour
             GameObject toolPanelprefab = obj.Result;
             
             if (toolPanelprefab == null) throw new Exception("Tool Panel Prefab not found");
-            
-            foreach (var tool in minerstation.Miner.toolList)
-            {
-                if (hasToolPrefabReady(tool)) continue;
-                GameObject ToolPanel = Instantiate(toolPanelprefab, ToolList.transform);
-                toolPanels.Add(ToolPanel.GetComponent<ToolPanelScript>());
-            }
+            ToolPanelPrefab = toolPanelprefab;
         }
         else throw new Exception("Loading Tool Panel Prefab failed");
+    }
+
+    public MinerStation getMinerStation()
+    {
+        return minerstation;
     }
 
     public void setMinerStation(MinerStation minerStation)
@@ -81,12 +92,15 @@ public class MinerController : MonoBehaviour
     {
         if (Active)
         {
-            if (NameText == null) throw new Exception("fuckoff");
-            NameText.text = "Name : " + minerstation.Miner.name;
-            DamageText.text = "Damage : " + minerstation.Miner.damage;
-            SpeedText.text = "Speed : " + minerstation.Miner.speed;
-            BlocksMinedText.text = "Blocks Mined : " + minerstation.Miner.blocksMined;
-
+            minerstation.Miner.MinerXpUpdate += updateXpBar;
+            minerstation.Miner.MinerLevelUpdate += updateLevelText;
+            minerstation.Miner.MinerLevelUpdate += updateSpeedText;
+            minerstation.Miner.activeTool.ToolDamageUpdate += updateDamageText;
+            
+            minerstation.Miner.MinerXpUpdate(this, EventArgs.Empty);
+            minerstation.Miner.MinerLevelUpdate(this, EventArgs.Empty);
+            minerstation.Miner.activeTool.ToolDamageUpdate(this, EventArgs.Empty);
+                
             if (MinerSprite.sprite == null)
             {
                 AsyncOperationHandle<Sprite> minerSpriteHandler = Addressables.LoadAssetAsync<Sprite>(minerstation.Miner.getSpritePath());
@@ -98,6 +112,10 @@ public class MinerController : MonoBehaviour
         }
         else
         {
+            minerstation.Miner.MinerXpUpdate = null;
+            minerstation.Miner.MinerLevelUpdate = null;
+            minerstation.Miner.activeTool.ToolDamageUpdate = null;
+            
             CancelInvoke();
         }
     }
@@ -105,8 +123,38 @@ public class MinerController : MonoBehaviour
     private void updateUI()
     {
         updateBattery();
-        updateXpBar();
+        updateBlocksMined(this, EventArgs.Empty);
     }
+    private void updateXpBar(object obj, EventArgs eventArgs)
+    {
+        int level = minerstation.Miner.getLevel(out double percentLeft);
+        levelText.text = "Level " + level;
+        LVLSlider.value = (float) percentLeft;
+    }
+
+    private void updateLevelText(object obj, EventArgs eventArgs)
+    {
+        levelText.text = "Level " + minerstation.Miner.getLevel(out double d);
+    }
+    private void updateNameText(object obj, EventArgs eventArgs)
+    {
+        NameText.text = minerstation.Miner.name;
+    }
+    private void updateSpeedText(object obj, EventArgs eventArgs)
+    {
+        SpeedText.text = "Speed\n" + Math.Round(1/minerstation.Miner.speed, 2) + " M/Sec";
+    }
+    private void updateDamageText(object obj, EventArgs eventArgs)
+    {
+        DamageText.text = "Damage\n" + Math.Round(minerstation.Miner.damage, 2);
+    }
+
+    private void updateBlocksMined(object obj, EventArgs eventArgs)
+    {
+        BlocksMinedText.text = "Blocks Mined\n" + minerstation.Miner.blocksMined;
+    }
+    
+    
 
     private void updateBattery()
     {
@@ -132,12 +180,7 @@ public class MinerController : MonoBehaviour
         setBatteryString(batteryHours + " Hrs until empty");
     }
 
-    private void updateXpBar()
-    {
-        int level = minerstation.Miner.getLevel(out double percentLeft);
-        levelText.text = "Level " + level;
-        LVLSlider.value = (float) percentLeft;
-    }
+    
 
     private void setBatteryString(String s)
     {
@@ -162,7 +205,11 @@ public class MinerController : MonoBehaviour
         minerstation.Miner.miningStrategy = miningStrategies[miningStrategyIndex];
         MiningStrategyText.text = getMiningStrategyString(minerstation.Miner.miningStrategy);
     }
-
+    
+    public Tool getActiveTool()
+    {
+        return minerstation.Miner.activeTool;
+    }
     
     private Vector3 cameraOriginPosition;
     private Vector3 cameraDifference;
@@ -208,20 +255,6 @@ public class MinerController : MonoBehaviour
         return null;
     }
 
-    private bool hasToolPrefabReady(Tool tool)
-    {
-        foreach (var toolPanel in toolPanels)
-        {
-            Tool paneltool = toolPanel.getTool();
-            if (paneltool == null) continue;
-            if (paneltool.GetType() == tool.GetType())
-                return true;
-        }
-
-        return false;
-    }
-
-
     private void LoadminerSpriteWhenReady(AsyncOperationHandle<Sprite> obj)
     {
         if (obj.Status == AsyncOperationStatus.Succeeded)
@@ -233,4 +266,6 @@ public class MinerController : MonoBehaviour
         }
         else throw new Exception("Loading sprite failed");
     }
+
+    
 }

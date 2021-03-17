@@ -19,7 +19,6 @@ public class UIController : MonoBehaviour
     public ScannerController ScannerController;
     public MinerController MinerController;
     
-    public GameObject UICanvas;
     public GameObject MenuPanel;
     public GameObject ScannerMenu;
     public GameObject MinerMenu;
@@ -27,7 +26,7 @@ public class UIController : MonoBehaviour
 
     private GameObject activeMenu;
     private MinerStation activeMinerStation;
-    
+
 
     void Start()
     {
@@ -42,7 +41,7 @@ public class UIController : MonoBehaviour
         Vector3 cameraPos = new Vector3(Bay.gridSize/2 , 0, -10);
         camera.transform.position = cameraPos;
         Vector3 middleOfTheGrid = new Vector3(Bay.gridSize/2 , 0, 1);
-        UICanvas.transform.position = middleOfTheGrid;
+        transform.position = middleOfTheGrid;
     }
     
     public void moveCamera()
@@ -87,7 +86,7 @@ public class UIController : MonoBehaviour
         setActivePanel(MinerMenu);
     }
 
-    public void OpenToolMenu()
+    public void OpenToolMenu()      //Activated by Toolbutton
     {
         MinerController.loadTools();
         setActivePanel(ToolMenu);
@@ -107,13 +106,15 @@ public class UIController : MonoBehaviour
 
         if (activeMenu == ToolMenu)
         {
+            
             setActivePanel(MinerMenu);
         }
-        
-        activeMenu.SetActive(false);
-        activeMenu = null;
-        MenuPanel.SetActive(false);
-        
+        else
+        {
+            activeMenu.SetActive(false);
+            activeMenu = null;
+            MenuPanel.SetActive(false);   
+        }
     }
 
     private void Update()
@@ -131,11 +132,5 @@ public class UIController : MonoBehaviour
     {
         return Bay;
     }
-    
-    public GameObject getCanvas()
-    {
-        return UICanvas;
-    }
 
-    
 }

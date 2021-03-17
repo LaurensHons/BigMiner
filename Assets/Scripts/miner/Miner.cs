@@ -18,11 +18,32 @@ public class Miner : IWalker
     protected GameObject minerObject;
     private Sprite minerSprite;
 
-    public float speed = 0.1f;
-    public int damage => tool.damage;
+    public EventHandler MinerXpUpdate;
+    public EventHandler MinerLevelUpdate;
+    
+    public float speed => (float) (Math.Pow(0.99f, getLevel(out double d) - 1));
+    
+    
+    public float damage => activeTool.damage;
     public int blocksMined = 0;
 
-    public int xp = 0;
+    private int XP = 0;
+
+    public int xp
+    {
+        get
+        {
+            return XP;
+        }
+        set
+        {
+            int previousLevel = getLevel(out double p);
+            XP = value;
+            MinerXpUpdate?.Invoke(this, EventArgs.Empty);
+            if (getLevel(out  p) > previousLevel)
+                MinerLevelUpdate?.Invoke(this, EventArgs.Empty);
+        }
+    }
     private int xpThreshHold = 50;      //change this for level calculation
 
     public MiningStrategy miningStrategy = MiningStrategy.Random;
@@ -34,23 +55,7 @@ public class Miner : IWalker
     {
         get => (int) Math.Round(maxBatteryMinutes * 60 * (1/Time.fixedDeltaTime));
     }
-    
-    public float Speed
-    {
-        get
-        {
-            return walker.speed;
-        }
 
-        set
-        {
-            if (value >= 0)
-            {
-                walker.speed = value;
-            }
-        }
-    }
-    
     public String name
     {
         get
@@ -70,7 +75,8 @@ public class Miner : IWalker
 
     public ItemInventory Inventory;
 
-    public Tool tool;
+    public Tool activeTool;
+    public EventHandler toolSwitchUpdate;
     public List<Tool> toolList = new List<Tool>();
     
     public Miner(Vector2 pos, MinerStation minerStation)
@@ -81,8 +87,10 @@ public class Miner : IWalker
 
         this.minerStation = minerStation;
 
-        this.tool = new Pickaxe();
-        toolList.Add(tool);
+        Pickaxe pick = new Pickaxe();
+        toolList.Add(pick);
+        setActiveTool(pick);
+        toolList.Add(new Hammer());
         
         Inventory = new ItemInventory(5);
         walker = new Walker(this, speed);
@@ -123,7 +131,7 @@ public class Miner : IWalker
         if (MININGTIMEMOUT >= 0)
         {
             MININGTIMEMOUT += 1;
-            if (MININGTIMEMOUT >= tool.getSpeed())
+            if (MININGTIMEMOUT >= activeTool.getSpeed())
                 IEChargeTool();
         }
         if (TRADINGTIMEOUT >= 0)
@@ -169,7 +177,7 @@ public class Miner : IWalker
 
 
 
-        foreach (var v2 in tool.getAdditionalMiningPos(walker.targetStructure.getPos() - (Vector2) getTransform().position))
+        foreach (var v2 in activeTool.getAdditionalMiningPos(walker.targetStructure.getPos() - (Vector2) getTransform().position))
         {
             //outstring += v2 + ", ";
             PathNode blockToMine = getBay().getPathNode(
@@ -193,11 +201,12 @@ public class Miner : IWalker
     
     private void MineBlock(PathNode pathNode, out bool destroyed)
     {
-        pathNode.MineBlock(tool.damage, out destroyed, out ItemInventory loot, out int xp);
+        pathNode.MineBlock(activeTool.damage, out destroyed, out ItemInventory loot, out int xp);
         if (destroyed)
         {
             blocksMined++;
             this.xp += xp;
+            activeTool.xp += xp;
             Inventory.PullInventory(loot);   
         }
 
@@ -211,7 +220,7 @@ public class Miner : IWalker
 
     public int getLevel(out double percentLeft)
     {
-        double level =  0.5 + Math.Sqrt(1 + 8 * (xp) / (xpThreshHold)) / 2;
+        double level =  0.5 + Math.Sqrt(1f + 8f * (xp) / (xpThreshHold)) / 2f;
         percentLeft = level % 1;
         return (int) level;
     }
@@ -250,7 +259,19 @@ public class Miner : IWalker
         return minerStation.getNextTarget();
     }
 
-    
+    public void setActiveTool(Tool tool)
+    {
+        if (toolList.Contains(tool))
+        {
+            if (activeTool != null) activeTool.isSelected = false;
+            activeTool = tool;
+            activeTool.isSelected = true;
+            toolSwitchUpdate?.Invoke(this, EventArgs.Empty);
+            Debug.Log("ACCEPTED");
+            return;
+        }
+        Debug.Log("DENIED BITCH");
+    }
 
     public Bay getBay()
     {

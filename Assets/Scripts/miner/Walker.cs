@@ -196,7 +196,7 @@ public class Walker
 
                 //float distanceBefore = Vector3.Distance(transform.position, targetPosition);
                 //animatedWalker.SetMoveVector(moveDir);
-                transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed);
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.fixedDeltaTime);
             } else {
                 currentPathIndex++;
                 if (currentPathIndex >= pathVectorList.Count) {
