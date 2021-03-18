@@ -1,36 +1,49 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 
-public class Item
+public abstract class Item
 {
-    private int amount;
+    private int amount = 0;
 
     public Item(int amount)
     {
         if (amount >= 0) this.amount = amount;
     }
 
+    public static Item CreateItem(Item item, int amount)
+    {
+        return (Item) Activator.CreateInstance(item.GetType(), amount);
+    }
+
+    public void addAmount(int amount)
+    {
+        this.amount += amount;
+    }
+
+    public void setAmount(int amount)
+    {
+        this.amount = amount;
+    }
+
     public int getAmount() { return amount; }
 
     public string getName() { return this.GetType().ToString(); }
 
-    public bool AddItem(Item itemToSubtract, int amount)
+    public abstract string getSpritePath();
+}
+
+public class ItemComparator : IEqualityComparer<Item>
+{
+    public bool Equals(Item? x, Item? y)
     {
-        if (!itemToSubtract.GetType().Equals(this.GetType())) return false;
-        if (itemToSubtract.amount < amount) amount = itemToSubtract.amount;
-        this.amount += amount;
-        itemToSubtract.amount -= amount;
-        return true;
+        if (x == null || y == null) return false;
+        return x.GetType() == y.GetType();
     }
 
-    public void AddAllItems(Item itemToSubstract)
+    public int GetHashCode(Item obj)
     {
-        this.amount += itemToSubstract.amount;
-        itemToSubstract.amount = 0;
-    }
-
-    public string getSpritePath()
-    {
-        throw new NotImplementedException();
+        return 0;
     }
 }
 
@@ -38,7 +51,17 @@ public class DirtBlockItem : Item
 {
     public DirtBlockItem(int amount) : base(amount) { }
 
-    public string getSpritePath()
+    public override string getSpritePath()
+    {
+        throw new System.NotImplementedException();
+    }
+}
+
+public class StoneBlockItem : Item
+{
+    public StoneBlockItem(int amount) : base(amount) { }
+
+    public override string getSpritePath()
     {
         throw new System.NotImplementedException();
     }

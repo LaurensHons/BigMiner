@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\Scanner\Scanner.cs" />
      <Compile Include="Assets\Scripts\Scanner\ScannerSlider.cs" />
      <Compile Include="Assets\Scripts\miner\Tool\ToolPanelScript.cs" />
+     <Compile Include="Assets\Scripts\miner\Tool\Hammer.cs" />
      <Compile Include="Assets\Scripts\miner\Miner.cs" />
      <Compile Include="Assets\Scripts\PathFinding\PathNode.cs" />
      <Compile Include="Assets\Scripts\Scanner\ScannerMainInfoPanel.cs" />
@@ -79,7 +80,6 @@
      <Compile Include="Assets\Scripts\miner\MinerStation.cs" />
      <Compile Include="Assets\Scripts\Blocks\DirtBlock.cs" />
      <Compile Include="Assets\Scripts\UIScripts\GameController.cs" />
-     <Compile Include="Assets\Scripts\miner\Tool\Hammer.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.2.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>

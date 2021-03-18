@@ -166,7 +166,7 @@ public abstract class Block : IStructure
 
 
     public abstract int getMaxHealth();
-    public abstract ItemInventory getLoot();
+    public abstract Inventory getLoot();
 
     public abstract int getXpOnMine();
 

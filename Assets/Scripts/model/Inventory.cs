@@ -1,105 +1,140 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using UnityEngine;
 
-public class ItemInventory
+
+public class Inventory 
 {
-    public List<Item> Inventory = new List<Item>();
-    private int maxCapacity = Int32.MaxValue;
-    private int usedCapacity = 0;
+    private HashSet<Item> ItemInventory;
+
+    private int inventoryWeight = 0;
+    public Action InventoryUpdate;
+
+    private int maxInventoryWeight;
     
-    public ItemInventory(int maxCapacity = Int32.MaxValue)
+    public Inventory(int maxInventoryWeight = Int32.MaxValue)
     {
-        this.maxCapacity = maxCapacity;
+        this.maxInventoryWeight = maxInventoryWeight;
+        ItemInventory = new HashSet<Item>(new ItemComparator());
     }
 
-    public void PushInventory(ItemInventory receivingItemInventory)
+    private void addInventoryWeight(int amount)
     {
-       foreach (var Item in Inventory)
-       {
-           receivingItemInventory.addAllItemToInventory(Item, out int acutalAmount);
-           usedCapacity -= acutalAmount;
-       }
-    }
-    
-    public void PullInventory(ItemInventory sendingItemInventory) 
-    {
-        foreach (var Item in sendingItemInventory.Inventory)
-        {
-            addAllItemToInventory(Item, out int actualAmount);
-            sendingItemInventory.usedCapacity -= actualAmount;
-        }
+        inventoryWeight += amount;
+        InventoryUpdate?.Invoke();
     }
 
-    public bool safeAddItemToInventory(Item item, int amount)
+    private Item TryGetItem(Item item)
     {
-        if (usedCapacity + item.getAmount() > maxCapacity)
-            return false;
-        bool succes = addItemToInventory(item, amount, out int acutalAmount);
-        if (succes && amount != acutalAmount) throw new Exception("This should not happen");
-        return succes;
-    }
-
-    public bool addItemToInventory(Item item, int amount, out int actualAmount)
-    {
-       
-        actualAmount  = amount;
-        if (usedCapacity >= maxCapacity)
+        foreach (var ItemInInventory in ItemInventory)
         {
-            actualAmount = 0;
-            return false;
-        }
-        
-        if (usedCapacity + item.getAmount() > maxCapacity)
-            actualAmount = maxCapacity - usedCapacity;
-        Item localItem = getItem(item.GetType());
-        if (localItem == null)
-        {
-            Item emptyItem = (Item) Activator.CreateInstance(item.GetType(), 0);
-            emptyItem.AddItem(item, actualAmount);
-            Inventory.Add(emptyItem);
-            usedCapacity += actualAmount;
-            Debug.Log("added new type, amount: " + actualAmount);
-            return true;
-        }
-        
-        return getItem(item.GetType()).AddItem(item, actualAmount);
-    }
-    
-    public void addAllItemToInventory(Item item, out int actualAmount)
-    {
-        addItemToInventory(item, item.getAmount(), out actualAmount);
-    }
-    
-    
-    public Item getItem(Type itemType)
-    {
-        foreach (var item in Inventory)
-        {
-            if (item.GetType().Equals(itemType.GetType()))
+            if (ItemInInventory.Equals(item))
                 return item;
         }
         return null;
     }
-    
 
-    public float getUsedCapacity()
+    private void AddToInventoryList(Item item, int amount)
     {
-        return usedCapacity;
+        Item itemInInventory = TryGetItem(item);
+        if (itemInInventory != null)
+            itemInInventory.addAmount(amount);
+        else
+        {
+            ItemInventory.Add(Item.CreateItem(item, amount));
+        }
+        addInventoryWeight(amount);
+        if (itemInInventory == null)
+            Debug.WriteLine("Added item, amount: " + amount);
     }
 
-    public float getMaxCapacity()
+    private void RemoveItemFromInventoryList(Item item, int amount)
     {
-        return maxCapacity;
+        Item itemInInventory = TryGetItem(item);
+        if (itemInInventory == null) throw new InventoryException("Item not found");
+        
+        itemInInventory.addAmount(-amount);
+        addInventoryWeight(-amount);
+    }
+    
+    public void AddItem(Item addItem, int? amount)
+    {
+        if (addItem == null) throw new NullReferenceException();
+        amount ??= addItem.getAmount();
+        
+        int leftOverSpace = maxInventoryWeight - inventoryWeight;
+        if (leftOverSpace <= 0) throw new InventoryException("Full");
+        
+        if (amount > leftOverSpace) amount = leftOverSpace;
+        
+        Debug.WriteLine("Adding: " + addItem.GetType() + ", amount " + amount);
+        AddToInventoryList(addItem, (int) amount);
+    }
+
+    public void RemoveItem(Item removeItem, int? amount)
+    {
+        if (removeItem == null) throw new NullReferenceException();
+        Item itemInInv = TryGetItem(removeItem);
+        if (itemInInv == null) throw new InventoryException("Item not found: equal=" + removeItem.GetType());
+        amount ??= itemInInv.getAmount();
+
+        if (amount > itemInInv.getAmount()) throw new InventoryException("Too much");
+        RemoveItemFromInventoryList(itemInInv, (int) amount);
+    }
+
+    public void TakeItem(Item item, Inventory inventoryToSubtract, int? amount = null)
+    {
+        Item itemToTake = TryGetItem(item);
+        if (itemToTake == null) throw new InventoryException("Item not found");
+        Debug.WriteLine(itemToTake.GetType() + ", amount: " + amount);
+        if (itemToTake == null) throw new Exception("Item to be taken not found");
+
+        AddItem(itemToTake, amount);
+        inventoryToSubtract.RemoveItem(itemToTake, amount);
+    }
+    
+    public void DepositInventory(Inventory receivingInventory)
+    {
+        foreach (var item in ItemInventory)
+        {
+            receivingInventory.AddItem(item, null);
+            RemoveItem(item, null);
+        }
     }
 
     public bool isFull()
     {
-        return usedCapacity >= maxCapacity;
+        return maxInventoryWeight - inventoryWeight <= 0;
+    }
+    public int getInventoryWeight()
+    {
+        return inventoryWeight;
     }
 
-    
+    public int getMaxInventoryweight()
+    {
+        return maxInventoryWeight;
+    }
+
+    public override string ToString()
+    {
+        String outstring = "Inventory, weight: " + getInventoryWeight();
+        foreach (var item in ItemInventory)
+        {
+            outstring += "\nItem " + item.GetType() + ", amount: " + item.getAmount();
+        }
+
+        return outstring;
+    }
 }
+
+public class InventoryException : Exception
+{
+    public InventoryException() { }
+    public InventoryException(string message) : base(message) { }
+    public InventoryException(string message, Exception inner) : base(message, inner) { }
+}
+
 

@@ -664,7 +664,7 @@ GameObject:
   - component: {fileID: 380689787}
   - component: {fileID: 380689786}
   m_Layer: 5
-  m_Name: ToolButton
+  m_Name: Upgradesbutton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -683,7 +683,7 @@ RectTransform:
   m_Children:
   - {fileID: 1671067679}
   m_Father: {fileID: 761264205}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -733,19 +733,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 380689787}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 674176485}
-        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
-        m_MethodName: OpenToolMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &380689787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1973,8 +1961,8 @@ RectTransform:
   - {fileID: 614088861}
   - {fileID: 279166297}
   - {fileID: 716802182}
-  - {fileID: 380689785}
   - {fileID: 1203989863}
+  - {fileID: 380689785}
   - {fileID: 718865190}
   m_Father: {fileID: 1495363580}
   m_RootOrder: 2
@@ -3096,7 +3084,7 @@ GameObject:
   - component: {fileID: 1203989865}
   - component: {fileID: 1203989864}
   m_Layer: 5
-  m_Name: InventoryButton
+  m_Name: ToolButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3115,7 +3103,7 @@ RectTransform:
   m_Children:
   - {fileID: 1359786529}
   m_Father: {fileID: 761264205}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3165,7 +3153,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1203989865}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 674176485}
+        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
+        m_MethodName: OpenToolMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1203989865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3563,7 +3563,7 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 25
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 2
     m_MaxSize: 40
     m_Alignment: 4
@@ -3572,7 +3572,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Inventory
+  m_Text: Tool
 --- !u!222 &1359786531
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4705,7 +4705,7 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 25
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 40
     m_Alignment: 4
@@ -4714,7 +4714,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Tool
+  m_Text: Upgrades
 --- !u!222 &1671067681
 CanvasRenderer:
   m_ObjectHideFlags: 0

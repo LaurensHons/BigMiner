@@ -73,7 +73,7 @@ public class Miner : IWalker
 
     private Vector3 lastPos;
 
-    public ItemInventory Inventory;
+    public Inventory Inventory;
 
     public Tool activeTool;
     public EventHandler toolSwitchUpdate;
@@ -92,7 +92,7 @@ public class Miner : IWalker
         setActiveTool(pick);
         toolList.Add(new Hammer());
         
-        Inventory = new ItemInventory(5);
+        Inventory = new Inventory(5);
         walker = new Walker(this, speed);
         minerObject = new GameObject("Miner 1");
         minerObject.transform.localPosition = pos;
@@ -201,16 +201,16 @@ public class Miner : IWalker
     
     private void MineBlock(PathNode pathNode, out bool destroyed)
     {
-        pathNode.MineBlock(activeTool.damage, out destroyed, out ItemInventory loot, out int xp);
+        pathNode.MineBlock(activeTool.damage, out destroyed, out Inventory loot, out int xp);
         if (destroyed)
         {
             blocksMined++;
             this.xp += xp;
             activeTool.xp += xp;
-            Inventory.PullInventory(loot);   
+            loot.DepositInventory(Inventory);  
         }
 
-        Debug.Log("Used: " + Inventory.getUsedCapacity() + ", Max:" + Inventory.getMaxCapacity());
+        Debug.Log("Used: " + Inventory.getInventoryWeight() + ", Max:" + Inventory.getMaxInventoryweight());
     }
 
     public bool isBatteryZero()
@@ -238,11 +238,11 @@ public class Miner : IWalker
 
     private void DepositItems()
     {
-        Inventory.PushInventory(Silo.Instance.Inventory);
+        Inventory.DepositInventory(Silo.Instance.Inventory);
         walker.StopAction();
     }
     
-    public ItemInventory getItemInventory()
+    public Inventory getItemInventory()
     {
         return Inventory;
     }

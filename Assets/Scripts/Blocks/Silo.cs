@@ -5,13 +5,13 @@ public class Silo : MultiBlock
 {
     public static Silo Instance { get; private set; }
 
-    public ItemInventory Inventory;
+    public Inventory Inventory;
 
     public Silo(float x, float y, Bay bay) : base(x, y, bay)
     {
         Instance = this;
         this.bay = bay;
-        Inventory = new ItemInventory();
+        Inventory = new Inventory();
     }
     
 

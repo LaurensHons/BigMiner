@@ -245,7 +245,7 @@ public interface IWalker
 
     public void Mine();
 
-    public ItemInventory getItemInventory();
+    public Inventory getItemInventory();
 
     public void startDepositingItems();
 
