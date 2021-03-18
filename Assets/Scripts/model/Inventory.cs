@@ -1,8 +1,11 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 
 public class Inventory 
@@ -30,8 +33,8 @@ public class Inventory
     {
         foreach (var ItemInInventory in ItemInventory)
         {
-            if (ItemInInventory.Equals(item))
-                return item;
+            if (ItemInInventory.GetType() == item.GetType())
+                return ItemInInventory;
         }
         return null;
     }
@@ -39,15 +42,16 @@ public class Inventory
     private void AddToInventoryList(Item item, int amount)
     {
         Item itemInInventory = TryGetItem(item);
+        
         if (itemInInventory != null)
             itemInInventory.addAmount(amount);
         else
         {
             ItemInventory.Add(Item.CreateItem(item, amount));
+            Debug.Log("Added new item, amount: " + amount);
         }
         addInventoryWeight(amount);
-        if (itemInInventory == null)
-            Debug.WriteLine("Added item, amount: " + amount);
+
     }
 
     private void RemoveItemFromInventoryList(Item item, int amount)
@@ -69,7 +73,7 @@ public class Inventory
         
         if (amount > leftOverSpace) amount = leftOverSpace;
         
-        Debug.WriteLine("Adding: " + addItem.GetType() + ", amount " + amount);
+        Debug.Log("Adding: " + addItem.GetType() + ", amount " + amount);
         AddToInventoryList(addItem, (int) amount);
     }
 
@@ -88,7 +92,7 @@ public class Inventory
     {
         Item itemToTake = TryGetItem(item);
         if (itemToTake == null) throw new InventoryException("Item not found");
-        Debug.WriteLine(itemToTake.GetType() + ", amount: " + amount);
+        Debug.Log(itemToTake.GetType() + ", amount: " + amount);
         if (itemToTake == null) throw new Exception("Item to be taken not found");
 
         AddItem(itemToTake, amount);

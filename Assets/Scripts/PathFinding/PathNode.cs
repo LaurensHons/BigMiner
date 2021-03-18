@@ -67,7 +67,7 @@ public class PathNode {
     public void MineBlock(float hit, out bool destroyed, out Inventory loot, out int xp)
     {
         destroyed = true;
-        loot = new Inventory();
+        loot = null;
         xp = 0;
         if (structure != null && structure is Block)
         {
@@ -77,6 +77,7 @@ public class PathNode {
             if (destroyed)
             {
                 loot = b.getLoot();
+                //Debug.Log("Loot: " + loot);
                 xp = b.getXpOnMine();
                 Structure = null;
             }

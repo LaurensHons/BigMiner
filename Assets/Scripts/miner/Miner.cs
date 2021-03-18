@@ -207,7 +207,12 @@ public class Miner : IWalker
             blocksMined++;
             this.xp += xp;
             activeTool.xp += xp;
-            loot.DepositInventory(Inventory);  
+            if (!Inventory.isFull())
+            {
+                loot.DepositInventory(Inventory);
+                
+            }
+            Debug.Log(Inventory);
         }
 
         Debug.Log("Used: " + Inventory.getInventoryWeight() + ", Max:" + Inventory.getMaxInventoryweight());
@@ -238,7 +243,9 @@ public class Miner : IWalker
 
     private void DepositItems()
     {
+        Debug.Log("Inv Miner:" +  Inventory);
         Inventory.DepositInventory(Silo.Instance.Inventory);
+        Debug.Log("Inv Miner:" +  Inventory);
         walker.StopAction();
     }
     
