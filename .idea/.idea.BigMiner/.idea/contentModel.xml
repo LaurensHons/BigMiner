@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\laure\AppData\Local\JetBrains\Rider2020.3\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\laure\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_BigMiner.1743131515.00" t="ExcludeRecursive" />
+    <e p="F:\BigMiner\BigMiner" t="IncludeRecursive">
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Scripts" t="Include">
+          <e p="model" t="Include">
+            <e p="bay" t="Include">
+              <e p="Bay.cs" t="Include" />
+              <e p="PathFinding" t="Include">
+                <e p="Grid.cs" t="Include" />
+                <e p="Pathfinding.cs" t="Include" />
+                <e p="PathNode.cs" t="Include" />
+              </e>
+            </e>
+            <e p="Blocks" t="Include">
+              <e p="Block.cs" t="Include" />
+              <e p="DirtBlock.cs" t="Include" />
+              <e p="MultiBlock.cs" t="Include" />
+              <e p="Silo.cs" t="Include" />
+              <e p="StoneBlock.cs" t="Include" />
+              <e p="Structure.cs" t="Include" />
+            </e>
+            <e p="miner" t="Include">
+              <e p="Miner.cs" t="Include" />
+              <e p="MinerStation.cs" t="Include" />
+              <e p="MinerUpgrade.cs" t="Include" />
+              <e p="Tool" t="Include">
+                <e p="Hammer.cs" t="Include" />
+                <e p="Pickaxe.cs" t="Include" />
+                <e p="Tool.cs" t="Include" />
+              </e>
+              <e p="Walker.cs" t="Include" />
+            </e>
+            <e p="resourceManagement" t="Include">
+              <e p="Inventory.cs" t="Include" />
+              <e p="Item.cs" t="Include" />
+            </e>
+            <e p="Scanner" t="Include">
+              <e p="Scanner.cs" t="Include" />
+            </e>
+          </e>
+          <e p="View" t="Include">
+            <e p="controllers" t="Include">
+              <e p="DebugDrawer.cs" t="Include" />
+              <e p="GameController.cs" t="Include" />
+              <e p="MinerController.cs" t="Include" />
+              <e p="ScannerController.cs" t="Include" />
+              <e p="UIController.cs" t="Include" />
+            </e>
+            <e p="UIScripts" t="Include">
+              <e p="MinerStationClickController.cs" t="Include" />
+              <e p="ScannerMainInfoPanel.cs" t="Include" />
+              <e p="ScannerSlider.cs" t="Include" />
+              <e p="ToolPanelScript.cs" t="Include" />
+              <e p="UpgradePanelScript.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="BigMiner.sln" t="IncludeFlat" />
+      <e p="manifest.json" t="Include" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="Packages" t="ExcludeRecursive" />
+      <e p="packages-lock.json" t="Include" />
+      <e p="Temp\Bin" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>

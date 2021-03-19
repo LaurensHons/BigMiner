@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="04527ff3-e0ce-4820-b253-87bf4da6a241" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/ProjectSettings/AudioManager.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjectSettings/ClusterInputManager.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjectSettings/DynamicsManager.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjectSettings/InputManager.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjectSettings/NavMeshAreas.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjectSettings/NetworkManager.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjectSettings/Physics2DSettings.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjectSettings/PresetManager.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjectSettings/TimeManager.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjectSettings/UnityConnectSettings.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjectSettings/VFXManager.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjectSettings/VersionControlSettings.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjectSettings/XRSettings.asset" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/miner/MinerStation.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/view/controllers/MinerController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://F:/BigMiner/BigMiner/Assets/Scripts/Blocks/Silo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/miner/Miner.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://F:/BigMiner/BigMiner/Assets/Scenes/UIShenanigans.unity" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://F:/BigMiner/BigMiner/Assets/Scenes/UIShenanigans.unity" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/E90BEB44-6898-4ECF-B706-59AC067ECC5C/48/124778ed/HashSet`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/blocks/StoneBlock.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/blocks/Silo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://F:/BigMiner/BigMiner/Assets/Scripts/Blocks/Block.cs.meta" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/view/UIScripts/ToolPanelScript.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/blocks/MultiBlock.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/blocks/DirtBlock.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/miner/Tool/Pickaxe.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://F:/BigMiner/BigMiner/Assets/Scripts/Blocks/Block.cs.meta" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/blocks/Block.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://F:/BigMiner/BigMiner/Assets/Scripts/model/Bay.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/resourceManagement/Inventory.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://F:/BigMiner/BigMiner/Assets/Scripts/Domain/UIController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/resourceManagement/Item.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/miner/MinerUpgrade.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <changedPaths>
+      <option value="$PROJECT_DIR$/Assets/Scripts/model/Bay.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/miner/Tool/Pickaxe.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/miner/Tool/Hammer.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/miner/Tool/ToolPanelScript.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/miner/Tool/Tool.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/PathFinding/PathNode.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/model/Item.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/model/Inventory.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Domain/UIController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/miner/Walker.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/miner/Miner.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/miner/Upgrades/MinerUpgrade.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/miner/MinerUpgrade.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/miner/Tool/UpgradePanelScript.cs" />
+      <option value="$PROJECT_DIR$/Assets/.gitignore" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Blocks/DirtBlock.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Blocks/StoneBlock.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Domain/SpriteRenderer.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Blocks/MultiBlock.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/miner/MinerController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Blocks/Silo.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/miner/MinerStation.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Blocks/Block.cs" />
+      <option value="$PROJECT_DIR$/.idea/.idea.BigMiner/.idea/.gitignore" />
+      <option value="$PROJECT_DIR$/.gitignore" />
+      <option value="$PROJECT_DIR$/package.json" />
+    </changedPaths>
+  </component>
+  <component name="ProjectId" id="1psl4FlLHRHn1tjPqLi8hFhRbFu" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_MARK_IGNORED_FILES_AS_EXCLUDED" value="true" />
+    <property name="Discover.Launch.Via.Unity" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.C#" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <method v="2" />
+    </configuration>
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="04527ff3-e0ce-4820-b253-87bf4da6a241" name="Default Changelist" comment="" />
+      <created>1615979488869</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1615979488869</updated>
+      <workItem from="1615979494972" duration="26954000" />
+      <workItem from="1616066430609" duration="3187000" />
+      <workItem from="1616084724483" duration="26249000" />
+    </task>
+    <task id="LOCAL-00001" summary="Bugfixes">
+      <created>1615987926870</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1615987926870</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Commiting the lost work :( 1 day setback">
+      <created>1616021011610</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1616021011610</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Inventory Overhaul">
+      <created>1616085828562</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1616085828562</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Inventory Bugfixes">
+      <created>1616091999882</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1616091999882</updated>
+    </task>
+    <task id="LOCAL-00005" summary=".gitignore">
+      <created>1616160764645</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1616160764645</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Miner Upgrades + bugfixes">
+      <created>1616160805468</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1616160805468</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Files I forgot to commit">
+      <created>1616161446707</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1616161446707</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Committing meta files">
+      <created>1616161524832</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1616161524832</updated>
+    </task>
+    <task id="LOCAL-00009" summary="AdressableAssetSettings">
+      <created>1616161583563</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1616161583563</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Updated Project Structure">
+      <created>1616162940091</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1616162940091</updated>
+    </task>
+    <task id="LOCAL-00011" summary="updated manifest.json">
+      <created>1616168709812</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1616168709812</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Updated manifest.json">
+      <created>1616168803584</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1616168803584</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Updated manifest.json">
+      <created>1616168850519</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1616168850519</updated>
+    </task>
+    <task id="LOCAL-00014" summary="package.json added">
+      <created>1616169505202</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1616169505202</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="Bugfixes" />
+    <MESSAGE value="Commiting the lost work :( 1 day setback" />
+    <MESSAGE value="Inventory Overhaul" />
+    <MESSAGE value="Inventory Bugfixes" />
+    <MESSAGE value=".gitignore" />
+    <MESSAGE value="Miner Upgrades + bugfixes" />
+    <MESSAGE value="Files I forgot to commit" />
+    <MESSAGE value="Committing meta files" />
+    <MESSAGE value="AdressableAssetSettings" />
+    <MESSAGE value="Updated Project Structure" />
+    <MESSAGE value="updated manifest.json" />
+    <MESSAGE value="Updated manifest.json" />
+    <MESSAGE value="package.json" />
+    <MESSAGE value="package.json added" />
+    <option name="LAST_COMMIT_MESSAGE" value="package.json added" />
+  </component>
+</project>

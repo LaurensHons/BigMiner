@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 34d9347779e6b8242b2bf93791c1068b
+  m_SerializeEntries:
+  - m_GUID: d3d615e5c42c87246b426e6a3ac5b692
+    m_Address: Assets/Images/DirtBlock.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 20ca2d57799ae2444a069b37802b210c
+    m_Address: Assets/Addressables/Prefabs/HealthBarPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 19bd1cc92d265c44cb5c9063a1e5ea3c
+    m_Address: Assets/Addressables/Prefabs/Slider_Block.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 6ef354b0313f8864cbf737d314477c19
+    m_Address: Assets/Addressables/Blocks/DirtBlock.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 554b869a5c1681f499b86d2ae7a2df41
+    m_Address: Assets/Addressables/Prefabs/UpgradePanelPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: b2f43ac12c9420449a24248d287bef9d
+    m_Address: Assets/Images/Miner.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: a885609cd4df123488fdb7724c1185cb
+    m_Address: Assets/Addressables/Prefabs/ToolPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: b8020e1671728914098142762e05a04c
+    m_Address: Assets/Addressables/Blocks/stoneWall.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 572bf61974b5a864fad1a0a840a73a34
+    m_Address: Assets/Addressables/Blocks/stone.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: cb36b2420195e5e479956f6bc505476b
+    m_Address: Assets/Addressables/Blocks/shardRock.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: f74ff28122923544dad13360e719334e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: a5ee377f7a8c8c746be0d13d253d0b92, type: 2}
+    - {fileID: 11400000, guid: 113360562174b794b9377ffd17b19f7b, type: 2}
