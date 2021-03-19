@@ -32,7 +32,7 @@ public class Silo : MultiBlock
     
     public override string getSpritePath()
     {
-        return "Assets/Images/silo.png";
+        return "Assets/Addressables/Blocks/stone.png";
     }
 
     public override Vector2 getDimensions()

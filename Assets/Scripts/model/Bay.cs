@@ -176,7 +176,7 @@ public class Bay : MonoBehaviour
     public void registerMiner(Miner miner)
     {
         minerList.Add(miner);
-        UpdateObservers += miner.Update;
+        UpdateObservers += miner.FixedUpdate;
     }
     
     

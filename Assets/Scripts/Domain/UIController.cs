@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
@@ -24,12 +25,23 @@ public class UIController : MonoBehaviour
     public GameObject MinerMenu;
     public GameObject ToolMenu;
 
+    public Text ScreenRes;
+    
     private GameObject activeMenu;
     private MinerStation activeMinerStation;
 
 
     void Start()
     {
+        int width = Display.main.systemWidth;
+        int height = Display.main.systemHeight;
+
+        ScreenRes.text = "Width: " + width + ", Height: " + height;
+        
+        float factor = height / (float) width;
+        float normalfactor = 16 / (float) 9;
+        Debug.Log("Normal " + normalfactor + ", factor " + factor);
+        camera.GetComponent<Camera>().orthographicSize = factor / normalfactor * 5;
         Bay = BayGameObject.GetComponent<Bay>();
         
         MenuPanel.SetActive(false);
@@ -94,8 +106,6 @@ public class UIController : MonoBehaviour
 
     private void setActiveMenuPanel()
     {
-        Vector2 pos = camera.transform.position;
-        MenuPanel.transform.position = pos;
         MenuPanel.SetActive(true);
     }
 

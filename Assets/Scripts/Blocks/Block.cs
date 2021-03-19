@@ -51,7 +51,7 @@ public abstract class Block : IStructure
         BlockSpriteHandler.Completed += LoadBlockSpriteWhenReady;
         
         
-        AsyncOperationHandle<GameObject> HealthBaPrefabHandler = Addressables.LoadAssetAsync<GameObject>("Assets/Prefabs/HealthBarPrefab.prefab");
+        AsyncOperationHandle<GameObject> HealthBaPrefabHandler = Addressables.LoadAssetAsync<GameObject>("Assets/Addressables/Prefabs/HealthBarPrefab.prefab");
         HealthBaPrefabHandler.Completed += LoadHealthBarWhenReady;
     }
     

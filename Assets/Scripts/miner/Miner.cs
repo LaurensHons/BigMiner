@@ -48,7 +48,7 @@ public class Miner : IWalker
 
     public MiningStrategy miningStrategy = MiningStrategy.Random;
 
-    public int maxBatteryMinutes = 2;
+    public int maxBatteryMinutes = 20;
     public int Battery = 0;
     
     public int maxBattery
@@ -123,7 +123,7 @@ public class Miner : IWalker
     private int MININGTIMEMOUT = -1;
     private int TRADINGTIMEOUT = -1;
     
-    public void Update(object sender, EventArgs eventArgs)
+    public void FixedUpdate(object sender, EventArgs eventArgs)
     {
         if (Battery >= 0)
             Battery -= 1;

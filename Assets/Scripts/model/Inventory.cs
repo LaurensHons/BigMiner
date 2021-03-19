@@ -48,7 +48,7 @@ public class Inventory
         else
         {
             ItemInventory.Add(Item.CreateItem(item, amount));
-            Debug.Log("Added new item, amount: " + amount);
+            //Debug.Log("Added new item, amount: " + amount);
         }
         addInventoryWeight(amount);
 
@@ -73,7 +73,7 @@ public class Inventory
         
         if (amount > leftOverSpace) amount = leftOverSpace;
         
-        Debug.Log("Adding: " + addItem.GetType() + ", amount " + amount);
+        //Debug.Log("Adding: " + addItem.GetType() + ", amount " + amount);
         AddToInventoryList(addItem, (int) amount);
     }
 
@@ -92,7 +92,7 @@ public class Inventory
     {
         Item itemToTake = TryGetItem(item);
         if (itemToTake == null) throw new InventoryException("Item not found");
-        Debug.Log(itemToTake.GetType() + ", amount: " + amount);
+        //Debug.Log(itemToTake.GetType() + ", amount: " + amount);
         if (itemToTake == null) throw new Exception("Item to be taken not found");
 
         AddItem(itemToTake, amount);
@@ -106,6 +106,11 @@ public class Inventory
             receivingInventory.AddItem(item, null);
             RemoveItem(item, null);
         }
+    }
+
+    public List<Item> getInventory()
+    {
+        return ItemInventory.ToList();
     }
 
     public bool isFull()

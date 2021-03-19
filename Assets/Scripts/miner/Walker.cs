@@ -28,13 +28,17 @@ public class Walker
     {
         this.objectToWalk = objectToWalk;
         this.speed = speed;
-        
-        setStatusCollectingBlocks(this, EventArgs.Empty);
+
+        walkerStatus = WalkerStatus.DoingNothing;
     }
 
     public void Update(bool wakeup)
     {
-        if (objectToWalk.isBatteryZero()) return;
+        if (objectToWalk.isBatteryZero())
+        {
+            Debug.Log("BatteryZero");
+            return;
+        }
         switch (walkerStatus)
         {
             case (WalkerStatus.CollectingBlocks):
@@ -49,10 +53,10 @@ public class Walker
             }
             case (WalkerStatus.DoingNothing):
             {
+                Debug.Log("Doing Nothing");
                 if (wakeup)
                 {
-                    walkerStatus = WalkerStatus.CollectingBlocks;
-                    findNextTarget();
+                    setStatusCollectingBlocks(this, EventArgs.Empty);
                 }
                 break;
             }

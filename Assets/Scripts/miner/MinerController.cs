@@ -30,15 +30,29 @@ public class MinerController : MonoBehaviour
 
     public Text MiningStrategyText;
 
-    public GameObject ToolList;
-    public Dictionary<Tool, ToolPanelScript> toolPanels = new Dictionary<Tool, ToolPanelScript>();
-    private String ToolPanelPrefabPath = "Assets/Prefabs/ToolPrefab.prefab";
-    private GameObject ToolPanelPrefab;
+    public Text InventoryText;
+    public GameObject InventoryObject;
     
     private MiningStrategy[] miningStrategies = (MiningStrategy[]) Enum.GetValues(typeof(MiningStrategy)).Cast<MiningStrategy>();
     private int miningStrategyIndex = 0;
+    
+    public GameObject ToolList;
+    private GameObject ToolPanelPrefab;
+    private String ToolPanelPrefabPath = "Assets/Addressables/Prefabs/ToolPrefab.prefab";
+    public Dictionary<Tool, ToolPanelScript> toolPanels = new Dictionary<Tool, ToolPanelScript>();
+    
+    
+
+    public GameObject UpgradeList;
+    private GameObject UpgradePanelPrefab;
+    private string UpgradePanelPrefabPath = "Assets/Addressables/Prefabs/UpgradePanelPrefab.prefab";
 
     private float DefaultBatteryWidth;      //gets battery width at starts and scales the battery according to this value;
+
+    private List<Tuple<Item, GameObject>> InventoryItemObjects = new List<Tuple<Item, GameObject>>();
+    
+    
+    
     
     public void Start()
     {
@@ -77,10 +91,12 @@ public class MinerController : MonoBehaviour
         else throw new Exception("Loading Tool Panel Prefab failed");
     }
 
-    public MinerStation getMinerStation()
+    public void loadUpgrades()
     {
-        return minerstation;
+        
     }
+
+    
 
     public void setMinerStation(MinerStation minerStation)
     {
@@ -96,10 +112,13 @@ public class MinerController : MonoBehaviour
             minerstation.Miner.MinerLevelUpdate += updateLevelText;
             minerstation.Miner.MinerLevelUpdate += updateSpeedText;
             minerstation.Miner.activeTool.ToolDamageUpdate += updateDamageText;
-            
+            minerstation.Miner.Inventory.InventoryUpdate += updateInventory;
+
             minerstation.Miner.MinerXpUpdate(this, EventArgs.Empty);
             minerstation.Miner.MinerLevelUpdate(this, EventArgs.Empty);
             minerstation.Miner.activeTool.ToolDamageUpdate(this, EventArgs.Empty);
+            updateInventory();
+            
                 
             if (MinerSprite.sprite == null)
             {
@@ -180,7 +199,57 @@ public class MinerController : MonoBehaviour
         setBatteryString(batteryHours + " Hrs until empty");
     }
 
-    
+    private void updateInventory()
+    {
+        InventoryText.text = "Inventory " + minerstation.Miner.Inventory.getInventoryWeight() + "/" +
+                             minerstation.Miner.Inventory.getMaxInventoryweight();
+        foreach (var item in minerstation.Miner.Inventory.getInventory())
+        {
+            int amountOfItemsInList = getAmountOfItemObjectsInInv(item);
+            Debug.Log("Found " + amountOfItemsInList + " , itemAmount " + item.getAmount());
+            if (amountOfItemsInList == item.getAmount()) return;
+            if (amountOfItemsInList < item.getAmount())
+            {
+                for (int i = 0; i < item.getAmount() - amountOfItemsInList; i++)
+                {
+                    Debug.Log("spawning object");
+                    GameObject g = new GameObject(item.GetType().ToString());
+                    g.AddComponent<Image>();
+                    g.GetComponent<Image>().sprite = item.getSprite();
+                    g.transform.SetParent(InventoryObject.transform);
+                    g.transform.localScale = Vector3.one;
+                    InventoryItemObjects.Add(new Tuple<Item, GameObject>(item, g));
+                }
+            }
+            else
+            {
+                for (int i = 0; i < amountOfItemsInList - item.getAmount() ; i++)
+                {
+                    foreach (var tuple in InventoryItemObjects)
+                    {
+                        if (tuple.Item1.GetType() == item.GetType())
+                        {
+                            Destroy(tuple.Item2);
+                            InventoryItemObjects.Remove(tuple);
+                            break;
+                        }
+                    }
+                }
+            }
+        }   
+    }
+
+    private int getAmountOfItemObjectsInInv(Item item)
+    {
+        int amount = 0;
+        foreach (var keyPair in InventoryItemObjects)
+        {
+            if (keyPair.Item1.GetType() == item.GetType())
+                amount++;
+        }
+
+        return amount;
+    }
 
     private void setBatteryString(String s)
     {
@@ -204,6 +273,11 @@ public class MinerController : MonoBehaviour
         miningStrategyIndex++;
         minerstation.Miner.miningStrategy = miningStrategies[miningStrategyIndex];
         MiningStrategyText.text = getMiningStrategyString(minerstation.Miner.miningStrategy);
+    }
+    
+    public MinerStation getMinerStation()
+    {
+        return minerstation;
     }
     
     public Tool getActiveTool()
@@ -238,7 +312,7 @@ public class MinerController : MonoBehaviour
         }
     }
 
-
+    
     private string getMiningStrategyString(MiningStrategy miningStrategy)
     {
         switch (miningStrategy)

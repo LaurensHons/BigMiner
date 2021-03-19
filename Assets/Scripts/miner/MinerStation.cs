@@ -43,7 +43,7 @@ public class MinerStation : MultiBlock
         
         Debug.Log(s);
         
-        if (Miner == null) return null;
+        if (Miner == null) throw new Exception("No Miner Found");
         switch (Miner.miningStrategy)
         {
             case MiningStrategy.Random:
@@ -55,6 +55,8 @@ public class MinerStation : MultiBlock
             case MiningStrategy.MaxValue:
                 return new HighestMiningStrategy().selectNextBlock(bay.getBlockList(), Miner.getTransform().position);
         }
+
+        throw new Exception("Very weird");
         return null;
     }
 
@@ -70,7 +72,7 @@ public class MinerStation : MultiBlock
 
     public override string getSpritePath()
     {
-        return "Assets/Images/shardRock.png";
+        return "Assets/Addressables/Blocks/shardRock.png";
     }
 
     public override Vector2 getDimensions()
