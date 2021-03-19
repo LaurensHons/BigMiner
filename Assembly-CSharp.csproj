@@ -746,6 +746,10 @@
  <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.2D.SpriteShape.Runtime.dll</HintPath>
  </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="manifest.json" />
+    <Content Include="packages-lock.json" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
