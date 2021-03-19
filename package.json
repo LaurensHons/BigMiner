@@ -1,0 +1,11 @@
+﻿{
+  "name": "com.lorenzoo.bigminer",
+  "displayName": "BigMiner",
+  "version": "0.0.1",
+  "unity": "2020.2",
+  "description": "Sensible Unity/C# Configuration",
+  "keywords": [ "config", "file", "data" ],
+  "category": "penis lmao",
+  "dependencies": {
+  }
+}

@@ -747,8 +747,9 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="manifest.json" />
-    <Content Include="packages-lock.json" />
+    <Content Include="package.json" />
+    <Content Include="Packages\manifest.json" />
+    <Content Include="Packages\packages-lock.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
