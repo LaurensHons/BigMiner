@@ -113,7 +113,7 @@ public class ToolPanelScript : MonoBehaviour
 
     public void BuyDamageUpgrade()      //Damage Upgrade Button
     {
-        tool.damageUpgrades += 1;
+        minerController.getMinerStation().buyToolDamageUpgrade(tool);
     }
 
     public void SelectTool()        //Select button

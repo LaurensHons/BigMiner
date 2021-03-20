@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ContentModelStore">
     <e p="C:\Users\laure\AppData\Local\JetBrains\Rider2020.3\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\laure\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_BigMiner.1743131515.00" t="ExcludeRecursive" />
-    <e p="F:\BigMiner\BigMiner" t="IncludeRecursive">
+    <e p="C:\Users\laure\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_BigMiner.-351231243.00" t="ExcludeRecursive" />
+    <e p="C:\Users\laure\BigMiner\BigMiner" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="Scripts" t="Include">
@@ -15,12 +15,12 @@
                 <e p="Pathfinding.cs" t="Include" />
                 <e p="PathNode.cs" t="Include" />
               </e>
+              <e p="Silo.cs" t="Include" />
             </e>
             <e p="Blocks" t="Include">
               <e p="Block.cs" t="Include" />
               <e p="DirtBlock.cs" t="Include" />
               <e p="MultiBlock.cs" t="Include" />
-              <e p="Silo.cs" t="Include" />
               <e p="StoneBlock.cs" t="Include" />
               <e p="Structure.cs" t="Include" />
             </e>
@@ -63,11 +63,7 @@
       </e>
       <e p="BigMiner.sln" t="IncludeFlat" />
       <e p="obj" t="ExcludeRecursive" />
-      <e p="package.json" t="Include" />
-      <e p="Packages" t="ExcludeRecursive">
-        <e p="manifest.json" t="Include" />
-        <e p="packages-lock.json" t="Include" />
-      </e>
+      <e p="Packages" t="ExcludeRecursive" />
       <e p="Temp\Bin" t="ExcludeRecursive" />
     </e>
   </component>

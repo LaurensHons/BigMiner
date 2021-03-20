@@ -17,7 +17,6 @@ public class MinerStation : MultiBlock
 
     public MinerStation(float x, float y, Bay bay) : base(x, y, bay)
     {
-        this.bay = bay;
         InstantiateMiner();
 
         BoxCollider2D bc = BlockObject.AddComponent<BoxCollider2D>();
@@ -59,6 +58,25 @@ public class MinerStation : MultiBlock
         throw new Exception("Very weird");
         return null;
     }
+
+    public bool buyToolDamageUpgrade(Tool tool)
+    {
+        if (!Miner.activeTool.Equals(tool)) return false;
+        int cost = Miner.activeTool.damageUpgrades * 4;
+        try
+        {
+            Silo.Instance.Inventory.RemoveItem(new DirtBlockItem(cost));
+            Miner.activeTool.damageUpgrades++;
+            return true;
+        }
+        catch (InventoryException exception)
+        {
+            Debug.Log(exception.Message);
+            return false;
+        }
+    }
+    
+    
 
     public Grid<PathNode> getNodeGrid()
     {

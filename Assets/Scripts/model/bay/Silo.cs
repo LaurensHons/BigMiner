@@ -10,7 +10,6 @@ public class Silo : MultiBlock
     public Silo(float x, float y, Bay bay) : base(x, y, bay)
     {
         Instance = this;
-        this.bay = bay;
         Inventory = new Inventory();
     }
     

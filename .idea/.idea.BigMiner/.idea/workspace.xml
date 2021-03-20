@@ -2,10 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="04527ff3-e0ce-4820-b253-87bf4da6a241" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.BigMiner/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BigMiner/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.BigMiner/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BigMiner/.idea/indexLayout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.BigMiner/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BigMiner/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assembly-CSharp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Assembly-CSharp.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Addressables/Prefabs/Slider_Block.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Addressables/Prefabs/Slider_Block.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/model/blocks/Silo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/model/bay/Silo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/model/blocks/Silo.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/model/bay/Silo.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/model/miner/MinerStation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/model/miner/MinerStation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/model/resourceManagement/Inventory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/model/resourceManagement/Inventory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/view/UIScripts/ToolPanelScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/view/UIScripts/ToolPanelScript.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/view/controllers/MinerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/view/controllers/MinerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,27 +25,19 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/miner/MinerStation.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/view/controllers/MinerController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://F:/BigMiner/BigMiner/Assets/Scripts/Blocks/Silo.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/miner/Miner.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://F:/BigMiner/BigMiner/Assets/Scenes/UIShenanigans.unity" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://F:/BigMiner/BigMiner/Assets/Scenes/UIShenanigans.unity" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/E90BEB44-6898-4ECF-B706-59AC067ECC5C/48/124778ed/HashSet`1.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/blocks/StoneBlock.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/blocks/Silo.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://F:/BigMiner/BigMiner/Assets/Scripts/Blocks/Block.cs.meta" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/view/UIScripts/ToolPanelScript.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/blocks/MultiBlock.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/blocks/DirtBlock.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/miner/Tool/Pickaxe.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://F:/BigMiner/BigMiner/Assets/Scripts/Blocks/Block.cs.meta" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/blocks/Block.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://F:/BigMiner/BigMiner/Assets/Scripts/model/Bay.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/resourceManagement/Inventory.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://F:/BigMiner/BigMiner/Assets/Scripts/Domain/UIController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/resourceManagement/Item.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/view/UIScripts/ToolPanelScript.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/resourceManagement/Inventory.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/miner/Miner.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/miner/MinerStation.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/view/controllers/MinerController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/miner/MinerUpgrade.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/miner/Tool/Pickaxe.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/blocks/DirtBlock.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/bay/Silo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/blocks/MultiBlock.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/blocks/StoneBlock.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/model/blocks/Block.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
@@ -66,6 +67,13 @@
       <option value="$PROJECT_DIR$/.idea/.idea.BigMiner/.idea/.gitignore" />
       <option value="$PROJECT_DIR$/.gitignore" />
       <option value="$PROJECT_DIR$/package.json" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/view/UIScripts/ScannerMainInfoPanel.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/model/bay/Bay.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/model/bay/Silo.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/model/resourceManagement/Inventory.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/model/miner/MinerStation.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/view/UIScripts/ToolPanelScript.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/view/controllers/MinerController.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1psl4FlLHRHn1tjPqLi8hFhRbFu" />
@@ -83,7 +91,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.C#" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
@@ -117,6 +125,9 @@
       <workItem from="1615979494972" duration="26954000" />
       <workItem from="1616066430609" duration="3187000" />
       <workItem from="1616084724483" duration="26672000" />
+      <workItem from="1616193934451" duration="502000" />
+      <workItem from="1616260653485" duration="174000" />
+      <workItem from="1616260862187" duration="1102000" />
     </task>
     <task id="LOCAL-00001" summary="Bugfixes">
       <created>1615987926870</created>

@@ -63,7 +63,7 @@ public class Inventory
         addInventoryWeight(-amount);
     }
     
-    public void AddItem(Item addItem, int? amount)
+    public void AddItem(Item addItem, int? amount = null)
     {
         if (addItem == null) throw new NullReferenceException();
         amount ??= addItem.getAmount();
@@ -77,7 +77,7 @@ public class Inventory
         AddToInventoryList(addItem, (int) amount);
     }
 
-    public void RemoveItem(Item removeItem, int? amount)
+    public void RemoveItem(Item removeItem, int? amount = null)
     {
         if (removeItem == null) throw new NullReferenceException();
         Item itemInInv = TryGetItem(removeItem);
