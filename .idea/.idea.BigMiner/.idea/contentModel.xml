@@ -15,12 +15,12 @@
                 <e p="Pathfinding.cs" t="Include" />
                 <e p="PathNode.cs" t="Include" />
               </e>
+              <e p="Silo.cs" t="Include" />
             </e>
             <e p="Blocks" t="Include">
               <e p="Block.cs" t="Include" />
               <e p="DirtBlock.cs" t="Include" />
               <e p="MultiBlock.cs" t="Include" />
-              <e p="Silo.cs" t="Include" />
               <e p="StoneBlock.cs" t="Include" />
               <e p="Structure.cs" t="Include" />
             </e>

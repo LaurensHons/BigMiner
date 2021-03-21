@@ -59,6 +59,25 @@ public class MinerStation : MultiBlock
         return null;
     }
 
+    public bool buyToolDamageUpgrade(Tool tool)
+    {
+        if (!Miner.activeTool.Equals(tool)) return false;
+        int cost = Miner.activeTool.damageUpgrades * 4;
+        try
+        {
+            Silo.Instance.Inventory.RemoveItem(new DirtBlockItem(cost));
+            Miner.activeTool.damageUpgrades++;
+            return true;
+        }
+        catch (InventoryException exception)
+        {
+            Debug.Log(exception.Message);
+            return false;
+        }
+    }
+    
+    
+
     public Grid<PathNode> getNodeGrid()
     {
         return bay.pathNodeGrid;

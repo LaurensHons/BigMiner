@@ -3107,6 +3107,7 @@ MonoBehaviour:
   InventoryText: {fileID: 1844115729}
   InventoryObject: {fileID: 718865189}
   ToolList: {fileID: 1005943160}
+  UpgradeList: {fileID: 0}
 --- !u!4 &1192068312
 Transform:
   m_ObjectHideFlags: 0
@@ -3722,7 +3723,7 @@ MonoBehaviour:
   BayGameObject: {fileID: 416115922}
   ScannerButton: {fileID: 1950554389}
   ScannerPanelList: {fileID: 987695612}
-  slider_BlockPrefab: {fileID: 6161902442441248090, guid: 030a131d40e37c44799e83ff36b991a7, type: 3}
+  slider_BlockPrefab: {fileID: 6161902442441248090, guid: 19bd1cc92d265c44cb5c9063a1e5ea3c, type: 3}
   ScannerSliders: []
 --- !u!4 &1377944155
 Transform:

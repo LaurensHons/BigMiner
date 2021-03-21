@@ -54,7 +54,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\model\blocks\Structure.cs" />
      <Compile Include="Assets\Scripts\model\resourceManagement\Item.cs" />
-     <Compile Include="Assets\Scripts\model\blocks\Silo.cs" />
+     <Compile Include="Assets\Scripts\model\bay\Silo.cs" />
      <Compile Include="Assets\Scripts\view\controllers\ScannerController.cs" />
      <Compile Include="Assets\Scripts\model\scanner\Scanner.cs" />
      <Compile Include="Assets\Scripts\view\UIScripts\ScannerSlider.cs" />

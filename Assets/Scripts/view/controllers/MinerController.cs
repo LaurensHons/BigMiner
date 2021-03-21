@@ -320,7 +320,7 @@ public class MinerController : MonoBehaviour
     {
         switch (miningStrategy)
         {
-            case MiningStrategy.Random:
+            default:
                 return "Random Block";
             case MiningStrategy.Closest:
                return "Closest Block";
