@@ -24,10 +24,10 @@ public class ToolPanelScript : MonoBehaviour
     private Tool tool;
     private MinerController minerController;
 
-    public void setActive(MinerController minerController, Tool tool, bool active)
+    public void setActive(bool active, MinerController minerController = null, Tool tool = null)
     {
-        this.minerController = minerController;
-        this.tool = tool;
+        if (minerController != null) this.minerController = minerController;
+        if (tool != null) this.tool = tool;
         if (active)
         {
             ToolName.text = tool.GetType().ToString();
@@ -46,9 +46,13 @@ public class ToolPanelScript : MonoBehaviour
         }
         else
         {
-            tool.ToolXpUpdate = null;
-            tool.ToolLevelUpdate = null;
-            tool.ToolDamageUpdate = null;
+            if (tool != null)
+            {
+                tool.ToolXpUpdate -= updateXpBar;
+                tool.ToolLevelUpdate -= updateLevelText;
+                tool.ToolLevelUpdate -= updateSpeedText;
+                tool.ToolDamageUpdate -= updateDamageText;
+            }
         }
     }
 
@@ -68,6 +72,9 @@ public class ToolPanelScript : MonoBehaviour
         else
         {
             SelectButton.gameObject.SetActive(true);
+            tool.ToolXpUpdate -= updateXpBar;
+            tool.ToolLevelUpdate -= updateLevelText;
+            tool.ToolLevelUpdate -= updateSpeedText;
         }
     }
     
@@ -113,7 +120,8 @@ public class ToolPanelScript : MonoBehaviour
 
     public void BuyDamageUpgrade()      //Damage Upgrade Button
     {
-        tool.damageUpgrades += 1;
+        if (Silo.Instance.buyItem(tool.getUpgradeCost()))
+            tool.damageUpgrades += 1;
     }
 
     public void SelectTool()        //Select button

@@ -49,6 +49,11 @@ public class Bay : MonoBehaviour
         MinerStation minerStation = new MinerStation(minerStationPos.x, minerStationPos.y, this);
         pathNodeGrid.GetGridObject(minerStationPos).SetStructure(minerStation);
 
+        /*
+        Vector2 secondminerStationPos = new Vector2(0, 4);
+        MinerStation secondminerStation = new MinerStation(secondminerStationPos.x, secondminerStationPos.y, this);
+        pathNodeGrid.GetGridObject(secondminerStationPos).SetStructure(secondminerStation);
+        */
 
         //GenerateBay();
     }

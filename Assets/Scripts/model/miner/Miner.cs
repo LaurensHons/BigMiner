@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.Serialization;
+using Object = UnityEngine.Object;
 
 
 public class Miner : IWalker
@@ -21,10 +22,17 @@ public class Miner : IWalker
     public EventHandler MinerXpUpdate;
     public EventHandler MinerLevelUpdate;
     
-    public float speed => (float) (Math.Pow(0.99f, getLevel(out double d) - 1));
+    public float speed => (float) (Math.Pow(1.01f, getLevel(out double d) - 1) + speedUpgradesFlat) * speedUpgradesPercent;
+    private float speedUpgradesFlat = 0;
+    private float speedUpgradesPercent = 1;
+
+    public List<MinerUpgrade> upgrades { get; private set; }
+    public float damage => (activeTool.damage + damageUpgradesFlat) * damageUpgradesPercent;
+    private float damageUpgradesFlat = 0;
+    private float damageUpgradesPercent = 1;
+
+    public EventHandler updateStats;
     
-    
-    public float damage => activeTool.damage;
     public int blocksMined = 0;
 
     private int XP = 0;
@@ -44,7 +52,8 @@ public class Miner : IWalker
                 MinerLevelUpdate?.Invoke(this, EventArgs.Empty);
         }
     }
-    private int xpThreshHold = 50;      //change this for level calculation
+    
+    private int xpThreshHold = 2;      //change this for level calculation
 
     public MiningStrategy miningStrategy = MiningStrategy.Random;
 
@@ -87,6 +96,8 @@ public class Miner : IWalker
 
         this.minerStation = minerStation;
 
+        
+
         Pickaxe pick = new Pickaxe();
         toolList.Add(pick);
         setActiveTool(pick);
@@ -99,6 +110,12 @@ public class Miner : IWalker
         minerObject.AddComponent<SpriteRenderer>();
         minerObject.transform.localScale = Vector3.one * GameController.getBlockScale();
         minerObject.transform.SetParent(getBay().transform);
+
+        upgrades = new List<MinerUpgrade> { new Upgrade1() };
+
+        MinerLevelUpdate += updateStats;
+        activeTool.ToolDamageUpdate += updateStats;
+        updateStats += updateStatCalculations;
     }
 
     private void HandleSpriteLoading()
@@ -243,9 +260,7 @@ public class Miner : IWalker
 
     private void DepositItems()
     {
-        Debug.Log("Inv Miner:" +  Inventory);
         Inventory.DepositInventory(Silo.Instance.Inventory);
-        Debug.Log("Inv Miner:" +  Inventory);
         walker.StopAction();
     }
     
@@ -254,7 +269,82 @@ public class Miner : IWalker
         return Inventory;
     }
 
-    
+    public void updateStatCalculations(object sender, EventArgs eventArgs)
+    {
+        if (upgrades == null) return;
+        upgrades.Sort(MinerUpgrade.CompareByMinimumLvl);
+        maxBatteryMinutes = 20;
+        int inventorySize = 5;
+        
+        Debug.Log("Updating stats");
+        
+        foreach (var minerUpgrade in upgrades)
+        {
+            switch (minerUpgrade.getUpgradeType())
+            {
+                case UpgradeType.Speed:     // Speed formula ( 0.99 ^ ( lvl - 1 ) ) + speedUpgradesFlat ) * speedUpgradesPercent
+                {
+                    switch (minerUpgrade.getOperatorType())
+                    {
+                        case operatorType.Flat:
+                            speedUpgradesFlat += minerUpgrade.getUpgradeImpact() * minerUpgrade.getAmount();
+                            break;
+                        case operatorType.Percent:
+                            speedUpgradesPercent *= minerUpgrade.getUpgradeImpact() * minerUpgrade.getAmount();
+                            break;
+                    }
+                    break;
+                }
+                
+                case UpgradeType.Damage:        // Damage Formula (activeTool.damage + damageUpgradesFlat) * damageUpgradesPercent
+                {
+                    switch (minerUpgrade.getOperatorType())
+                    {
+                        case operatorType.Flat:
+                            damageUpgradesFlat += minerUpgrade.getUpgradeImpact() * minerUpgrade.getAmount();
+                            break;
+                        case operatorType.Percent:
+                            damageUpgradesPercent *= minerUpgrade.getUpgradeImpact() * minerUpgrade.getAmount();
+                            break;
+                    }
+                    break;
+                }
+                
+                case UpgradeType.Battery:        // Battery starts at 20 min and stacks up multipliers;
+                {
+                    switch (minerUpgrade.getOperatorType())
+                    {
+                        case operatorType.Flat:
+                            maxBatteryMinutes += (int) minerUpgrade.getUpgradeImpact() * minerUpgrade.getAmount();
+                            break;
+                        case operatorType.Percent:
+                            maxBatteryMinutes *= (int) minerUpgrade.getUpgradeImpact() * minerUpgrade.getAmount();
+                            break;
+                    }
+                    break;
+                }
+                
+                case UpgradeType.InventorySize:        // Inventory starts at 5 and stacks up multipliers;
+                {
+                    switch (minerUpgrade.getOperatorType())
+                    {
+                        case operatorType.Flat:
+                            inventorySize += (int) minerUpgrade.getUpgradeImpact() * minerUpgrade.getAmount();
+                            break;
+                        case operatorType.Percent:
+                            inventorySize *= (int) minerUpgrade.getUpgradeImpact() * minerUpgrade.getAmount();
+                            break;
+                    }
+                    break;
+                }
+            }
+        }
+
+        if (inventorySize != Inventory.getMaxInventoryweight())
+        {
+            Inventory.setMaxInventoryWeigh(inventorySize);
+        }
+    }    
 
     public Transform getTransform()
     {

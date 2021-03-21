@@ -12,6 +12,15 @@ public class Hammer : Tool
         };
     }
 
+    public override Item[] getBaseUpgradeCost()
+    {
+        return new Item[]
+        {
+            new DirtBlockItem(10),
+            new StoneBlockItem(10)
+        };
+    }
+
     public override string getSpritePath()
     {
         return "Assets/Images/Miner.png";
@@ -22,15 +31,10 @@ public class Hammer : Tool
         return 2;
     }
 
-    public override int getMinimumLvl()
-    {
-        return 0;
-    }
-
     public override string getDecriptionText()
     {
-        return "Trusty ol' pickaxe" +
-               "\nMines one block in front" +
-               "\nBase Damage: 1";
+        return "Its Hammer Time" +
+               "\nMines block in front and right" +
+               "\nBase Damage: 2";
     }
 }

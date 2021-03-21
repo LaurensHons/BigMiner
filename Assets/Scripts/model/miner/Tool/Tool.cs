@@ -44,8 +44,6 @@ public abstract class Tool
                 ToolLevelUpdate?.Invoke(this, EventArgs.Empty);
         }
     }
-    
-    public bool isUnlocked => getMinimumLvl() <= getLevel(out double d);
 
     public int getSpeed()
     {
@@ -87,22 +85,35 @@ public abstract class Tool
      * 
      */
 
+    public Item[] getUpgradeCost()
+    {
+        List<Item> returnList = new List<Item>();
+        foreach (var item in getBaseUpgradeCost())
+        {
+            item.addAmount((int) Math.Floor(item.getAmount() * 0.2 * DamageUpgrades));
+            returnList.Add(item);
+        }
+        Debug.Log("returnList: " + returnList[0]);
+        Debug.Log("baseUpgradeCost: " + getBaseUpgradeCost().Length);
+        return returnList.ToArray();
+    }
+    
+    public abstract Item[] getBaseUpgradeCost();
+
     public override bool Equals(object obj)
     {
         if (obj == null) return false;
         if (obj.GetType() == this.GetType())
         {
             Tool t = (Tool) obj;
-            if (getBaseDamage() == t.getBaseDamage() && getMinimumLvl() == t.getMinimumLvl()) return true;
+            if (getBaseDamage() == t.getBaseDamage() && XP == t.XP) return true;
             else return false;
         }
         else return false;
     }
 
     public abstract string getSpritePath();
-    
     public abstract float getBaseDamage();
-    public abstract int getMinimumLvl();
-
     public abstract string getDecriptionText();
+    
 }

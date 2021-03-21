@@ -11,6 +11,7 @@ public class UIController : MonoBehaviour
     private Vector3 cameraOriginPosition;
     private Vector3 cameraDifference;
     private bool Drag = false;
+    private GameObject SubPanel = null;
 
     private Vector3 dragOrigin;
     
@@ -23,7 +24,8 @@ public class UIController : MonoBehaviour
     public GameObject MenuPanel;
     public GameObject ScannerMenu;
     public GameObject MinerMenu;
-    public GameObject ToolMenu;
+    public GameObject MinerToolMenu;
+    public GameObject MinerUpgradeMenu;
 
     public Text ScreenRes;
     
@@ -47,7 +49,8 @@ public class UIController : MonoBehaviour
         MenuPanel.SetActive(false);
         ScannerMenu.SetActive(false);
         MinerMenu.SetActive(false);
-        ToolMenu.SetActive(false);
+        MinerToolMenu.SetActive(false);
+        MinerUpgradeMenu.SetActive(false);
 
 
         Vector3 cameraPos = new Vector3(Bay.gridSize/2 , 0, -10);
@@ -101,7 +104,16 @@ public class UIController : MonoBehaviour
     public void OpenToolMenu()      //Activated by Toolbutton
     {
         MinerController.loadTools();
-        setActivePanel(ToolMenu);
+        setActivePanel(MinerToolMenu);
+        SubPanel = MinerMenu;
+    }
+
+    public void OpenUpgradeMenu()       //Activated by UpgradesButton
+    {
+        
+        setActivePanel(MinerUpgradeMenu);
+        MinerController.loadUpgrades();
+        SubPanel = MinerMenu;
     }
 
     private void setActiveMenuPanel()
@@ -114,10 +126,10 @@ public class UIController : MonoBehaviour
         if (activeMenu == MinerMenu)
             MinerController.setActive(false);
 
-        if (activeMenu == ToolMenu)
+        if (SubPanel != null)
         {
-            
-            setActivePanel(MinerMenu);
+            setActivePanel(SubPanel);
+            SubPanel = null;
         }
         else
         {

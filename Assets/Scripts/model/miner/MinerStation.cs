@@ -17,7 +17,6 @@ public class MinerStation : MultiBlock
 
     public MinerStation(float x, float y, Bay bay) : base(x, y, bay)
     {
-        this.bay = bay;
         InstantiateMiner();
 
         BoxCollider2D bc = BlockObject.AddComponent<BoxCollider2D>();

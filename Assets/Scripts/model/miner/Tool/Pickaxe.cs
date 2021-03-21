@@ -19,15 +19,18 @@ public class Pickaxe : Tool
         return 1;
     }
 
-    public override int getMinimumLvl()
-    {
-        return 0;
-    }
-
     public override string getDecriptionText()
     {
         return "Trusty ol' pickaxe" +
                "\nMines one block in front" +
                "\nBase Damage: 1";
+    }
+
+    public override Item[] getBaseUpgradeCost()
+    {
+        return new Item[]
+        {
+            new DirtBlockItem(10)
+        };
     }
 }

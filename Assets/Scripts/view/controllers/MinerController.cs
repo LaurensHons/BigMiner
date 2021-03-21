@@ -45,6 +45,7 @@ public class MinerController : MonoBehaviour
 
     public GameObject UpgradeList;
     private GameObject UpgradePanelPrefab;
+    private List<UpgradePanelScript> upgradePanelScripts;
     private string UpgradePanelPrefabPath = "Assets/Addressables/Prefabs/UpgradePanelPrefab.prefab";
 
     private float DefaultBatteryWidth;      //gets battery width at starts and scales the battery according to this value;
@@ -62,42 +63,7 @@ public class MinerController : MonoBehaviour
         AsyncOperationHandle<GameObject> toolpanelHandler = Addressables.LoadAssetAsync<GameObject>(ToolPanelPrefabPath);
         toolpanelHandler.Completed += LoadToolPanels;
     }
-
-    public void loadTools()
-    {
-        if (ToolPanelPrefab == null) throw new Exception("Tool Panel Prefab not found");
-        
-        foreach (var tool in minerstation.Miner.toolList)
-        {
-            if (!toolPanels.ContainsKey(tool))
-            {
-                GameObject ToolPanel = Instantiate(ToolPanelPrefab, ToolList.transform);
-                toolPanels.Add(tool, ToolPanel.GetComponent<ToolPanelScript>());
-            }
-            Debug.Log(tool.GetType());
-            toolPanels[tool].setActive(this, tool, true);
-        }
-    }
-
-    private void LoadToolPanels(AsyncOperationHandle<GameObject> obj)
-    {
-        if (obj.Status == AsyncOperationStatus.Succeeded)
-        {
-            GameObject toolPanelprefab = obj.Result;
-            
-            if (toolPanelprefab == null) throw new Exception("Tool Panel Prefab not found");
-            ToolPanelPrefab = toolPanelprefab;
-        }
-        else throw new Exception("Loading Tool Panel Prefab failed");
-    }
-
-    public void loadUpgrades()
-    {
-        
-    }
-
     
-
     public void setMinerStation(MinerStation minerStation)
     {
         minerstation = minerStation;
@@ -126,14 +92,22 @@ public class MinerController : MonoBehaviour
                 minerSpriteHandler.Completed += LoadminerSpriteWhenReady; 
             }
             
+            
         
             InvokeRepeating("updateUI", 0, 1f);
         }
         else
         {
-            minerstation.Miner.MinerXpUpdate = null;
-            minerstation.Miner.MinerLevelUpdate = null;
-            minerstation.Miner.activeTool.ToolDamageUpdate = null;
+            minerstation.Miner.MinerXpUpdate -= updateXpBar;
+            minerstation.Miner.MinerLevelUpdate -= updateLevelText;
+            minerstation.Miner.MinerLevelUpdate -= updateSpeedText;
+            minerstation.Miner.activeTool.ToolDamageUpdate -= updateDamageText;
+            minerstation.Miner.Inventory.InventoryUpdate -= updateInventory;
+
+            foreach (var keyValuePair in toolPanels)
+            {
+                keyValuePair.Value.setActive(false);
+            }
             
             CancelInvoke();
         }
@@ -161,7 +135,7 @@ public class MinerController : MonoBehaviour
     }
     private void updateSpeedText(object obj, EventArgs eventArgs)
     {
-        SpeedText.text = "Speed\n" + Math.Round(1/minerstation.Miner.speed, 2) + " M/Sec";
+        SpeedText.text = "Speed\n" + Math.Round(minerstation.Miner.speed, 2) + " M/Sec";
     }
     private void updateDamageText(object obj, EventArgs eventArgs)
     {
@@ -197,6 +171,35 @@ public class MinerController : MonoBehaviour
 
         int batteryHours = batteryMinutes / 60;
         setBatteryString(batteryHours + " Hrs until empty");
+    }
+    
+    public void loadTools()
+    {
+        if (ToolPanelPrefab == null) throw new Exception("Tool Panel Prefab not found");
+        
+        foreach (var tool in minerstation.Miner.toolList)
+        {
+            if (!toolPanels.ContainsKey(tool))
+            {
+                GameObject ToolPanel = Instantiate(ToolPanelPrefab, ToolList.transform);
+                toolPanels.Add(tool, ToolPanel.GetComponent<ToolPanelScript>());
+            }
+            Debug.Log(tool.GetType());
+            toolPanels[tool].setActive(true, this, tool);
+        }
+    }
+
+    public void loadUpgrades()
+    {
+        int amountOfPanels = UpgradeList.transform.childCount;
+        for (int i = 0; i < amountOfPanels; i++)
+        {
+            if (minerstation.Miner.upgrades == null || i >= minerstation.Miner.upgrades.Count) return;
+            MinerUpgrade upgrade = minerstation.Miner.upgrades[i];
+            if (upgrade != null)
+                UpgradeList.transform.GetChild(i).gameObject.GetComponent<UpgradePanelScript>().LoadUpgrade(upgrade);
+            else return;
+        }
     }
 
     private void updateInventory()
@@ -340,6 +343,19 @@ public class MinerController : MonoBehaviour
         }
         else throw new Exception("Loading sprite failed");
     }
+    
+    private void LoadToolPanels(AsyncOperationHandle<GameObject> obj)
+    {
+        if (obj.Status == AsyncOperationStatus.Succeeded)
+        {
+            GameObject toolPanelprefab = obj.Result;
+            
+            if (toolPanelprefab == null) throw new Exception("Tool Panel Prefab not found");
+            ToolPanelPrefab = toolPanelprefab;
+        }
+        else throw new Exception("Loading Tool Panel Prefab failed");
+    }
+    
 
     
 }

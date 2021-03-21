@@ -27,7 +27,10 @@
             <e p="miner" t="Include">
               <e p="Miner.cs" t="Include" />
               <e p="MinerStation.cs" t="Include" />
-              <e p="MinerUpgrade.cs" t="Include" />
+              <e p="MinerUpgrades" t="Include">
+                <e p="MinerUpgrade.cs" t="Include" />
+                <e p="Upgrade1To10.cs" t="Include" />
+              </e>
               <e p="Tool" t="Include">
                 <e p="Hammer.cs" t="Include" />
                 <e p="Pickaxe.cs" t="Include" />
@@ -52,6 +55,7 @@
               <e p="UIController.cs" t="Include" />
             </e>
             <e p="UIScripts" t="Include">
+              <e p="ButtonTextPrefab.cs" t="Include" />
               <e p="MinerStationClickController.cs" t="Include" />
               <e p="ScannerMainInfoPanel.cs" t="Include" />
               <e p="ScannerSlider.cs" t="Include" />
@@ -63,11 +67,7 @@
       </e>
       <e p="BigMiner.sln" t="IncludeFlat" />
       <e p="obj" t="ExcludeRecursive" />
-      <e p="package.json" t="Include" />
-      <e p="Packages" t="ExcludeRecursive">
-        <e p="manifest.json" t="Include" />
-        <e p="packages-lock.json" t="Include" />
-      </e>
+      <e p="Packages" t="ExcludeRecursive" />
       <e p="Temp\Bin" t="ExcludeRecursive" />
     </e>
   </component>

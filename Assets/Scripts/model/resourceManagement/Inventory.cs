@@ -29,7 +29,12 @@ public class Inventory
         InventoryUpdate?.Invoke();
     }
 
-    private Item TryGetItem(Item item)
+    public void setMaxInventoryWeigh(int amount)
+    {
+        this.maxInventoryWeight = amount;
+    }
+
+    public Item TryGetItem(Item item)
     {
         foreach (var ItemInInventory in ItemInventory)
         {
@@ -63,7 +68,7 @@ public class Inventory
         addInventoryWeight(-amount);
     }
     
-    public void AddItem(Item addItem, int? amount)
+    public void AddItem(Item addItem, int? amount = null)
     {
         if (addItem == null) throw new NullReferenceException();
         amount ??= addItem.getAmount();
@@ -77,7 +82,7 @@ public class Inventory
         AddToInventoryList(addItem, (int) amount);
     }
 
-    public void RemoveItem(Item removeItem, int? amount)
+    public void RemoveItem(Item removeItem, int? amount = null)
     {
         if (removeItem == null) throw new NullReferenceException();
         Item itemInInv = TryGetItem(removeItem);

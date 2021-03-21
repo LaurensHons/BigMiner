@@ -77,7 +77,7 @@ public class DirtBlockItem : Item
 
     public override string getSpritePath()
     {
-        return "Assets/Images/DirtBlock.png";
+        return "Assets/Addressables/Blocks/DirtBlock.png";
     }
 }
 
@@ -87,6 +87,6 @@ public class StoneBlockItem : Item
 
     public override string getSpritePath()
     {
-        return "Assets/Images/stone.png";
+        return "Assets/Addressables/Blocks/stoneW all.png";
     }
 }
