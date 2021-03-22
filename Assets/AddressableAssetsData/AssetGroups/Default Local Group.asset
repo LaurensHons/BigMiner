@@ -77,6 +77,12 @@ MonoBehaviour:
     m_SerializedLabels: []
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
+  - m_GUID: a594253672bad1d47b6abac90bc36c95
+    m_Address: Assets/Addressables/Items/iceCave.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: f74ff28122923544dad13360e719334e, type: 2}
   m_SchemaSet:

@@ -218,7 +218,13 @@ public class MinerController : MonoBehaviour
                     Debug.Log("spawning object");
                     GameObject g = new GameObject(item.GetType().ToString());
                     g.AddComponent<Image>();
-                    g.GetComponent<Image>().sprite = item.getSprite();
+                    item.loadSprite().Completed += obj =>
+                    {
+                        g.GetComponent<Image>().sprite = obj.Result;
+                    };
+                    
+                    
+                    
                     g.transform.SetParent(InventoryObject.transform);
                     g.transform.localScale = Vector3.one;
                     InventoryItemObjects.Add(new Tuple<Item, GameObject>(item, g));

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
@@ -8,13 +9,13 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public abstract class Item
 {
     private int amount = 0;
+    private static Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
     private Sprite sprite;
 
     public Item(int amount)
     {
-        if (amount >= 0) this.amount = amount;
-        AsyncOperationHandle<Sprite> ItemSpriteHandler = Addressables.LoadAssetAsync<Sprite>(getSpritePath());
-        ItemSpriteHandler.Completed += LoadItemSpriteWhenReady; 
+        if (amount >= 0) 
+            this.amount = amount;
     }
 
     public static Item CreateItem(Item item, int amount)
@@ -31,29 +32,18 @@ public abstract class Item
     {
         this.amount = amount;
     }
-
-   
+    
     public int getAmount() { return amount; }
 
     public string getName() { return this.GetType().ToString(); }
     
-    public Sprite getSprite()
-    {
-        return sprite;
-    }
 
-    private void LoadItemSpriteWhenReady(AsyncOperationHandle<Sprite> obj)
+    public AsyncOperationHandle<Sprite> loadSprite()
     {
-        if (obj.Status == AsyncOperationStatus.Succeeded)
-        {
-            Sprite itemSprite = obj.Result;
-            
-            if (itemSprite == null) throw new Exception("No item sprite found");
-            sprite = itemSprite;
-        }
-        else throw new Exception("Loading item sprite failed");
+        AsyncOperationHandle<Sprite> spriteHandle = Addressables.LoadAssetAsync<Sprite>(getSpritePath());
+        return spriteHandle;
     }
-
+    
     public abstract string getSpritePath();
 }
 
@@ -87,6 +77,6 @@ public class StoneBlockItem : Item
 
     public override string getSpritePath()
     {
-        return "Assets/Addressables/Blocks/stoneW all.png";
+        return "Assets/Addressables/Blocks/stoneWall.png";
     }
 }
