@@ -23,6 +23,11 @@ public class MinerStation : MultiBlock
     private void InstantiateMiner()
     {
         Vector2 pos = new Vector2(0, 1);
+        while (!bay.getPathNode(pos).isWalkable)
+        {
+            pos.y += 1;
+            if (bay.getPathNode(pos) == null) throw new Exception("No valid space found for Instantiating miner");
+        }
         Miner = new Miner(pos, this);
         bay.registerMiner(Miner);
     }
@@ -101,11 +106,6 @@ public class MinerStation : MultiBlock
     public override bool isResource()
     {
         return false;
-    }
-
-    public override void destroy()
-    {
-        throw new NotImplementedException();
     }
 
     public override PathNode getInterfaceNode()

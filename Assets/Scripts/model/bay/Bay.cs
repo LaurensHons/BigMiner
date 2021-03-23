@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using Blocks;
 using Grid;
 using UnityEngine;
@@ -19,7 +20,7 @@ public class Bay : MonoBehaviour
         UpdateObservers?.Invoke(this, EventArgs.Empty);
     }
 
-    public int gridSize
+    public Vector2 gridSize
     {
         get { return GameController.getGridSize(); }
         set { GameController.setGridSize(value);}
@@ -38,7 +39,7 @@ public class Bay : MonoBehaviour
 
     void Start()
     {
-        pathNodeGrid = new Grid<PathNode>(gridSize, gridSize * 2, 1f, Vector3.zero,
+        pathNodeGrid = new Grid<PathNode>((int) gridSize.x, (int) gridSize.y, 1f, Vector3.zero,
             (Grid<PathNode> g, int x, int y) => new PathNode(g, x, y));
 
         Vector2 siloPos = new Vector2(0, 0);
@@ -86,6 +87,18 @@ public class Bay : MonoBehaviour
     }
     
     */
+
+    public void clearBay()
+    {
+        foreach (var structure in structures.ToArray())
+        {
+            if (structure.isResource())
+            {
+                structure.destroy();
+                removeBlock(structure as Block);
+            }
+        }
+    }
 
     public void spawnBlockType(BlockTypes BlockType)
     {
@@ -171,9 +184,9 @@ public class Bay : MonoBehaviour
 
     public void updateStructure(MultiBlock structure)
     {
-        for (int x = 0; x < gridSize; x++)
+        for (int x = 0; x < gridSize.x; x++)
         {
-            for (int y = 0; y < gridSize; y++)
+            for (int y = 0; y < gridSize.y; y++)
             {
                 PathNode b = pathNodeGrid.GetGridObject(x, y);
                 if (b.structure == structure)
@@ -193,14 +206,10 @@ public class Bay : MonoBehaviour
     public List<PathNode> getBlockList()
     {
         List<PathNode> returnList = new List<PathNode>();
-        for (int x = 0; x < gridSize; x++)
+
+        foreach (var structure in structures)
         {
-            for (int y = 0; y < gridSize; y++)
-            {
-                PathNode b = pathNodeGrid.GetGridObject(x, y);
-                if (!b.isWalkable && b.structure.isResource())
-                    returnList.Add(b);
-            }
+           if (structure.isResource()) returnList.AddRange(structure.getPathNodeList());
         }
 
         return returnList;
@@ -209,9 +218,9 @@ public class Bay : MonoBehaviour
     private List<PathNode> getFreeNodes()
     {
         List<PathNode> returnList = new List<PathNode>();
-        for (int x = 0; x < gridSize; x++)
+        for (int x = 0; x < gridSize.x; x++)
         {
-            for (int y = gridSize / 2; y < gridSize * 2; y++)
+            for (int y = (int) (gridSize.y / 2f); y < gridSize.y; y++)
             {
                 PathNode b = pathNodeGrid.GetGridObject(x, y);
                 if (b.isWalkable)

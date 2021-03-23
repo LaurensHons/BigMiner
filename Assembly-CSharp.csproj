@@ -67,7 +67,9 @@
      <Compile Include="Assets\Scripts\model\bay\PathFinding\Grid.cs" />
      <Compile Include="Assets\Scripts\model\resourceManagement\Inventory.cs" />
      <Compile Include="Assets\Scripts\model\miner\Walker.cs" />
+     <Compile Include="Assets\Scripts\view\controllers\EditController.cs" />
      <Compile Include="Assets\Scripts\model\miner\Tool\Pickaxe.cs" />
+     <Compile Include="Assets\Scripts\view\UIScripts\MultiBlockGameObjectScript.cs" />
      <Compile Include="Assets\Scripts\model\blocks\StoneBlock.cs" />
      <Compile Include="Assets\Scripts\model\miner\Tool\Tool.cs" />
      <Compile Include="Assets\Scripts\view\controllers\DebugDrawer.cs" />
@@ -77,15 +79,13 @@
      <Compile Include="Assets\Scripts\model\blocks\Block.cs" />
      <Compile Include="Assets\Scripts\view\controllers\MinerController.cs" />
      <Compile Include="Assets\Scripts\model\blocks\MultiBlock.cs" />
+     <Compile Include="Assets\Scripts\view\UIScripts\UI\ButtonTextPrefab.cs" />
      <Compile Include="Assets\Scripts\view\controllers\UIController.cs" />
      <Compile Include="Assets\Scripts\model\miner\MinerStation.cs" />
      <Compile Include="Assets\Scripts\view\UIScripts\UI\UpgradePanelScript.cs" />
      <Compile Include="Assets\Scripts\model\blocks\DirtBlock.cs" />
      <Compile Include="Assets\Scripts\view\controllers\GameController.cs" />
      <Compile Include="Assets\Scripts\model\miner\MinerUpgrades\Upgrade1To10.cs" />
-     <Compile Include="Assets\Scripts\view\UIScripts\UI\ButtonTextPrefab.cs" />
-     <Compile Include="Assets\Scripts\view\UIScripts\MultiBlockGameObjectScript.cs" />
-     <Compile Include="Assets\Scripts\view\controllers\EditController.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.2.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>

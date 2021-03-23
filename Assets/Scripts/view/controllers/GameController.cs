@@ -8,7 +8,7 @@ public class GameController : MonoBehaviour
 {
     public GameObject Bay;
 
-    public static int baySize = 5;
+    public static Vector2 baySize = new Vector2(5, 10);
     public static float blockScale = 0.19f;
 
     void Start()
@@ -22,7 +22,7 @@ public class GameController : MonoBehaviour
         
     }
 
-    public static int getGridSize()
+    public static Vector2 getGridSize()
     {
         return baySize;
     }
@@ -32,7 +32,7 @@ public class GameController : MonoBehaviour
         return blockScale;
     }
 
-    public static void setGridSize(int value)
+    public static void setGridSize(Vector2 value)
     {
         baySize = value;
     }

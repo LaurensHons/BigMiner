@@ -174,8 +174,9 @@ public class Miner : IWalker
     
     public void Mine()
     {
-        if (walker.targetStructure == null)
+        if (walker.targetStructure.isDestroyed())
         {
+            walker.setStatusCollectingBlocks(this, EventArgs.Empty);
             walker.StopAction();
             return;
         }
@@ -192,10 +193,14 @@ public class Miner : IWalker
     {
         //String outstring = "Additinal mining pos:\n";
 
+        if (walker.targetStructure.isDestroyed())
+        {
+            walker.StopAction();
+            return;
+        }
 
 
-
-        foreach (var v2 in activeTool.getAdditionalMiningPos(walker.targetStructure.getPos() - (Vector2) getTransform().position))
+        foreach (var v2 in activeTool.getAdditionalMiningPos(walker.targetStructure.getPos() - (Vector2) getTransform().position).ToArray())
         {
             //outstring += v2 + ", ";
             PathNode blockToMine = getBay().getPathNode(

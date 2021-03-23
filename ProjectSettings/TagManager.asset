@@ -3,12 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - UIController
+  - Bay
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Bay
   - Water
   - UI
   - 

@@ -140,7 +140,7 @@ public class Walker
         //Debug.Log("Finding new target");
         targetStructure = objectToWalk.getNextTarget();
 
-        if (targetStructure != null)
+        if (targetStructure != null && !targetStructure.isDestroyed())
         {
             SetTargetPosition(targetStructure);
         }

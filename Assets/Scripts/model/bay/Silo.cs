@@ -48,11 +48,6 @@ public class Silo : MultiBlock
         return false;
     }
 
-    public override void destroy()
-    {
-        throw new System.NotImplementedException();
-    }
-
     public override PathNode getInterfaceNode()
     {
         return bay.getPathNode((int) baseX, (int) baseY);
@@ -70,6 +65,6 @@ public class Silo : MultiBlock
 
     public override Vector2 getDimensions()
     {
-        return new Vector2(2, 1);
+        return new Vector2(2, 2);
     }
 }

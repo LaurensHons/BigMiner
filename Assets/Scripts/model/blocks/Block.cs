@@ -20,11 +20,12 @@ public abstract class Block : IStructure
     private GameObject healthBarPrefab;
 
     public float HP;
+    public bool isDestroyed { get; private set; } = false;
 
     protected Block(float x, float y, PathNode pathNode)
     {
         HandleSpriteLoading();
-        
+
         this.pathNode = pathNode;
         pathNode.SetStructure(this);
 
@@ -38,8 +39,6 @@ public abstract class Block : IStructure
         BlockSpriteRenderer.AddComponent<Image>();
         BlockSpriteRenderer.layer = 3;
         BlockSpriteRenderer.transform.SetParent(BlockObject.transform, false);
-        
-        BoxCollider2D bc = BlockObject.AddComponent<BoxCollider2D>();
 
 
         HP = getMaxHealth();
@@ -62,6 +61,7 @@ public abstract class Block : IStructure
             GameObject.Destroy(BlockObject);
             GameObject.FindWithTag("Bay").GetComponent<Bay>().removeBlock(this);
             destroyed = true;
+            isDestroyed = true;
         }
         else
         {
@@ -121,17 +121,6 @@ public abstract class Block : IStructure
         
     }
     
-    
-    
-    public void highLightBlock()
-    {
-        //BlockSpriteRenderer.GetComponent<SpriteRenderer>().material.SetColor(0, Color.blue);
-    }
-
-    public void stopHighlightBlock()
-    {
-        //BlockSpriteRenderer.GetComponent<SpriteRenderer>().material.SetColor(0, Color.clear);
-    }
 
     public void setParent(Transform transform)
     {
@@ -153,9 +142,15 @@ public abstract class Block : IStructure
         return true;
     }
 
-    public BoxCollider2D getBoxCollider()
+    bool IStructure.isDestroyed()
     {
-        return BlockObject.GetComponent<BoxCollider2D>();
+        return isDestroyed;
+    }
+
+    public void destroy()
+    {
+        GameObject.Destroy(BlockObject);
+        isDestroyed = true;
     }
 
     public override string ToString()

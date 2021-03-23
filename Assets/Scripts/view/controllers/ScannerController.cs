@@ -39,10 +39,6 @@ public class ScannerController : MonoBehaviour
             Slider_BlockPrefab.name = "Slider" + BlockType.ToString();
             Slider_BlockPrefab.GetComponent<ScannerSlider>().ScannerController = this;
         }
-        
-        
-        Vector3 pos = new Vector3(Bay.gridSize/2, Bay.gridSize + .3f);
-
         updateSliders();
     }
 

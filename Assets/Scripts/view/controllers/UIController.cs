@@ -57,7 +57,7 @@ public class UIController : MonoBehaviour
         MinerUpgradeMenu.SetActive(false);
 
 
-        Vector3 cameraPos = new Vector3(Bay.gridSize / 2, Bay.gridSize / 2, -10);
+        Vector3 cameraPos = new Vector3((Bay.gridSize.x - 1) / 2f, (Bay.gridSize.y - 1) / 2f, -10);
         camera.transform.position = cameraPos;
     }
 
@@ -81,7 +81,7 @@ public class UIController : MonoBehaviour
         if (Drag == true)
         {
             Camera.main.transform.position =
-                new Vector3(Bay.gridSize / 2, cameraOriginPosition.y - cameraDifference.y, -1);
+                new Vector3((Bay.gridSize.x - 1) / 2f, cameraOriginPosition.y - cameraDifference.y, -1);
         }
     }
 
@@ -132,6 +132,11 @@ public class UIController : MonoBehaviour
     public void CommitButton()   //Activated by Commit Button
     {
         EditController.CommitButtonClick();
+    }
+
+    public void TrashButton()   //Activated by trash Button
+    {
+        Bay.clearBay();
     }
     
 
