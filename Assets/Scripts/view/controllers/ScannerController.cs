@@ -14,10 +14,7 @@ public class ScannerController : MonoBehaviour
     private UIController UIController;
     public GameObject BayGameObject;
     private Bay Bay;
-
-    public Scanner Scanner;
     
-    public GameObject ScannerButton;
     public GameObject ScannerPanelList;
     
     public GameObject slider_BlockPrefab;
@@ -31,9 +28,7 @@ public class ScannerController : MonoBehaviour
     private void Start()
     {
         UIController = UIControllerObject.GetComponent<UIController>();
-        
-        Scanner = Scanner.Instance;
-        Scanner.setUiController(UIController);
+        Scanner.Instance.setUiController(UIController);
         
         Bay = BayGameObject.GetComponent<Bay>();
 
@@ -47,10 +42,7 @@ public class ScannerController : MonoBehaviour
         
         
         Vector3 pos = new Vector3(Bay.gridSize/2, Bay.gridSize + .3f);
-        ScannerButton.transform.position = pos;
-        float scale = ScannerButton.transform.localScale.x;
-        ScannerButton.GetComponent<RectTransform>().rect.Set(Bay.gridSize/2, Bay.gridSize + .3f,scale * Bay.gridSize, 30);
-        
+
         updateSliders();
     }
 
@@ -58,7 +50,7 @@ public class ScannerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Scanner.Update();
+        Scanner.Instance.Update();
     }
 
     public void RegisterScannerSlider(ScannerSlider scannerSlider)
@@ -68,7 +60,6 @@ public class ScannerController : MonoBehaviour
     
     public void updateSliders()
     {
-        if (Scanner == null) return;
         float total = 0;
         foreach (var slider in ScannerSliders)
         {
@@ -79,8 +70,8 @@ public class ScannerController : MonoBehaviour
         {
             float scaleFactor = slider.getValue() / total;
             
-            float BPS = slider.getValue() * Scanner.getSearchCapacity() * scaleFactor / getBlockSearchCost(slider.getBlockType());
-            Debug.Log(slider.getValue()  + " *  " +  Scanner.getSearchCapacity() + " *  " + scaleFactor + " /  " + getBlockSearchCost(slider.getBlockType()));
+            float BPS = slider.getValue() * Scanner.Instance.getSearchCapacity() * scaleFactor / getBlockSearchCost(slider.getBlockType());
+            Debug.Log(slider.getValue()  + " *  " +  Scanner.Instance.getSearchCapacity() + " *  " + scaleFactor + " /  " + getBlockSearchCost(slider.getBlockType()));
             
             //Debug.Log("Scalefactor: " + scaleFactor + ", total: " + total + ", Slidervalue: " + slider.getValue());
             slider.updatePercentageText();
@@ -91,7 +82,7 @@ public class ScannerController : MonoBehaviour
             else
                 blocksPerSec.Add(slider.getBlockType(), BPS);
         }
-        Scanner.setblocksPerSec(blocksPerSec);
+        Scanner.Instance.setblocksPerSec(blocksPerSec);
         
     }
 
@@ -115,7 +106,7 @@ public class ScannerController : MonoBehaviour
 
     public void upgradeScannerPower()
     {
-        Scanner.SearchCapcacity *= 1.5f;
+        Scanner.Instance.SearchCapcacity *= 1.5f;
     }
     
 }

@@ -29,7 +29,7 @@ public class ScannerMainInfoPanel : MonoBehaviour
 
     void Update()
     {
-        ScannerCapacitySlider.maxValue = ScannerController.Scanner.getSearchCapacity();
+        ScannerCapacitySlider.maxValue = Scanner.Instance.getSearchCapacity();
         float currentSearchCapacityUse = ScannerController.getCurrentSearchCapacityUse();
         ScannerCapacitySlider.value = currentSearchCapacityUse;
         CurrentSearchCapacityText.text = Math.Round(currentSearchCapacityUse, 1).ToString();

@@ -13,16 +13,11 @@ public class MinerStation : MultiBlock
     
     private IMiningStrategy miningStrategy = new RandomMiningStrategy();
 
-    private MinerStationClickController ClickController;
+    private MultiBlockGameObjectScript ClickController;
 
     public MinerStation(float x, float y, Bay bay) : base(x, y, bay)
     {
         InstantiateMiner();
-
-        BoxCollider2D bc = BlockObject.AddComponent<BoxCollider2D>();
-        bc.size = Vector2.one * (1/GameController.getBlockScale());
-        ClickController = BlockObject.AddComponent<MinerStationClickController>();
-        ClickController.minerstation = this;
     }
     
     private void InstantiateMiner()
@@ -91,6 +86,11 @@ public class MinerStation : MultiBlock
     public override string getSpritePath()
     {
         return "Assets/Addressables/Blocks/shardRock.png";
+    }
+
+    public override void onClick()
+    {
+        GameObject.FindWithTag("UIController").GetComponent<UIController>().OpenMinerMenu(this);
     }
 
     public override Vector2 getDimensions()

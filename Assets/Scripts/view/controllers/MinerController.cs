@@ -76,13 +76,12 @@ public class MinerController : MonoBehaviour
         {
             minerstation.Miner.MinerXpUpdate += updateXpBar;
             minerstation.Miner.MinerLevelUpdate += updateLevelText;
-            minerstation.Miner.MinerLevelUpdate += updateSpeedText;
-            minerstation.Miner.activeTool.ToolDamageUpdate += updateDamageText;
+            minerstation.Miner.updatedStats += updateMinerStats;
             minerstation.Miner.Inventory.InventoryUpdate += updateInventory;
 
-            minerstation.Miner.MinerXpUpdate(this, EventArgs.Empty);
-            minerstation.Miner.MinerLevelUpdate(this, EventArgs.Empty);
-            minerstation.Miner.activeTool.ToolDamageUpdate(this, EventArgs.Empty);
+            minerstation.Miner.MinerXpUpdate?.Invoke(this, EventArgs.Empty);
+            minerstation.Miner.MinerLevelUpdate?.Invoke(this, EventArgs.Empty);
+            minerstation.Miner.activeTool.ToolDamageUpdate?.Invoke(this, EventArgs.Empty);
             updateInventory();
             
                 
@@ -91,17 +90,14 @@ public class MinerController : MonoBehaviour
                 AsyncOperationHandle<Sprite> minerSpriteHandler = Addressables.LoadAssetAsync<Sprite>(minerstation.Miner.getSpritePath());
                 minerSpriteHandler.Completed += LoadminerSpriteWhenReady; 
             }
-            
-            
-        
-            InvokeRepeating("updateUI", 0, 1f);
+
+            InvokeRepeating("updatePerSecond", 0, 1f);
         }
         else
         {
             minerstation.Miner.MinerXpUpdate -= updateXpBar;
             minerstation.Miner.MinerLevelUpdate -= updateLevelText;
-            minerstation.Miner.MinerLevelUpdate -= updateSpeedText;
-            minerstation.Miner.activeTool.ToolDamageUpdate -= updateDamageText;
+            minerstation.Miner.MinerLevelUpdate -= updateMinerStats;
             minerstation.Miner.Inventory.InventoryUpdate -= updateInventory;
 
             foreach (var keyValuePair in toolPanels)
@@ -112,12 +108,13 @@ public class MinerController : MonoBehaviour
             CancelInvoke();
         }
     }
-
-    private void updateUI()
+    
+    private void updatePerSecond()
     {
         updateBattery();
         updateBlocksMined(this, EventArgs.Empty);
     }
+    
     private void updateXpBar(object obj, EventArgs eventArgs)
     {
         int level = minerstation.Miner.getLevel(out double percentLeft);
@@ -133,12 +130,10 @@ public class MinerController : MonoBehaviour
     {
         NameText.text = minerstation.Miner.name;
     }
-    private void updateSpeedText(object obj, EventArgs eventArgs)
+    
+    private void updateMinerStats(object obj, EventArgs eventArgs)
     {
         SpeedText.text = "Speed\n" + Math.Round(minerstation.Miner.speed, 2) + " M/Sec";
-    }
-    private void updateDamageText(object obj, EventArgs eventArgs)
-    {
         DamageText.text = "Damage\n" + Math.Round(minerstation.Miner.damage, 2);
     }
 
@@ -222,9 +217,7 @@ public class MinerController : MonoBehaviour
                     {
                         g.GetComponent<Image>().sprite = obj.Result;
                     };
-                    
-                    
-                    
+
                     g.transform.SetParent(InventoryObject.transform);
                     g.transform.localScale = Vector3.one;
                     InventoryItemObjects.Add(new Tuple<Item, GameObject>(item, g));

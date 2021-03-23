@@ -4,9 +4,15 @@ using System.Collections.Generic;
 public abstract class MinerUpgrade
 {
     public EventHandler UpgradeUpdate;
-    
+
+    private Miner owner;
     private int amount = 0;
     private int maxAmount;
+
+    public MinerUpgrade(Miner owner)
+    {
+        this.owner = owner;
+    }
 
     public void BuyUpgrade()
     {
@@ -15,6 +21,7 @@ public abstract class MinerUpgrade
         {
             amount++;
             UpgradeUpdate?.Invoke(this, EventArgs.Empty);
+            owner.recalculateStats?.Invoke(this, EventArgs.Empty);
         }
     }
     

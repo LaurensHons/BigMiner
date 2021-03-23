@@ -39,8 +39,8 @@ public abstract class Block : IStructure
         BlockSpriteRenderer.layer = 3;
         BlockSpriteRenderer.transform.SetParent(BlockObject.transform, false);
         
-        
-        
+        BoxCollider2D bc = BlockObject.AddComponent<BoxCollider2D>();
+
 
         HP = getMaxHealth();
     }
@@ -60,7 +60,7 @@ public abstract class Block : IStructure
         if (HP - hit <= 0)
         {
             GameObject.Destroy(BlockObject);
-            //GameObject.Destroy(HealthBar);
+            GameObject.FindWithTag("Bay").GetComponent<Bay>().removeBlock(this);
             destroyed = true;
         }
         else
@@ -153,9 +153,9 @@ public abstract class Block : IStructure
         return true;
     }
 
-    public void destroy()
+    public BoxCollider2D getBoxCollider()
     {
-        GameObject.Destroy(BlockObject);
+        return BlockObject.GetComponent<BoxCollider2D>();
     }
 
     public override string ToString()

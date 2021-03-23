@@ -1,20 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.UI;
 
 public abstract class MultiBlock : IStructure
 {
     protected GameObject BlockObject;
+    protected GameObject BlockSpriteRenderer;
     protected Bay bay;
     protected List<PathNode> pathNodeList;
 
+    protected Vector2 temporaryPos;
+    protected GameObject temporaryGameObject;
+    private bool canPlaceTemporary;
+
+    public bool CanPlaceTemporary => canPlaceTemporary;
+
     protected PathNode interfaceNode
     {
-        get
-        {
-            return getInterfaceNode();
-        }
+        get { return getInterfaceNode(); }
     }
 
     private Sprite BlockSprite;
@@ -24,47 +30,56 @@ public abstract class MultiBlock : IStructure
 
     protected MultiBlock(float x, float y, Bay bay)
     {
-        HandleSpriteLoading();
+
 
         this.bay = bay;
         baseX = x;
         baseY = y;
 
         float width = getDimensions().x, height = getDimensions().y;
-        
-        BlockObject = new GameObject("MultiBlock [x:"  + x + ", y:" + y + ", width:" + width + ", height:" + height + "]");
-        BlockObject.AddComponent(typeof(SpriteRenderer));
 
-        float xOffset = (width - 1 )/ 2;
+        BlockObject =
+            new GameObject("MultiBlock [x:" + x + ", y:" + y + ", width:" + width + ", height:" + height + "]");
+
+        float xOffset = (width - 1) / 2;
         float yOffset = (height - 1) / 2;
-        
-        BlockObject.transform.position = new Vector3(x + xOffset, y + yOffset);
-        BlockObject.transform.localScale = new Vector3(GameController.getBlockScale() * width,
-            GameController.getBlockScale() * height);
+        RectTransform rect = BlockObject.AddComponent<RectTransform>();
+        rect.sizeDelta = new Vector2(width, height);
         BlockObject.transform.SetParent(bay.transform);
+        BlockObject.transform.position = new Vector2(x + xOffset, y + yOffset);
+        //BlockObject.transform.localScale = new Vector2(width, height);
 
-        
-        setPathNodeList();
-    }
+        BlockSpriteRenderer = new GameObject("BlockSpriteRenderer");
+        BlockSpriteRenderer.transform.localPosition = Vector3.zero;
+        BlockSpriteRenderer.layer = 3;
+        BlockSpriteRenderer.transform.SetParent(BlockObject.transform, false);
 
-    private void setPathNodeList()
-    {
-        float width = getDimensions().x, height = getDimensions().y;
 
-        List<PathNode> pathNodes = new List<PathNode>();
-
-        for (int x = (int) baseX; x < width; x++)
+        AsyncOperationHandle<Sprite> spriteHandler = Addressables.LoadAssetAsync<Sprite>(getSpritePath());
+        spriteHandler.Completed += obj =>
         {
-            for (int y = (int) baseY ; y < height; y++)
-            {
-                pathNodes.Add(bay.getPathNode((int) baseX + x, (int) baseY + y));
-            }
-        }
+            BlockSpriteRenderer.AddComponent<Image>().sprite = obj.Result;
+            RectTransform rect = BlockSpriteRenderer.GetComponent<RectTransform>();
+            rect.anchoredPosition = BlockObject.transform.position;
+            rect.anchorMin = Vector2.zero;
+            rect.anchorMax = Vector2.zero;
+            rect.localPosition = Vector3.zero;
+            rect.sizeDelta = new Vector2(width, height);
+        };
 
-        pathNodeList = pathNodes;
+        BlockObject.AddComponent<MultiBlockGameObjectScript>();
+        BlockObject.GetComponent<MultiBlockGameObjectScript>().setStructure(this);
+
+        BoxCollider2D bc = BlockObject.AddComponent<BoxCollider2D>();
+        bc.size = new Vector2(width, height);
     }
 
     public List<PathNode> getPathNodeList()
+    {
+        return getPathNodeList(new Vector2(baseX, baseY));
+    }
+
+    public List<PathNode> getPathNodeList(Vector2 pos)
     {
         float width = getDimensions().x, height = getDimensions().y;
 
@@ -72,34 +87,83 @@ public abstract class MultiBlock : IStructure
 
         for (int x = 0; x < width; x++)
         {
-            for (int y = 0 ; y < height; y++)
+            for (int y = 0; y < height; y++)
             {
-                pathNodes.Add(bay.getPathNode((int) baseX + x, (int) baseY + y));
+                pathNodes.Add(bay.getPathNode((int) pos.x + x, (int) pos.y + y));
+
             }
         }
 
         return pathNodes;
     }
-    
-    private void HandleSpriteLoading()
+
+    public void moveTemporaryStructure(Vector2 pos)
     {
-        AsyncOperationHandle<Sprite> HealthBarSpriteHandler = Addressables.LoadAssetAsync<Sprite>(getSpritePath());
-        HealthBarSpriteHandler.Completed += LoadSpriteWhenReady;
-    }
-    
-    private void LoadSpriteWhenReady(AsyncOperationHandle<Sprite> handleToCheck)
-    {
-        if(handleToCheck.Status == AsyncOperationStatus.Succeeded)
+        temporaryPos = pos;
+        if (temporaryGameObject == null)
         {
-            BlockSprite = handleToCheck.Result;
-            
-            if (BlockSprite == null) Debug.Log("No block sprite found, maybe file named wrong?");
-            else
+            temporaryGameObject = new GameObject("Temp Multiblock");
+            temporaryGameObject.transform.localPosition = Vector3.zero;
+            temporaryGameObject.layer = 3;
+            temporaryGameObject.transform.SetParent(bay.transform, false);
+            MultiBlockGameObjectScript mbgos = temporaryGameObject.AddComponent<MultiBlockGameObjectScript>();
+            mbgos.setStructure(this);
+            mbgos.isTemporaryStructure = true;
+
+            temporaryGameObject.transform.position = new Vector2(temporaryPos.x, temporaryPos.y);
+
+            BoxCollider2D bc = temporaryGameObject.AddComponent<BoxCollider2D>();
+            bc.size = new Vector2(getDimensions().x, getDimensions().y);
+
+            AsyncOperationHandle<Sprite> spriteHandler = Addressables.LoadAssetAsync<Sprite>(getSpritePath());
+            spriteHandler.Completed += obj =>
             {
-                BlockObject.GetComponent<SpriteRenderer>().sprite = BlockSprite;
-                BlockObject.layer = 3;
-            }
+                temporaryGameObject.AddComponent<Image>().sprite = obj.Result;
+                RectTransform rect = temporaryGameObject.GetComponent<RectTransform>();
+                rect.anchoredPosition = temporaryGameObject.transform.position;
+                rect.anchorMin = Vector2.zero;
+                rect.anchorMax = Vector2.zero;
+                rect.localPosition = Vector3.zero;
+                rect.sizeDelta = new Vector2(getDimensions().x, getDimensions().y);
+            };
+            
+            EditController.addTemporaryPlacement(this);
         }
+        else
+        {
+            temporaryGameObject.transform.position = new Vector2(temporaryPos.x, temporaryPos.y);
+        }
+
+        canPlaceTemporary = true;
+
+        foreach (var pathNode in getPathNodeList(pos))
+        {
+            if (pathNode == null || (!pathNode.isWalkable && pathNode.structure != this))
+                canPlaceTemporary = false;
+        }
+
+        Image image = temporaryGameObject.GetComponent<Image>();
+        temporaryGameObject.GetComponent<MultiBlockGameObjectScript>().canPlace = canPlaceTemporary;
+        if (image == null) return;
+    }
+
+    public void commitTemporaryStructure()
+    {
+        if (!canPlaceTemporary)
+            throw new Exception("Cannot commit changes, structure is in a occupied space");
+        else
+        {
+            baseX = temporaryPos.x;
+            baseY = temporaryPos.y;
+
+            BlockObject.transform.position = temporaryPos;
+            GameObject.Destroy(temporaryGameObject);
+        }
+    }
+
+    public void cancelTemporaryPlacement()
+    {
+        GameObject.Destroy(temporaryGameObject);
     }
 
     public Vector2 getPos()
@@ -107,11 +171,15 @@ public abstract class MultiBlock : IStructure
         return interfaceNode.getPos();
     }
 
+    public abstract void onClick();
+
     public abstract Vector2 getDimensions();
     public abstract bool isResource();
-
-
-
+    public BoxCollider2D getBoxCollider()
+    {
+        return BlockObject.GetComponent<BoxCollider2D>();
+    }
+    
     public abstract PathNode getInterfaceNode();
     
     

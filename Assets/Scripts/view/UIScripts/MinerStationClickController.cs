@@ -6,7 +6,7 @@ public class MinerStationClickController : MonoBehaviour
     public MinerStation minerstation;
     public void OnMouseDown()
     {
-        GameObject.FindWithTag("UIController").GetComponent<UIController>().OpenMinerMenu(minerstation);
+        
     }
 }
 

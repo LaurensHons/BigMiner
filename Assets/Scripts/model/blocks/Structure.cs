@@ -8,5 +8,5 @@ public interface IStructure
 
     public bool isResource();
 
-    public void destroy();
+    public BoxCollider2D getBoxCollider();
 }

@@ -12,6 +12,7 @@ public class UIController : MonoBehaviour
     private Vector3 cameraDifference;
     private bool Drag = false;
     private GameObject SubPanel = null;
+    public bool EditMode => EditController.EditMode;
 
     private Vector3 dragOrigin;
 
@@ -20,7 +21,8 @@ public class UIController : MonoBehaviour
 
     public ScannerController ScannerController;
     public MinerController MinerController;
-
+    public EditController EditController;
+    
     public GameObject MenuPanel;
     public GameObject ScannerMenu;
     public GameObject MinerMenu;
@@ -31,6 +33,8 @@ public class UIController : MonoBehaviour
 
     private GameObject activeMenu;
     private MinerStation activeMinerStation;
+
+    
 
 
     void Start()
@@ -53,15 +57,13 @@ public class UIController : MonoBehaviour
         MinerUpgradeMenu.SetActive(false);
 
 
-        Vector3 cameraPos = new Vector3(Bay.gridSize / 2, 0, -10);
+        Vector3 cameraPos = new Vector3(Bay.gridSize / 2, Bay.gridSize / 2, -10);
         camera.transform.position = cameraPos;
-        Vector3 middleOfTheGrid = new Vector3(Bay.gridSize / 2, 0, 1);
-        transform.position = middleOfTheGrid;
     }
 
     public void moveCamera()
     {
-        if (activeMenu != null) return;
+        if (activeMenu != null || EditMode) return;
         if (Input.GetMouseButton(0))
         {
             cameraDifference = (Camera.main.ScreenToWorldPoint(Input.mousePosition)) - Camera.main.transform.position;
@@ -122,6 +124,16 @@ public class UIController : MonoBehaviour
         MinerController.loadUpgrades();
         SubPanel = MinerMenu;
     }
+
+    public void EditButton()   //Activated by Edit Button
+    {
+        EditController.EditButtonClick();
+    }
+    public void CommitButton()   //Activated by Commit Button
+    {
+        EditController.CommitButtonClick();
+    }
+    
 
     private void setActiveMenuPanel()
     {

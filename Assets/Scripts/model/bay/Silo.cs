@@ -63,6 +63,11 @@ public class Silo : MultiBlock
         return "Assets/Addressables/Blocks/stone.png";
     }
 
+    public override void onClick()
+    {
+        Debug.Log("Open the silo menu");
+    }
+
     public override Vector2 getDimensions()
     {
         return new Vector2(2, 1);

@@ -31,7 +31,8 @@ public class Miner : IWalker
     private float damageUpgradesFlat = 0;
     private float damageUpgradesPercent = 1;
 
-    public EventHandler updateStats;
+    public EventHandler recalculateStats;
+    public EventHandler updatedStats;
     
     public int blocksMined = 0;
 
@@ -111,11 +112,11 @@ public class Miner : IWalker
         minerObject.transform.localScale = Vector3.one * GameController.getBlockScale();
         minerObject.transform.SetParent(getBay().transform);
 
-        upgrades = new List<MinerUpgrade> { new Upgrade1() };
+        upgrades = new List<MinerUpgrade> { new Upgrade1(this), new Upgrade2(this) };
 
-        MinerLevelUpdate += updateStats;
-        activeTool.ToolDamageUpdate += updateStats;
-        updateStats += updateStatCalculations;
+        MinerLevelUpdate += recalculateStats;
+        activeTool.ToolDamageUpdate += recalculateStats;
+        recalculateStats += updateStatCalculations;
     }
 
     private void HandleSpriteLoading()
@@ -226,13 +227,12 @@ public class Miner : IWalker
             activeTool.xp += xp;
             if (!Inventory.isFull())
             {
-                loot.DepositInventory(Inventory);
-                
+                loot?.DepositInventory(Inventory);
             }
-            Debug.Log(Inventory);
+            //Debug.Log(Inventory);
         }
 
-        Debug.Log("Used: " + Inventory.getInventoryWeight() + ", Max:" + Inventory.getMaxInventoryweight());
+        //Debug.Log("Used: " + Inventory.getInventoryWeight() + ", Max:" + Inventory.getMaxInventoryweight());
     }
 
     public bool isBatteryZero()
@@ -290,7 +290,7 @@ public class Miner : IWalker
                             speedUpgradesFlat += minerUpgrade.getUpgradeImpact() * minerUpgrade.getAmount();
                             break;
                         case operatorType.Percent:
-                            speedUpgradesPercent *= minerUpgrade.getUpgradeImpact() * minerUpgrade.getAmount();
+                            speedUpgradesPercent *= 1 + minerUpgrade.getUpgradeImpact() * minerUpgrade.getAmount();
                             break;
                     }
                     break;
@@ -304,7 +304,7 @@ public class Miner : IWalker
                             damageUpgradesFlat += minerUpgrade.getUpgradeImpact() * minerUpgrade.getAmount();
                             break;
                         case operatorType.Percent:
-                            damageUpgradesPercent *= minerUpgrade.getUpgradeImpact() * minerUpgrade.getAmount();
+                            damageUpgradesPercent *= 1 + minerUpgrade.getUpgradeImpact() * minerUpgrade.getAmount();
                             break;
                     }
                     break;
@@ -318,7 +318,7 @@ public class Miner : IWalker
                             maxBatteryMinutes += (int) minerUpgrade.getUpgradeImpact() * minerUpgrade.getAmount();
                             break;
                         case operatorType.Percent:
-                            maxBatteryMinutes *= (int) minerUpgrade.getUpgradeImpact() * minerUpgrade.getAmount();
+                            maxBatteryMinutes *= 1 + (int) minerUpgrade.getUpgradeImpact() * minerUpgrade.getAmount();
                             break;
                     }
                     break;
@@ -332,7 +332,7 @@ public class Miner : IWalker
                             inventorySize += (int) minerUpgrade.getUpgradeImpact() * minerUpgrade.getAmount();
                             break;
                         case operatorType.Percent:
-                            inventorySize *= (int) minerUpgrade.getUpgradeImpact() * minerUpgrade.getAmount();
+                            inventorySize *= 1 + (int) minerUpgrade.getUpgradeImpact() * minerUpgrade.getAmount();
                             break;
                     }
                     break;
@@ -344,6 +344,8 @@ public class Miner : IWalker
         {
             Inventory.setMaxInventoryWeigh(inventorySize);
         }
+        
+        updatedStats?.Invoke(this, EventArgs.Empty);
     }    
 
     public Transform getTransform()

@@ -54,14 +54,11 @@ public class PathNode {
     {
         if (structure == null) return;
         Structure = structure;
+    }
 
-        List<PathNode> nodeList = structure.getPathNodeList();
-        nodeList.Remove(this);
-        foreach (var pathNode in nodeList)
-        {
-            pathNode.Structure = structure;
-            //Debug.Log("Node: "+  pathNode.x + ", " + pathNode.y + " structure");
-        }
+    public void removeStructure()
+    {
+        Structure = null;
     }
 
     public void MineBlock(float hit, out bool destroyed, out Inventory loot, out int xp)

@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 public class Bay : MonoBehaviour
 {
     private List<Miner> minerList = new List<Miner>();
-    private List<PathNode> blockList = new List<PathNode>();
+    private List<IStructure> structures = new List<IStructure>();
 
     public EventHandler UpdateObservers;
     public void FixedUpdate()
@@ -38,16 +38,16 @@ public class Bay : MonoBehaviour
 
     void Start()
     {
-        pathNodeGrid = new Grid<PathNode>(gridSize, gridSize, 1f, Vector3.zero,
+        pathNodeGrid = new Grid<PathNode>(gridSize, gridSize * 2, 1f, Vector3.zero,
             (Grid<PathNode> g, int x, int y) => new PathNode(g, x, y));
 
         Vector2 siloPos = new Vector2(0, 0);
         new Silo(siloPos.x, siloPos.y, this);
-        pathNodeGrid.GetGridObject(siloPos).SetStructure(Silo.Instance);
+        addStructureToGrid(Silo.Instance);
 
         Vector2 minerStationPos = new Vector2(2, 0);
         MinerStation minerStation = new MinerStation(minerStationPos.x, minerStationPos.y, this);
-        pathNodeGrid.GetGridObject(minerStationPos).SetStructure(minerStation);
+        addStructureToGrid(minerStation);
 
         /*
         Vector2 secondminerStationPos = new Vector2(0, 4);
@@ -125,15 +125,69 @@ public class Bay : MonoBehaviour
                     }
                 }
                 block.setParent(transform);
-                blockList.Add(pathNode);
+                structures.Add(pathNode.structure);
             }
         }
     }
-    
 
-    void Update()
+    public bool canPlaceStructure(MultiBlock structure, Vector2 pos)
+    {
+        float width = structure.getDimensions().x, height = structure.getDimensions().y;
+
+        List<PathNode> pathNodes = new List<PathNode>();
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0 ; y < height; y++)
+            {
+                pathNodes.Add(getPathNode((int) pos.x + x, (int) pos.y + y));
+            }
+        }
+        
+        
+        foreach (var pathNode in pathNodes)
+        {
+            if (pathNode != null &&pathNode.structure != null && pathNode.structure != structure) return false;
+        }
+
+        return true;
+    }
+    
+    public void addStructureToGrid(MultiBlock structure)
     {
         
+        if (!canPlaceStructure(structure, structure.getPos()))
+        {
+            Debug.Log("Cannot add structure, pathNode is occupied");
+            return;
+        }
+        foreach (var pathNode in structure.getPathNodeList())
+        {
+            pathNode.SetStructure(structure);
+            structures.Add(structure);
+            Debug.Log("Setting Structure: " + pathNode.x + ", " + pathNode.y);
+        }
+    }
+
+    public void updateStructure(MultiBlock structure)
+    {
+        for (int x = 0; x < gridSize; x++)
+        {
+            for (int y = 0; y < gridSize; y++)
+            {
+                PathNode b = pathNodeGrid.GetGridObject(x, y);
+                if (b.structure == structure)
+                    b.removeStructure();
+            }
+        }
+        addStructureToGrid(structure);
+    }
+
+    public void removeBlock(Block b)
+    {
+        if (structures.Contains(b))
+            structures.Remove(b);
+        else throw new Exception("Could not find block to remove");
     }
 
     public List<PathNode> getBlockList()
@@ -144,7 +198,7 @@ public class Bay : MonoBehaviour
             for (int y = 0; y < gridSize; y++)
             {
                 PathNode b = pathNodeGrid.GetGridObject(x, y);
-                if (!pathNodeGrid.GetGridObject(x, y).isWalkable && b.structure.isResource())
+                if (!b.isWalkable && b.structure.isResource())
                     returnList.Add(b);
             }
         }
@@ -157,7 +211,7 @@ public class Bay : MonoBehaviour
         List<PathNode> returnList = new List<PathNode>();
         for (int x = 0; x < gridSize; x++)
         {
-            for (int y = 0; y < gridSize; y++)
+            for (int y = gridSize / 2; y < gridSize * 2; y++)
             {
                 PathNode b = pathNodeGrid.GetGridObject(x, y);
                 if (b.isWalkable)
@@ -183,8 +237,11 @@ public class Bay : MonoBehaviour
         minerList.Add(miner);
         UpdateObservers += miner.FixedUpdate;
     }
-    
-    
+
+    public List<IStructure> getStructureList()
+    {
+        return structures;
+    }
 
     
 }

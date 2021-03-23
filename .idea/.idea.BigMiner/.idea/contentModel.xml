@@ -49,18 +49,22 @@
           <e p="View" t="Include">
             <e p="controllers" t="Include">
               <e p="DebugDrawer.cs" t="Include" />
+              <e p="EditController.cs" t="Include" />
               <e p="GameController.cs" t="Include" />
               <e p="MinerController.cs" t="Include" />
               <e p="ScannerController.cs" t="Include" />
               <e p="UIController.cs" t="Include" />
             </e>
             <e p="UIScripts" t="Include">
-              <e p="ButtonTextPrefab.cs" t="Include" />
               <e p="MinerStationClickController.cs" t="Include" />
-              <e p="ScannerMainInfoPanel.cs" t="Include" />
-              <e p="ScannerSlider.cs" t="Include" />
-              <e p="ToolPanelScript.cs" t="Include" />
-              <e p="UpgradePanelScript.cs" t="Include" />
+              <e p="MultiBlockGameObjectScript.cs" t="Include" />
+              <e p="UI" t="Include">
+                <e p="ButtonTextPrefab.cs" t="Include" />
+                <e p="ScannerMainInfoPanel.cs" t="Include" />
+                <e p="ScannerSlider.cs" t="Include" />
+                <e p="ToolPanelScript.cs" t="Include" />
+                <e p="UpgradePanelScript.cs" t="Include" />
+              </e>
             </e>
           </e>
         </e>
