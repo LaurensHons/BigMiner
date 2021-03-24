@@ -28,7 +28,8 @@ public class UIController : MonoBehaviour
     public GameObject MinerMenu;
     public GameObject MinerToolMenu;
     public GameObject MinerUpgradeMenu;
-
+    public GameObject BuildingsMenu;
+    
     public Text ScreenRes;
 
     private GameObject activeMenu;
@@ -123,6 +124,11 @@ public class UIController : MonoBehaviour
         setActivePanel(MinerUpgradeMenu);
         MinerController.loadUpgrades();
         SubPanel = MinerMenu;
+    }
+
+    public void OpenBuildingsMenu()
+    {
+        setActivePanel(BuildingsMenu);
     }
 
     public void EditButton()   //Activated by Edit Button

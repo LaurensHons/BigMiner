@@ -95,13 +95,18 @@ public class Inventory
 
     public void TakeItem(Item item, Inventory inventoryToSubtract, int? amount = null)
     {
-        Item itemToTake = TryGetItem(item);
-        if (itemToTake == null) throw new InventoryException("Item not found");
-        //Debug.Log(itemToTake.GetType() + ", amount: " + amount);
-        if (itemToTake == null) throw new Exception("Item to be taken not found");
-
+        Item itemToTake = inventoryToSubtract.TryGetItem(item);
+        if (itemToTake == null) throw new InventoryException("Item to take not found in other inventory");
         AddItem(itemToTake, amount);
         inventoryToSubtract.RemoveItem(itemToTake, amount);
+    }
+
+    public void putItem(Item item, Inventory inventoryToAdd, int? amount = null)
+    {
+        Item itemToPut = TryGetItem(item);
+        if (itemToPut == null) throw new InventoryException("Item to put not found in own inventory");
+        inventoryToAdd.AddItem(itemToPut, amount);
+        RemoveItem(itemToPut, amount);
     }
     
     public void DepositInventory(Inventory receivingInventory)

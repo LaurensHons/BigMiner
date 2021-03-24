@@ -174,7 +174,7 @@ public class Miner : IWalker
     
     public void Mine()
     {
-        if (walker.targetStructure.isDestroyed())
+        if (walker.targetStructure == null || walker.targetStructure.isDestroyed())
         {
             walker.setStatusCollectingBlocks(this, EventArgs.Empty);
             walker.StopAction();
@@ -199,20 +199,20 @@ public class Miner : IWalker
             return;
         }
 
-
-        foreach (var v2 in activeTool.getAdditionalMiningPos(walker.targetStructure.getPos() - (Vector2) getTransform().position).ToArray())
+        Block block = (Block) walker.targetStructure;
+        foreach (var v2 in activeTool.getAdditionalMiningPos(block.getPos() - (Vector2) getTransform().position).ToArray())
         {
             //outstring += v2 + ", ";
             PathNode blockToMine = getBay().getPathNode(
-                (int) Math.Round(walker.targetStructure.getPos().x + v2.x ), 
-                (int) Math.Round(walker.targetStructure.getPos().y + v2.y));
+                (int) Math.Round(block.getPos().x + v2.x ), 
+                (int) Math.Round(block.getPos().y + v2.y));
             if (blockToMine == null || blockToMine.isWalkable || blockToMine.structure.Equals(walker.targetStructure)) continue;
             MineBlock(blockToMine, out bool d);
             
         }
         //Debug.Log("target: " + walker.targetStructure.getPos());
         //Debug.Log("Additionals: " + outstring);
-        MineBlock(getBay().getPathNode(walker.targetStructure.getPos()), out bool destroyed);
+        MineBlock(getBay().getPathNode(block.getPos()), out bool destroyed);
         if (destroyed)
         {
             walker.targetStructure = null;

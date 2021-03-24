@@ -14,7 +14,7 @@ public abstract class Item
 
     public Item(int amount)
     {
-        if (amount >= 0) 
+        if (amount >= 0)
             this.amount = amount;
     }
 
@@ -32,7 +32,21 @@ public abstract class Item
     {
         this.amount = amount;
     }
-    
+
+    public static Item operator +(Item a, Item b)
+    {
+        if (a.GetType() != b.GetType()) throw new ArgumentException("Cannot add 2 items of different type");
+        a.addAmount(b.amount);
+        return a;
+    }
+
+    public static Item operator *(Item a, int b)
+    {
+        a.amount *= b;
+        return a;
+    }
+
+
     public int getAmount() { return amount; }
 
     public string getName() { return this.GetType().ToString(); }

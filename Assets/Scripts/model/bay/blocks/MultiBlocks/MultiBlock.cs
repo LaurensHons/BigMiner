@@ -19,19 +19,14 @@ public abstract class MultiBlock : IStructure
     public bool CanPlaceTemporary => canPlaceTemporary;
     public bool isDestroyed { get; private set; } = false;
 
-    protected PathNode interfaceNode
-    {
-        get { return getInterfaceNode(); }
-    }
-
     private Sprite BlockSprite;
 
     protected float baseX;
     protected float baseY;
 
-    protected MultiBlock(float x, float y, Bay bay)
+    protected MultiBlock(float x, float y)
     {
-        this.bay = bay;
+        this.bay = GameObject.FindWithTag("Bay").GetComponent<Bay>();
         moveBlockStructure(new Vector2(x, y));
     }
 
@@ -185,24 +180,17 @@ public abstract class MultiBlock : IStructure
     }
 
     public void destroy() { }
-
-    public Vector2 getPos()
-    {
-        return interfaceNode.getPos();
-    }
+    
 
     public abstract void onClick();
 
     public abstract Vector2 getDimensions();
     public abstract bool isResource();
-    public BoxCollider2D getBoxCollider()
+    
+    
+    public  Vector2 getPos()
     {
-        return BlockObject.GetComponent<BoxCollider2D>();
+        return bay.getPathNode((int) baseX, (int) baseY).getPos();
     }
-    
-    public abstract PathNode getInterfaceNode();
-    
-    
-   
     public abstract string getSpritePath();
 }

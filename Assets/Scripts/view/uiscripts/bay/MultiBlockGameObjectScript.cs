@@ -6,8 +6,7 @@ using UnityEngine.UI;
 public class MultiBlockGameObjectScript : MonoBehaviour
 {
     private MultiBlock structure;
-
-    private MinerStation minerStation;
+    
     private UIController uiController;
     private Image objectImage;
     
@@ -21,10 +20,16 @@ public class MultiBlockGameObjectScript : MonoBehaviour
         objectImage = GetComponent<Image>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!isTemporaryStructure || objectImage == null)
-            return;
+        {
+            try
+            {
+                Processor processor = structure as Processor;
+                processor?.fixedUpdate();
+            } catch (Exception e) { }
+        }
         else
         {
             if (canPlace)

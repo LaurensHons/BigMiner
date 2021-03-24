@@ -156,27 +156,33 @@ public class Walker
         currentPathIndex = 0;
 
         List<Vector3> fastestPath = null;
+        PathNode closestNode = null;
         foreach (var targetNode in targetStructure.getPathNodeList())
         {
             List<Vector3> vectorList = Pathfinding.Instance.FindPath(new Vector3((int)Math.Round(transform.position.x), (int)Math.Round(transform.position.y), 0), targetNode.getPos());
-            if (vectorList != null && (fastestPath == null || vectorList.Count <= fastestPath.Count))
+            if (closestNode == null || Vector2.Distance(transform.position, targetNode.getPos()) <
+                Vector2.Distance(transform.position, closestNode.getPos()))                             //Checks for closest available pathnodeList
+                closestNode = targetNode;
+            if (vectorList != null && (fastestPath == null || vectorList.Count <= fastestPath.Count))       //If path is valid, keep it
             {
                 fastestPath = vectorList;
             }
         }
 
         pathVectorList = fastestPath;
+        if (closestNode == null)
+            closestNode = targetStructure.getPathNodeList()[0];
         
-        if (pathVectorList == null && forced)
-            pathVectorList = Pathfinding.Instance.FindPath(new Vector3((int)Math.Round(transform.position.x), (int)Math.Round(transform.position.y), 0), targetStructure.getPos(), true);
+        if (pathVectorList == null && forced)                                                              //If no path was found, force one from to the closest possible block
+            pathVectorList = Pathfinding.Instance.FindPath(new Vector3((int)Math.Round(transform.position.x), (int)Math.Round(transform.position.y), 0), closestNode.getPos(), true);
 
         if (pathVectorList == null)
         {
             String outstring;
             outstring = forced ? "No Forced " : "No ";
 
-            Debug.Log(outstring + "path found from [" + Math.Round(transform.position.x) + "," + Math.Round(transform.position.y) + "] to [" + 
-                      targetStructure.getPos().x +", " + targetStructure.getPos().y + "]");
+            Debug.Log(outstring + "path found from [" + Math.Round(transform.position.x) + "," + Math.Round(transform.position.y) + "] to closest structure node [" + 
+                      closestNode.getPos().x +", " + closestNode.getPos().y + "]");
             findNextTarget();
             return;
         }

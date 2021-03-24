@@ -10,33 +10,41 @@
           <e p="model" t="Include">
             <e p="bay" t="Include">
               <e p="Bay.cs" t="Include" />
+              <e p="Blocks" t="Include">
+                <e p="MultiBlocks" t="Include">
+                  <e p="MultiBlock.cs" t="Include" />
+                  <e p="Processor.cs" t="Include" />
+                  <e p="Processors" t="Include">
+                    <e p="Saw.cs" t="Include" />
+                  </e>
+                  <e p="Silo.cs" t="Include" />
+                </e>
+                <e p="Resource" t="Include">
+                  <e p="Block.cs" t="Include" />
+                  <e p="DirtBlock.cs" t="Include" />
+                  <e p="StoneBlock.cs" t="Include" />
+                </e>
+                <e p="Structure.cs" t="Include" />
+              </e>
+              <e p="miner" t="Include">
+                <e p="Miner.cs" t="Include" />
+                <e p="MinerStation.cs" t="Include" />
+                <e p="MinerUpgrades" t="Include">
+                  <e p="MinerUpgrade.cs" t="Include" />
+                  <e p="Upgrade1To10.cs" t="Include" />
+                </e>
+                <e p="Tool" t="Include">
+                  <e p="Hammer.cs" t="Include" />
+                  <e p="Pickaxe.cs" t="Include" />
+                  <e p="Tool.cs" t="Include" />
+                </e>
+                <e p="Walker.cs" t="Include" />
+              </e>
               <e p="PathFinding" t="Include">
                 <e p="Grid.cs" t="Include" />
                 <e p="Pathfinding.cs" t="Include" />
                 <e p="PathNode.cs" t="Include" />
               </e>
-              <e p="Silo.cs" t="Include" />
-            </e>
-            <e p="Blocks" t="Include">
-              <e p="Block.cs" t="Include" />
-              <e p="DirtBlock.cs" t="Include" />
-              <e p="MultiBlock.cs" t="Include" />
-              <e p="StoneBlock.cs" t="Include" />
-              <e p="Structure.cs" t="Include" />
-            </e>
-            <e p="miner" t="Include">
-              <e p="Miner.cs" t="Include" />
-              <e p="MinerStation.cs" t="Include" />
-              <e p="MinerUpgrades" t="Include">
-                <e p="MinerUpgrade.cs" t="Include" />
-                <e p="Upgrade1To10.cs" t="Include" />
-              </e>
-              <e p="Tool" t="Include">
-                <e p="Hammer.cs" t="Include" />
-                <e p="Pickaxe.cs" t="Include" />
-                <e p="Tool.cs" t="Include" />
-              </e>
-              <e p="Walker.cs" t="Include" />
             </e>
             <e p="resourceManagement" t="Include">
               <e p="Inventory.cs" t="Include" />
@@ -48,17 +56,28 @@
           </e>
           <e p="View" t="Include">
             <e p="controllers" t="Include">
-              <e p="DebugDrawer.cs" t="Include" />
-              <e p="EditController.cs" t="Include" />
-              <e p="GameController.cs" t="Include" />
-              <e p="MinerController.cs" t="Include" />
+              <e p="bay" t="Include">
+                <e p="BuildingController.cs" t="Include" />
+                <e p="EditController.cs" t="Include" />
+                <e p="MinerController.cs" t="Include" />
+              </e>
+              <e p="general" t="Include">
+                <e p="DebugDrawer.cs" t="Include" />
+                <e p="GameController.cs" t="Include" />
+                <e p="UIController.cs" t="Include" />
+              </e>
               <e p="ScannerController.cs" t="Include" />
-              <e p="UIController.cs" t="Include" />
             </e>
             <e p="UIScripts" t="Include">
-              <e p="MinerStationClickController.cs" t="Include" />
-              <e p="MultiBlockGameObjectScript.cs" t="Include" />
+              <e p="bay" t="Include">
+                <e p="MinerStationClickController.cs" t="Include" />
+                <e p="MultiBlockGameObjectScript.cs" t="Include" />
+              </e>
               <e p="UI" t="Include">
+                <e p="building" t="Include">
+                  <e p="TabButton.cs" t="Include" />
+                  <e p="TabGroup.cs" t="Include" />
+                </e>
                 <e p="ButtonTextPrefab.cs" t="Include" />
                 <e p="ScannerMainInfoPanel.cs" t="Include" />
                 <e p="ScannerSlider.cs" t="Include" />

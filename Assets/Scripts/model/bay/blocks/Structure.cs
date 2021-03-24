@@ -3,7 +3,6 @@ using UnityEngine;
 
 public interface IStructure
 {
-    public Vector2 getPos();
     public List<PathNode> getPathNodeList();
 
     public bool isResource();

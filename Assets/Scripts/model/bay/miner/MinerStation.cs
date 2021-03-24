@@ -15,7 +15,7 @@ public class MinerStation : MultiBlock
 
     private MultiBlockGameObjectScript ClickController;
 
-    public MinerStation(float x, float y, Bay bay) : base(x, y, bay)
+    public MinerStation(float x, float y, Bay bay) : base(x, y)
     {
         InstantiateMiner();
     }
@@ -106,11 +106,6 @@ public class MinerStation : MultiBlock
     public override bool isResource()
     {
         return false;
-    }
-
-    public override PathNode getInterfaceNode()
-    {
-        return bay.getPathNode((int) baseX, (int) baseY);
     }
 }
 

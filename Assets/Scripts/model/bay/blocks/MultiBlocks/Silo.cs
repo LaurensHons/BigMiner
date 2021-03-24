@@ -8,7 +8,7 @@ public class Silo : MultiBlock
 
     public Inventory Inventory;
 
-    public Silo(float x, float y, Bay bay) : base(x, y, bay)
+    public Silo(float x, float y, Bay bay) : base(x, y)
     {
         Instance = this;
         Inventory = new Inventory();
@@ -48,11 +48,6 @@ public class Silo : MultiBlock
         return false;
     }
 
-    public override PathNode getInterfaceNode()
-    {
-        return bay.getPathNode((int) baseX, (int) baseY);
-    }
-    
     public override string getSpritePath()
     {
         return "Assets/Addressables/Blocks/stone.png";
