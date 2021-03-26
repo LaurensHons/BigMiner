@@ -88,7 +88,7 @@ public class Miner : IWalker
     public Tool activeTool;
     public EventHandler toolSwitchUpdate;
     public List<Tool> toolList = new List<Tool>();
-    
+
     public Miner(Vector2 pos, MinerStation minerStation)
     {
         HandleSpriteLoading();
@@ -139,7 +139,8 @@ public class Miner : IWalker
 
 
     private int MININGTIMEMOUT = -1;
-    private int TRADINGTIMEOUT = -1;
+    private int DEPOSITINGTIMEOUT = -1;
+    private int TAKINGTIMEOUT = -1;
     
     public void FixedUpdate(object sender, EventArgs eventArgs)
     {
@@ -152,11 +153,18 @@ public class Miner : IWalker
             if (MININGTIMEMOUT >= activeTool.getSpeed())
                 IEChargeTool();
         }
-        if (TRADINGTIMEOUT >= 0)
+        if (DEPOSITINGTIMEOUT >= 0)
         {
-            TRADINGTIMEOUT += 1;
-            if (TRADINGTIMEOUT >= 50)
+            DEPOSITINGTIMEOUT += 1;
+            if (DEPOSITINGTIMEOUT >= 50)
                 IEDepositItems();
+        }
+        
+        if (TAKINGTIMEOUT >= 0)
+        {
+            TAKINGTIMEOUT += 1;
+            if (TAKINGTIMEOUT >= 50)
+                IETakeItems();
         }
         
 
@@ -182,6 +190,8 @@ public class Miner : IWalker
         }
         MININGTIMEMOUT = 0;
     }
+
+    
 
     private void IEChargeTool()
     {
@@ -254,21 +264,38 @@ public class Miner : IWalker
 
     public void startDepositingItems()
     {
-        TRADINGTIMEOUT = 0;
+        DEPOSITINGTIMEOUT = 0;
     }
+
+    public void startTakingItems()
+    {
+        throw new NotImplementedException();
+    }
+    
     
     private void IEDepositItems()
     {
-        TRADINGTIMEOUT = -1;
-        DepositItems();
-    }
-
-    private void DepositItems()
-    {
-        Inventory.DepositInventory(Silo.Instance.Inventory);
+        DEPOSITINGTIMEOUT = -1;
+        if (walker.getActiveJobCall() == null)
+            Inventory.DepositInventory(Silo.Instance.Inventory);
+        else
+        {
+            Inventory.putItem(walker.getActiveJobCall().itemToBeDelivered, ((JobCallStructure) walker.getActiveJobCall().targetStructure).getInputInventory());   
+        }
         walker.StopAction();
     }
+
     
+    
+    private void IETakeItems()
+    {
+        TAKINGTIMEOUT = -1;
+        JobCall jobCall = walker.getActiveJobCall();
+        Inventory.TakeItem(jobCall.itemToBeDelivered, ((JobCallStructure) jobCall.originStructure).getOutputInventory());
+        walker.StopAction();
+    }
+
+        
     public Inventory getItemInventory()
     {
         return Inventory;

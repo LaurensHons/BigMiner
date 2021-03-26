@@ -46,9 +46,22 @@ public class Bay : MonoBehaviour
         new Silo(siloPos.x, siloPos.y, this);
         addStructureToGrid(Silo.Instance);
 
+        new JobController();
+
+        Vector2 SawPos = new Vector2(0, 2);
+        Saw saw = new Saw(SawPos.x, SawPos.y, 2, Processor.Tier.Bronze);
+        addStructureToGrid(saw);
+        
+        
+        
+        
         Vector2 minerStationPos = new Vector2(2, 0);
         MinerStation minerStation = new MinerStation(minerStationPos.x, minerStationPos.y, this);
         addStructureToGrid(minerStation);
+        
+        
+        
+        
 
         /*
         Vector2 secondminerStationPos = new Vector2(0, 4);

@@ -9,6 +9,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public abstract class Item
 {
     private int amount = 0;
+    public Action ItemUpdate;
     private static Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
     private Sprite sprite;
 
@@ -26,11 +27,13 @@ public abstract class Item
     public void addAmount(int amount)
     {
         this.amount += amount;
+        ItemUpdate?.Invoke();
     }
 
     public void setAmount(int amount)
     {
         this.amount = amount;
+        ItemUpdate?.Invoke();
     }
 
     public static Item operator +(Item a, Item b)

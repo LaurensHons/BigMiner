@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Silo : MultiBlock
+public class Silo : MultiBlock, JobCallStructure
 {
     public static Silo Instance { get; private set; }
 
@@ -55,11 +55,21 @@ public class Silo : MultiBlock
 
     public override void onClick()
     {
-        Debug.Log("Open the silo menu");
+        GameObject.FindWithTag("UIController").GetComponent<UIController>().OpenSiloMenu();
     }
 
     public override Vector2 getDimensions()
     {
         return new Vector2(2, 2);
+    }
+
+    public Inventory getInputInventory()
+    {
+        return Inventory;
+    }
+
+    public Inventory getOutputInventory()
+    {
+        return Inventory;
     }
 }

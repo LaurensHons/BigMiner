@@ -20,11 +20,13 @@ public class UIController : MonoBehaviour
     private Bay Bay;
 
     public ScannerController ScannerController;
+    public SiloController SiloController;
     public MinerController MinerController;
     public EditController EditController;
     
     public GameObject MenuPanel;
     public GameObject ScannerMenu;
+    public GameObject SiloMenu;
     public GameObject MinerMenu;
     public GameObject MinerToolMenu;
     public GameObject MinerUpgradeMenu;
@@ -35,7 +37,7 @@ public class UIController : MonoBehaviour
     private GameObject activeMenu;
     private MinerStation activeMinerStation;
 
-    
+    private Action CloseButton;
 
 
     void Start()
@@ -53,6 +55,7 @@ public class UIController : MonoBehaviour
 
         MenuPanel.SetActive(false);
         ScannerMenu.SetActive(false);
+        SiloMenu.SetActive(false);
         MinerMenu.SetActive(false);
         MinerToolMenu.SetActive(false);
         MinerUpgradeMenu.SetActive(false);
@@ -99,12 +102,18 @@ public class UIController : MonoBehaviour
         activeMenu.SetActive(true);
     }
 
-    public void OpenScannerMenu()
+    public void OpenScannerMenu()   //Activated by scanner button
     {
         setActivePanel(ScannerMenu);
     }
 
-    public void OpenMinerMenu(MinerStation minerStation, bool forced = false)
+    public void OpenSiloMenu()
+    {
+        setActivePanel(SiloMenu);
+        SiloController.setActive(true);
+    }
+
+    public void OpenMinerMenu(MinerStation minerStation, bool forced = false)   //Activated by tapping on miner station
     {
         if (activeMenu != null && !forced) return;
         MinerController.setMinerStation(minerStation);
@@ -155,6 +164,9 @@ public class UIController : MonoBehaviour
     {
         if (activeMenu == MinerMenu)
             MinerController.setActive(false);
+        
+        if (activeMenu == SiloMenu)
+            SiloController.setActive(false);
 
         if (SubPanel != null)
         {

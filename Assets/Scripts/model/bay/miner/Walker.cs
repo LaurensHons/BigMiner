@@ -10,6 +10,8 @@ public class Walker
     public List<Vector3> pathVectorList = new List<Vector3>();
     public int currentPathIndex;
 
+    public bool checkForInventoryCalls = true;
+
     public float speed;
 
     public IStructure targetStructure;
@@ -23,6 +25,8 @@ public class Walker
             return objectToWalk.getTransform();
         }
     }
+
+    private JobCall activeJobCall;
 
     public Walker(IWalker objectToWalk, float speed)
     {
@@ -68,9 +72,13 @@ public class Walker
     public void setStatusGoingToTargetBlock(object sender, EventArgs args)
     {
         Debug.Log("Miner: Going to TargetStructure");
+
         walkerStatus = WalkerStatus.GoingToTargetStructure;
         SetTargetPosition(targetStructure, true);
-        ActionEnd = setStatusDepositingItems;
+        if (activeJobCall == null)
+            ActionEnd = setStatusDepositingBlocksInSilo;
+        else
+            ActionEnd = setStatusDepositingItems;
     }
 
     public void setStatusCollectingBlocks(object sender, EventArgs args)
@@ -91,10 +99,13 @@ public class Walker
         Debug.Log("Miner: Mining Block");
         objectToWalk.Mine();
         walkerStatus = WalkerStatus.Mining;
-        ActionEnd = setStatusCollectingBlocks;
+        if (checkForInventoryCalls)
+            ActionEnd = CheckJobCalls;
+        else 
+            ActionEnd = setStatusCollectingBlocks;
     }
 
-    public void setStatusDepositingItems(object sender, EventArgs args)
+    public void setStatusDepositingBlocksInSilo(object sender, EventArgs args)
     {
         bool closeEnough = false;
         foreach (var pathNode in targetStructure.getPathNodeList())
@@ -116,11 +127,114 @@ public class Walker
             Debug.Log("Miner: Depositing Items");
             walkerStatus = WalkerStatus.TradingItems;
             objectToWalk.startDepositingItems();
-            ActionEnd = setStatusCollectingBlocks;
+            if (checkForInventoryCalls)
+                ActionEnd = CheckJobCalls;
+            else 
+                ActionEnd = setStatusCollectingBlocks;
         }
     }
-
     
+    public void setStatusDepositingItems(object sender, EventArgs args)
+    {
+        bool closeEnough = false;
+        foreach (var pathNode in activeJobCall.targetStructure.getPathNodeList())
+        {
+            Debug.Log("Distance: " + Vector2.Distance(transform.position, pathNode.getPos()));
+            if (Vector2.Distance(transform.position, pathNode.getPos()) <= 1.1f)
+                closeEnough = true;
+
+        }
+        if (!closeEnough)
+        {
+            Debug.Log("You're too far mate");
+           
+            ActionEnd = setStatusGoingToTargetBlock;
+            StopAction();
+        }
+        else
+        {
+            Debug.Log("Miner: Depositing Items");
+            walkerStatus = WalkerStatus.TradingItems;
+            objectToWalk.startDepositingItems();
+            if (checkForInventoryCalls)
+                ActionEnd = CheckJobCalls;
+            else 
+                ActionEnd = setStatusCollectingBlocks;
+        }
+    }
+    
+    
+    
+    private void CheckJobCalls(object obj, EventArgs eventArgs)
+    {
+        Inventory inventory = objectToWalk.getItemInventory();
+        Debug.Log("Checking Inventory calls");
+        
+        if (activeJobCall == null)
+        {
+            JobCall jobCall = JobController.Instance.getNextJobCall();
+            if (jobCall == null)
+            {
+                Debug.Log("Found no Inventory calls");
+                ActionEnd = setStatusCollectingBlocks;
+                StopAction();
+                return;
+            }
+            
+            activeJobCall = jobCall;
+            
+            if (inventory.TryGetItem(activeJobCall.itemToBeDelivered) == null)
+            {
+                targetStructure = Silo.Instance;
+                ActionEnd = setStatusGoingToTargetBlock;
+                StopAction();
+                return; 
+            } 
+        }
+        
+        if (inventory.TryGetItem(activeJobCall.itemToBeDelivered) == null)
+        {
+            if (!inventory.isEmpty())
+            {
+                ActionEnd = setStatusDepositingBlocksInSilo;
+                StopAction();
+                return;
+            }
+            
+            ActionEnd = setStatusTakingItems;
+            StopAction();
+            return;
+        }
+
+        targetStructure = activeJobCall.targetStructure;
+        ActionEnd = setStatusGoingToTargetBlock;
+        StopAction();
+    }
+
+    public void setStatusTakingItems(object sender, EventArgs args)
+    {
+        bool closeEnough = false;
+        foreach (var pathNode in activeJobCall.originStructure.getPathNodeList())
+        {
+            Debug.Log("Distance: " + Vector2.Distance(transform.position, pathNode.getPos()));
+            if (Vector2.Distance(transform.position, pathNode.getPos()) <= 1.1f)
+                closeEnough = true;
+
+        }
+        if (!closeEnough)
+        {
+            Debug.Log("You're too far mate");
+            ActionEnd = setStatusGoingToTargetBlock;
+            StopAction();
+        }
+        else
+        {
+            Debug.Log("Miner: Taking Items");
+            walkerStatus = WalkerStatus.TradingItems;
+            objectToWalk.startTakingItems();
+            ActionEnd = setStatusGoingToTargetBlock;
+        }
+    }
 
     private bool checkIfInventoryFull()
     {
@@ -217,7 +331,6 @@ public class Walker
             }
         }
     }
-    
     private bool checkNextNode()
     {
         if (pathVectorList != null && pathVectorList.Count > 0)
@@ -236,15 +349,17 @@ public class Walker
         return false;
     }
     
+    
+    
     public void StopAction()
     {
         
         ActionEnd?.Invoke(this,EventArgs.Empty);
     }
-    
-    public bool hasEmptyPathNodeList()
+
+    public JobCall getActiveJobCall()
     {
-        return pathVectorList == null || pathVectorList.Count == 0;
+        return activeJobCall;
     }
 }
 
@@ -258,6 +373,7 @@ public interface IWalker
     public Inventory getItemInventory();
 
     public void startDepositingItems();
+    public void startTakingItems();
 
     public Bay getBay();
 

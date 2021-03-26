@@ -5,7 +5,7 @@ public class Saw : Processor
 {
     public Saw(float x, float y, float speed, Tier tier) : base(x, y, speed, tier)
     {
-        
+        JobController.Instance.addJobCall(Silo.Instance, this, new DirtBlockItem(3));
     }
 
     public override Vector2 getDimensions()
@@ -15,7 +15,7 @@ public class Saw : Processor
 
     public override string getSpritePath()
     {
-        throw new System.NotImplementedException();
+        return "Assets/Addressables/Blocks/Saw.png";
     }
 
     public override Item[] getBaseInputItems()

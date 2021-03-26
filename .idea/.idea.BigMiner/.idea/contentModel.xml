@@ -49,6 +49,8 @@
             <e p="resourceManagement" t="Include">
               <e p="Inventory.cs" t="Include" />
               <e p="Item.cs" t="Include" />
+              <e p="JobCall.cs" t="Include" />
+              <e p="JobController.cs" t="Include" />
             </e>
             <e p="Scanner" t="Include">
               <e p="Scanner.cs" t="Include" />
@@ -60,6 +62,7 @@
                 <e p="BuildingController.cs" t="Include" />
                 <e p="EditController.cs" t="Include" />
                 <e p="MinerController.cs" t="Include" />
+                <e p="SiloController.cs" t="Include" />
               </e>
               <e p="general" t="Include">
                 <e p="DebugDrawer.cs" t="Include" />
@@ -74,13 +77,14 @@
                 <e p="MultiBlockGameObjectScript.cs" t="Include" />
               </e>
               <e p="UI" t="Include">
-                <e p="building" t="Include">
-                  <e p="TabButton.cs" t="Include" />
-                  <e p="TabGroup.cs" t="Include" />
-                </e>
                 <e p="ButtonTextPrefab.cs" t="Include" />
                 <e p="ScannerMainInfoPanel.cs" t="Include" />
                 <e p="ScannerSlider.cs" t="Include" />
+                <e p="SiloItemPrefabScript.cs" t="Include" />
+                <e p="tabs" t="Include">
+                  <e p="TabButton.cs" t="Include" />
+                  <e p="TabGroup.cs" t="Include" />
+                </e>
                 <e p="ToolPanelScript.cs" t="Include" />
                 <e p="UpgradePanelScript.cs" t="Include" />
               </e>

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Processor : MultiBlock
+public abstract class Processor : MultiBlock, JobCallStructure
 {
     private float ItemsPerSecond = 1f;
     private int maxInventory;
@@ -110,7 +110,14 @@ public abstract class Processor : MultiBlock
     {
         outputInventory.TakeItem(item, minerInventory, amount);
     }
-    
+    public Inventory getInputInventory()
+    {
+        return inputInventory;
+    }
+    public Inventory getOutputInventory()
+    {
+        return outputInventory;
+    }
     public override void onClick()
     {
         
@@ -144,5 +151,7 @@ public abstract class Processor : MultiBlock
         Titanium = 5,
         Diamond = 4
     }
+
+    
 }
 

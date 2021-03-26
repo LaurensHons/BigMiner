@@ -127,6 +127,11 @@ public class Inventory
     {
         return maxInventoryWeight - inventoryWeight <= 0;
     }
+    
+    public bool isEmpty()
+    {
+        return inventoryWeight == 0;
+    }
     public int getInventoryWeight()
     {
         return inventoryWeight;
@@ -147,6 +152,8 @@ public class Inventory
 
         return outstring;
     }
+
+    
 }
 
 public class InventoryException : Exception
