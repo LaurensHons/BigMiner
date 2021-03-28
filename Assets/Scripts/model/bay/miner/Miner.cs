@@ -167,7 +167,6 @@ public class Miner : IWalker
                 IETakeItems();
         }
         
-
         bool wakeup = Time.time % 500 == 0 || Time.time < 200;
         walker.Update(wakeup);
     }
@@ -268,7 +267,7 @@ public class Miner : IWalker
 
     public void startTakingItems()
     {
-        throw new NotImplementedException();
+        TAKINGTIMEOUT = 0;
     }
     
     
@@ -279,7 +278,7 @@ public class Miner : IWalker
             Inventory.DepositInventory(Silo.Instance.Inventory);
         else
         {
-            Inventory.putItem(walker.getActiveJobCall().itemToBeDelivered, ((JobCallStructure) walker.getActiveJobCall().targetStructure).getInputInventory());   
+            ((IJobCallStructure) walker.getActiveJobCall().targetStructure).deliverJobCall(walker.getActiveJobCall().itemToBeDelivered, Inventory); 
         }
         walker.StopAction();
     }
@@ -290,7 +289,8 @@ public class Miner : IWalker
     {
         TAKINGTIMEOUT = -1;
         JobCall jobCall = walker.getActiveJobCall();
-        Inventory.TakeItem(jobCall.itemToBeDelivered, ((JobCallStructure) jobCall.originStructure).getOutputInventory());
+        
+        ((IJobCallStructure) jobCall.originStructure).pickUpJobCall(jobCall.itemToBeDelivered, Inventory);
         walker.StopAction();
     }
 

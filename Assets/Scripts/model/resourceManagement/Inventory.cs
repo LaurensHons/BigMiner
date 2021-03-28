@@ -26,6 +26,7 @@ public class Inventory
     private void addInventoryWeight(int amount)
     {
         inventoryWeight += amount;
+        if (inventoryWeight > maxInventoryWeight) throw new Exception("Miner Capacity Full");
         InventoryUpdate?.Invoke();
     }
 
@@ -47,9 +48,11 @@ public class Inventory
     private void AddToInventoryList(Item item, int amount)
     {
         Item itemInInventory = TryGetItem(item);
-        
+
         if (itemInInventory != null)
+        {
             itemInInventory.addAmount(amount);
+        }
         else
         {
             ItemInventory.Add(Item.CreateItem(item, amount));
@@ -63,8 +66,9 @@ public class Inventory
     {
         Item itemInInventory = TryGetItem(item);
         if (itemInInventory == null) throw new InventoryException("Item not found");
-        
+        Debug.Log("Taking item from inventory: amount = " + amount);
         itemInInventory.addAmount(-amount);
+        //if (itemInInventory.getAmount() == 0) ItemInventory.Remove(itemInInventory);
         addInventoryWeight(-amount);
     }
     
@@ -153,7 +157,11 @@ public class Inventory
         return outstring;
     }
 
-    
+
+    public int getLeftOverInventorySpace()
+    {
+        return maxInventoryWeight - inventoryWeight;
+    }
 }
 
 public class InventoryException : Exception

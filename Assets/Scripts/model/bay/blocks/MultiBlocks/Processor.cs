@@ -3,14 +3,15 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Processor : MultiBlock, JobCallStructure
+public abstract class Processor : MultiBlock, IJobCallStructure
 {
     private float ItemsPerSecond = 1f;
     private int maxInventory;
     private Tier currentTier;
 
-    private Inventory inputInventory;
-    private Inventory outputInventory;
+    private Inventory InputInventory;
+    private Inventory OutputInventory;
+    
     
     public Processor(float x, float y, float speed, Tier tier) : base(x, y)
     {
@@ -19,7 +20,7 @@ public abstract class Processor : MultiBlock, JobCallStructure
         currentTier = tier;
         
         setMaxInventory(tier);
-        outputInventory = new Inventory();
+        OutputInventory = new Inventory();
     }
 
     private void setMaxInventory(Tier tier)
@@ -46,10 +47,10 @@ public abstract class Processor : MultiBlock, JobCallStructure
                 break;
         }
 
-        if (inputInventory == null)
-            inputInventory = new Inventory(maxInventory);
+        if (InputInventory == null)
+            InputInventory = new Inventory(maxInventory);
         else
-            inputInventory.setMaxInventoryWeigh(maxInventory);
+            InputInventory.setMaxInventoryWeigh(maxInventory);
 
     }
 
@@ -75,12 +76,12 @@ public abstract class Processor : MultiBlock, JobCallStructure
         {
             foreach (var inputItem in getActualInputItems())
             {
-                inputInventory.RemoveItem(inputItem);
+                InputInventory.RemoveItem(inputItem);
             }
             
             foreach (var outputItem in getOutputItems())
             {
-                outputInventory.AddItem(Item.CreateItem(outputItem, outputItem.getAmount()));
+                OutputInventory.AddItem(Item.CreateItem(outputItem, outputItem.getAmount()));
             }
         }
     }
@@ -89,7 +90,7 @@ public abstract class Processor : MultiBlock, JobCallStructure
     {
         foreach (var inputItem in getActualInputItems())
         {
-            Item itemInInv = inputInventory.TryGetItem(inputItem);
+            Item itemInInv = InputInventory.TryGetItem(inputItem);
             if (itemInInv.getAmount() < inputItem.getAmount())
             {
                 notEnoughItems = true;
@@ -102,28 +103,45 @@ public abstract class Processor : MultiBlock, JobCallStructure
     
     public void depositItem(Item item, Inventory minerInventory, int? amount = null)
     {
-        inputInventory.putItem(item, minerInventory, amount);
+        InputInventory.putItem(item, minerInventory, amount);
         checkInputInventory();
     }
 
     public void takeItem(Item item, Inventory minerInventory, int? amount = null)
     {
-        outputInventory.TakeItem(item, minerInventory, amount);
+        OutputInventory.TakeItem(item, minerInventory, amount);
     }
     public Inventory getInputInventory()
     {
-        return inputInventory;
+        return InputInventory;
     }
     public Inventory getOutputInventory()
     {
-        return outputInventory;
+        return OutputInventory;
     }
     public override void onClick()
     {
         
     }
-    
 
+    public void deliverJobCall(Item itemToBeDelivered, Inventory minerInventory)
+    {
+        InputInventory.TakeItem(itemToBeDelivered, minerInventory);
+        JobController.Instance.successJobCall(this, itemToBeDelivered);
+    }
+
+    public void pickUpJobCall(Item itemToBeDelivered, Inventory minerInventory)
+    {
+        int amount = itemToBeDelivered.getAmount();
+        if (amount > minerInventory.getLeftOverInventorySpace()) amount = minerInventory.getLeftOverInventorySpace();
+        OutputInventory.putItem(itemToBeDelivered, minerInventory, amount);
+    }
+
+    public void addInventoryCall(Item item)
+    {
+        
+    }
+    
     public override bool isResource() { return false; }
     public abstract override Vector2 getDimensions();
     public abstract override string getSpritePath();

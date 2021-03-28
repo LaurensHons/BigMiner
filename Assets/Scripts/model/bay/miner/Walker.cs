@@ -97,34 +97,52 @@ public class Walker
                 if (activeJobCall == null)
                 {
                     JobCall jobCall = JobController.Instance.getNextJobCall();
-                    if (jobCall == null)
+                    
+                    if (jobCall == null || jobCall.itemToBeDelivered.getAmount() == 0)
                     {
                         Debug.Log("Found no Inventory calls");
                         walkerStatus = WalkerStatus.CollectingBlocks;
+                        targetStructure = null;
                         DecideNextAction();
                         return;
                     }
-            
+                    Debug.Log("JobCall: item amount: " + jobCall.itemToBeDelivered.getAmount());
                     activeJobCall = jobCall;
-            
-                    if (inventory.TryGetItem(jobCall.itemToBeDelivered) == null)
+                    Item itemInInv = inventory.TryGetItem(jobCall.itemToBeDelivered);
+                    if (itemInInv == null || itemInInv.getAmount() == 0)
                     {
-                        targetStructure = Silo.Instance;
+                        SetTargetPosition(Silo.Instance, out bool success);
                     }
                     else
                     {
-                        targetStructure = activeJobCall.targetStructure;
+                        SetTargetPosition(activeJobCall.targetStructure, out bool success);
+                        if (!success)
+                        {
+                            targetStructure = null;
+                            walkerStatus = WalkerStatus.CollectingBlocks;
+                            DecideNextAction();
+                        }
                     } 
                 }
-        
-                if (inventory.TryGetItem(activeJobCall.itemToBeDelivered) == null)
+
+                if (activeJobCall.itemToBeDelivered.getAmount() == 0)
                 {
+                    activeJobCall = null;
+                    DecideNextAction();
+                    return;
+                }
+                
+                
+                Item itemInInvv = inventory.TryGetItem(activeJobCall.itemToBeDelivered);
+                if (itemInInvv == null || itemInInvv.getAmount() == 0)
+                {
+                    
                     if (!inventory.isEmpty())
                     {
                         depositBlocksInSilo();
                         return;
                     }
-
+                    
                     TakeItems();
                     return;
                 }
@@ -147,7 +165,8 @@ public class Walker
         if (!isStructureCloseEnough(Silo.Instance))
         {
             Debug.Log("You're too far to deposit items mate");
-            targetStructure = Silo.Instance;
+            SetTargetPosition(Silo.Instance, out bool success);
+            if (!success) throw new ArgumentException("Madafakas blocking the silo");
             return;
         }
         
@@ -159,12 +178,13 @@ public class Walker
     {
         if (!isStructureCloseEnough(activeJobCall.targetStructure))
         {
-            Debug.Log("You're too far mate");
-            targetStructure = activeJobCall.targetStructure;
+            Debug.Log("Going to Inventory call TargetStructure");
+            SetTargetPosition(activeJobCall.targetStructure, out bool success);
+            if (!success) DecideNextAction();
         }
         else
         {
-            Debug.Log("Miner: Depositing Items");
+            Debug.Log("Miner: Depositing Items, inv: " + objectToWalk.getItemInventory().getInventoryWeight());
             objectToWalk.startDepositingItems();
         }
     }
@@ -173,14 +193,14 @@ public class Walker
     {
         if (!isStructureCloseEnough(activeJobCall.originStructure))
         {
-            Debug.Log("You're too far mate");
-            if (targetStructure == null)
-                Debug.Log("wtf bruh in the walker ln 230");
-            else targetStructure = activeJobCall.originStructure;
+            
+            SetTargetPosition(activeJobCall.originStructure, out bool success);
+            Debug.Log("Going to Inventory call OriginStructure, Success: " + success);
+            if (!success) DecideNextAction();
         }
         else
         {
-            Debug.Log("Miner: Taking Items");
+            Debug.Log("Miner: Taking Items, inv: " + objectToWalk.getItemInventory().getInventoryWeight());
             objectToWalk.startTakingItems();
         }
     }
@@ -200,14 +220,23 @@ public class Walker
     }
     private void findNextTarget()
     {
+        if (InventoryCalls())
+        {
+            walkerStatus = WalkerStatus.InventoryCalls;
+            return;
+        }
         Debug.Log("Finding new target");
-        targetStructure = objectToWalk.getNextTarget();
+        IStructure targetStructure = objectToWalk.getNextTarget();
         Debug.Log("TargetStructure: " + targetStructure);
 
         if (targetStructure != null && !targetStructure.isDestroyed())
         {
             Debug.Log("TargetStructure: " + targetStructure);
-            SetTargetPosition(targetStructure);
+            SetTargetPosition(targetStructure, out bool success);
+            if (!success)
+            {
+                findNextTarget();
+            }
         }
         else
         {
@@ -215,8 +244,17 @@ public class Walker
             activated = false;
         }
     }
-    private void SetTargetPosition(IStructure targetStructure, bool forced = false)
+
+    private bool InventoryCalls()
     {
+        if (checkForInventoryCalls && JobController.Instance.getNextJobCall() != null)
+            return true;
+        else return false;
+    }
+
+    private void SetTargetPosition(IStructure targetStructure, out bool success, bool forced = false)
+    {
+        this.targetStructure = targetStructure ?? throw new ArgumentException("TargetStructure can't be null");
         //Debug.Log("Started pathfinding from " + GetPosition().ToString() + " to " + targetPosition.ToString());
         currentPathIndex = 0;
 
@@ -248,13 +286,14 @@ public class Walker
 
             Debug.Log(outstring + "path found from [" + Math.Round(transform.position.x) + "," + Math.Round(transform.position.y) + "] to closest structure node [" + 
                       closestNode.getPos().x +", " + closestNode.getPos().y + "]");
-            findNextTarget();
-            return;
+            success = false;
         }
         for (int i = 0; i < pathVectorList.Count - 1; i++)
         {
             Debug.DrawLine(pathVectorList[i], pathVectorList[i + 1], Color.white, pathVectorList.Count);
         }
+
+        success = true;
     }
     
     protected void HandleMovement()
@@ -279,8 +318,8 @@ public class Walker
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.fixedDeltaTime);
             } else {
                 currentPathIndex++;
-                if (currentPathIndex + 1 >= pathVectorList.Count) {
-                    //Debug.Log("Path ended: currentPathIndex: " + currentPathIndex + ", pathVectorListCount: " + pathVectorList.Count);
+                if (currentPathIndex >= pathVectorList.Count) {
+                    Debug.Log("Path ended: currentPathIndex: " + currentPathIndex + ", pathVectorListCount: " + pathVectorList.Count);
                     StopAction();
                     //animatedWalker.SetMoveVector(Vector3.zero);
                 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 public class JobCall
 {
@@ -30,10 +31,6 @@ public class JobCall
         if (item == null) throw new ArgumentException();
         itemToBeDelivered = item;
     }
-    public void Success()
-    {
-        jobController.successJobCall(this);
-    }
 
     public static JobCall operator ++(JobCall a)
     {
@@ -60,8 +57,11 @@ public class JobCall
     }
 }
 
-public interface JobCallStructure
+public interface IJobCallStructure
 {
-    public Inventory getInputInventory();
-    public Inventory getOutputInventory();
+    public void deliverJobCall(Item itemToBeDelivered, Inventory minerInventory);
+    public void pickUpJobCall(Item itemToBeDelivered, Inventory minerInventory);
+    public void addInventoryCall(Item item);
 }
+
+

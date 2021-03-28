@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.Jobs;
 using UnityEngine;
 
-public class Silo : MultiBlock, JobCallStructure
+public class Silo : MultiBlock, IJobCallStructure
 {
     public static Silo Instance { get; private set; }
 
@@ -63,13 +64,22 @@ public class Silo : MultiBlock, JobCallStructure
         return new Vector2(2, 2);
     }
 
-    public Inventory getInputInventory()
+    public void deliverJobCall(Item itemToBeDelivered, Inventory minerInventory)
     {
-        return Inventory;
+        Inventory.TakeItem(itemToBeDelivered, minerInventory);
+        JobController.Instance.successJobCall(this, itemToBeDelivered);
     }
 
-    public Inventory getOutputInventory()
+    public void pickUpJobCall(Item itemToBeDelivered, Inventory minerInventory)
     {
-        return Inventory;
+        int amount = itemToBeDelivered.getAmount();
+        if (amount > minerInventory.getLeftOverInventorySpace()) amount = minerInventory.getLeftOverInventorySpace();
+        Inventory.putItem(itemToBeDelivered, minerInventory, amount);
+        
+    }
+
+    public void addInventoryCall(Item item)
+    {
+        throw new NotImplementedException();
     }
 }
