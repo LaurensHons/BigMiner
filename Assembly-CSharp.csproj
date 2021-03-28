@@ -54,6 +54,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\model\bay\blocks\Structure.cs" />
      <Compile Include="Assets\Scripts\model\resourceManagement\Item.cs" />
+     <Compile Include="Assets\Scripts\view\controllers\bay\SiloController.cs" />
      <Compile Include="Assets\Scripts\model\bay\blocks\MultiBlocks\Silo.cs" />
      <Compile Include="Assets\Scripts\model\bay\blocks\MultiBlocks\Processors\Saw.cs" />
      <Compile Include="Assets\Scripts\view\controllers\ScannerController.cs" />
@@ -65,6 +66,7 @@
      <Compile Include="Assets\Scripts\model\bay\PathFinding\PathNode.cs" />
      <Compile Include="Assets\Scripts\view\uiscripts\ui\ScannerMainInfoPanel.cs" />
      <Compile Include="Assets\Scripts\view\uiscripts\bay\MinerStationClickController.cs" />
+     <Compile Include="Assets\Scripts\view\uiscripts\ui\SiloItemPrefabScript.cs" />
      <Compile Include="Assets\Scripts\model\bay\PathFinding\Grid.cs" />
      <Compile Include="Assets\Scripts\model\resourceManagement\Inventory.cs" />
      <Compile Include="Assets\Scripts\model\bay\miner\Walker.cs" />
@@ -72,6 +74,7 @@
      <Compile Include="Assets\Scripts\model\bay\miner\Tool\Pickaxe.cs" />
      <Compile Include="Assets\Scripts\view\uiscripts\bay\MultiBlockGameObjectScript.cs" />
      <Compile Include="Assets\Scripts\model\bay\blocks\Resource\StoneBlock.cs" />
+     <Compile Include="Assets\Scripts\model\resourceManagement\JobCall.cs" />
      <Compile Include="Assets\Scripts\model\bay\miner\Tool\Tool.cs" />
      <Compile Include="Assets\Scripts\view\controllers\general\DebugDrawer.cs" />
      <Compile Include="Assets\Scripts\model\bay\Bay.cs" />
@@ -91,9 +94,6 @@
      <Compile Include="Assets\Scripts\view\controllers\general\GameController.cs" />
      <Compile Include="Assets\Scripts\model\bay\blocks\MultiBlocks\Processor.cs" />
      <Compile Include="Assets\Scripts\model\bay\miner\MinerUpgrades\Upgrade1To10.cs" />
-     <Compile Include="Assets\Scripts\view\uiscripts\ui\SiloItemPrefabScript.cs" />
-     <Compile Include="Assets\Scripts\view\controllers\bay\SiloController.cs" />
-     <Compile Include="Assets\Scripts\model\resourceManagement\JobCall.cs" />
      <Compile Include="Assets\Scripts\model\resourceManagement\JobController.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.2.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>

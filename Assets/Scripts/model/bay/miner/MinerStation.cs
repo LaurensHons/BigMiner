@@ -34,7 +34,7 @@ public class MinerStation : MultiBlock
 
     public Block getNextTarget()
     {
-        String s = "";
+        String s = "Blocks available to mine: ";
         foreach (var pathNode in bay.getBlockList())
         {
             s += pathNode.ToString() + "; ";

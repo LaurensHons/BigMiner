@@ -1,22 +1,21 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Walker
 {
     private IWalker objectToWalk;
-    private WalkerStatus walkerStatus = WalkerStatus.DoingNothing;
+    private WalkerStatus walkerStatus = WalkerStatus.CollectingBlocks;
+    private IEnumerator sleeping;
     public List<Vector3> pathVectorList = new List<Vector3>();
     public int currentPathIndex;
-
     public bool checkForInventoryCalls = true;
-
     public float speed;
 
     public IStructure targetStructure;
-
-    public event EventHandler ActionEnd;
 
     private Transform transform
     {
@@ -33,235 +32,187 @@ public class Walker
         this.objectToWalk = objectToWalk;
         this.speed = speed;
 
-        walkerStatus = WalkerStatus.DoingNothing;
+        walkerStatus = WalkerStatus.CollectingBlocks;
+        
+        
     }
 
+    private bool activated = false;
     public void Update(bool wakeup)
     {
+        if (targetStructure != null)
+            activated = true;
+        if (wakeup && !activated)
+        {
+            DecideNextAction();
+        }
         if (objectToWalk.isBatteryZero())
         {
             Debug.Log("BatteryZero");
             return;
         }
-        switch (walkerStatus)
-        {
-            case (WalkerStatus.CollectingBlocks):
-            {
-                HandleMovement();
-                break;
-            }
-            case (WalkerStatus.GoingToTargetStructure):
-            {
-                HandleMovement();
-                break;
-            }
-            case (WalkerStatus.DoingNothing):
-            {
-                Debug.Log("Doing Nothing");
-                if (wakeup)
-                {
-                    setStatusCollectingBlocks(this, EventArgs.Empty);
-                }
-                break;
-            }
-        }
+        HandleMovement();
     }
 
     public WalkerStatus getWalkerStatus() { return walkerStatus; }
 
-    public void setStatusGoingToTargetBlock(object sender, EventArgs args)
+    public void DecideNextAction()
     {
-        Debug.Log("Miner: Going to TargetStructure");
+        Debug.Log("Deciding next action");
+        switch (walkerStatus)
+        {
+            case WalkerStatus.CollectingBlocks:
+            {
+                if (objectToWalk.getItemInventory().isFull())
+                {
+                    depositBlocksInSilo();
+                    return;
+                }
 
-        walkerStatus = WalkerStatus.GoingToTargetStructure;
-        SetTargetPosition(targetStructure, true);
-        if (activeJobCall == null)
-            ActionEnd = setStatusDepositingBlocksInSilo;
-        else
-            ActionEnd = setStatusDepositingItems;
+                if (targetStructure == null || targetStructure.isDestroyed())
+                {
+                    findNextTarget();
+                    return;
+                }
+
+                if (isStructureCloseEnough(targetStructure))
+                {
+                    Debug.Log("mining");
+                    objectToWalk.Mine();
+                    return;
+                }
+                else
+                {
+                    Debug.Log("not close enough to mine");
+                }
+
+                break;
+            }
+
+            case WalkerStatus.InventoryCalls:
+            {
+                Inventory inventory = objectToWalk.getItemInventory();
+                Debug.Log("Status: Inventory Call");
+        
+                if (activeJobCall == null)
+                {
+                    JobCall jobCall = JobController.Instance.getNextJobCall();
+                    if (jobCall == null)
+                    {
+                        Debug.Log("Found no Inventory calls");
+                        walkerStatus = WalkerStatus.CollectingBlocks;
+                        DecideNextAction();
+                        return;
+                    }
+            
+                    activeJobCall = jobCall;
+            
+                    if (inventory.TryGetItem(jobCall.itemToBeDelivered) == null)
+                    {
+                        targetStructure = Silo.Instance;
+                    }
+                    else
+                    {
+                        targetStructure = activeJobCall.targetStructure;
+                    } 
+                }
+        
+                if (inventory.TryGetItem(activeJobCall.itemToBeDelivered) == null)
+                {
+                    if (!inventory.isEmpty())
+                    {
+                        depositBlocksInSilo();
+                        return;
+                    }
+
+                    TakeItems();
+                    return;
+                }
+
+                DepositItems();
+                break;
+            }
+        }
     }
 
-    public void setStatusCollectingBlocks(object sender, EventArgs args)
+    private IEnumerator Sleep()
     {
-        if (checkIfInventoryFull())
+        yield return new WaitForSeconds(1);
+        DecideNextAction();
+        sleeping = null;
+    }
+
+    public void depositBlocksInSilo()
+    {
+        if (!isStructureCloseEnough(Silo.Instance))
         {
-            StopAction();
+            Debug.Log("You're too far to deposit items mate");
+            targetStructure = Silo.Instance;
             return;
         }
-        Debug.Log("Miner: Collecting blocks");
-        walkerStatus = WalkerStatus.CollectingBlocks;
-        findNextTarget();
-        ActionEnd = setStatusMining;
-    }
         
-    public void setStatusMining(object sender, EventArgs args)
-    {
-        Debug.Log("Miner: Mining Block");
-        objectToWalk.Mine();
-        walkerStatus = WalkerStatus.Mining;
-        if (checkForInventoryCalls)
-            ActionEnd = CheckJobCalls;
-        else 
-            ActionEnd = setStatusCollectingBlocks;
+        Debug.Log("Miner: Depositing Items");
+        objectToWalk.startDepositingItems();
     }
-
-    public void setStatusDepositingBlocksInSilo(object sender, EventArgs args)
+    
+    public void DepositItems()
     {
-        bool closeEnough = false;
-        foreach (var pathNode in targetStructure.getPathNodeList())
-        {
-            Debug.Log("Distance: " + Vector2.Distance(transform.position, pathNode.getPos()));
-            if (Vector2.Distance(transform.position, pathNode.getPos()) <= 1.1f)
-                closeEnough = true;
-
-        }
-        if (!closeEnough)
+        if (!isStructureCloseEnough(activeJobCall.targetStructure))
         {
             Debug.Log("You're too far mate");
-           
-            ActionEnd = setStatusGoingToTargetBlock;
-            StopAction();
+            targetStructure = activeJobCall.targetStructure;
         }
         else
         {
             Debug.Log("Miner: Depositing Items");
-            walkerStatus = WalkerStatus.TradingItems;
             objectToWalk.startDepositingItems();
-            if (checkForInventoryCalls)
-                ActionEnd = CheckJobCalls;
-            else 
-                ActionEnd = setStatusCollectingBlocks;
         }
     }
-    
-    public void setStatusDepositingItems(object sender, EventArgs args)
-    {
-        bool closeEnough = false;
-        foreach (var pathNode in activeJobCall.targetStructure.getPathNodeList())
-        {
-            Debug.Log("Distance: " + Vector2.Distance(transform.position, pathNode.getPos()));
-            if (Vector2.Distance(transform.position, pathNode.getPos()) <= 1.1f)
-                closeEnough = true;
 
-        }
-        if (!closeEnough)
+    public void TakeItems()
+    {
+        if (!isStructureCloseEnough(activeJobCall.originStructure))
         {
             Debug.Log("You're too far mate");
-           
-            ActionEnd = setStatusGoingToTargetBlock;
-            StopAction();
-        }
-        else
-        {
-            Debug.Log("Miner: Depositing Items");
-            walkerStatus = WalkerStatus.TradingItems;
-            objectToWalk.startDepositingItems();
-            if (checkForInventoryCalls)
-                ActionEnd = CheckJobCalls;
-            else 
-                ActionEnd = setStatusCollectingBlocks;
-        }
-    }
-    
-    
-    
-    private void CheckJobCalls(object obj, EventArgs eventArgs)
-    {
-        Inventory inventory = objectToWalk.getItemInventory();
-        Debug.Log("Checking Inventory calls");
-        
-        if (activeJobCall == null)
-        {
-            JobCall jobCall = JobController.Instance.getNextJobCall();
-            if (jobCall == null)
-            {
-                Debug.Log("Found no Inventory calls");
-                ActionEnd = setStatusCollectingBlocks;
-                StopAction();
-                return;
-            }
-            
-            activeJobCall = jobCall;
-            
-            if (inventory.TryGetItem(activeJobCall.itemToBeDelivered) == null)
-            {
-                targetStructure = Silo.Instance;
-                ActionEnd = setStatusGoingToTargetBlock;
-                StopAction();
-                return; 
-            } 
-        }
-        
-        if (inventory.TryGetItem(activeJobCall.itemToBeDelivered) == null)
-        {
-            if (!inventory.isEmpty())
-            {
-                ActionEnd = setStatusDepositingBlocksInSilo;
-                StopAction();
-                return;
-            }
-            
-            ActionEnd = setStatusTakingItems;
-            StopAction();
-            return;
-        }
-
-        targetStructure = activeJobCall.targetStructure;
-        ActionEnd = setStatusGoingToTargetBlock;
-        StopAction();
-    }
-
-    public void setStatusTakingItems(object sender, EventArgs args)
-    {
-        bool closeEnough = false;
-        foreach (var pathNode in activeJobCall.originStructure.getPathNodeList())
-        {
-            Debug.Log("Distance: " + Vector2.Distance(transform.position, pathNode.getPos()));
-            if (Vector2.Distance(transform.position, pathNode.getPos()) <= 1.1f)
-                closeEnough = true;
-
-        }
-        if (!closeEnough)
-        {
-            Debug.Log("You're too far mate");
-            ActionEnd = setStatusGoingToTargetBlock;
-            StopAction();
+            if (targetStructure == null)
+                Debug.Log("wtf bruh in the walker ln 230");
+            else targetStructure = activeJobCall.originStructure;
         }
         else
         {
             Debug.Log("Miner: Taking Items");
-            walkerStatus = WalkerStatus.TradingItems;
             objectToWalk.startTakingItems();
-            ActionEnd = setStatusGoingToTargetBlock;
         }
     }
 
-    private bool checkIfInventoryFull()
+    private bool isStructureCloseEnough(IStructure structure)
     {
-        if (objectToWalk.getItemInventory().isFull())
+        if (structure == null || structure.isDestroyed()) return false;
+        bool closeEnough = false;
+        foreach (var pathNode in structure.getPathNodeList())
         {
-            targetStructure = Silo.Instance;
-            ActionEnd = setStatusGoingToTargetBlock;
-            return true;
+            //Debug.Log("Distance: " + Vector2.Distance(transform.position, pathNode.getPos()));
+            if (Vector2.Distance(transform.position, pathNode.getPos()) <= 1.1f)
+                closeEnough = true;
         }
 
-        return false;
+        return closeEnough;
     }
-
-
     private void findNextTarget()
     {
-        //Debug.Log("Finding new target");
+        Debug.Log("Finding new target");
         targetStructure = objectToWalk.getNextTarget();
+        Debug.Log("TargetStructure: " + targetStructure);
 
         if (targetStructure != null && !targetStructure.isDestroyed())
         {
+            Debug.Log("TargetStructure: " + targetStructure);
             SetTargetPosition(targetStructure);
         }
         else
         {
-            Debug.Log("getNextTarget found no target");
-            walkerStatus = WalkerStatus.DoingNothing;
+            Debug.Log("getNextTarget found no target, sleeping for 1 sec");
+            activated = false;
         }
     }
     private void SetTargetPosition(IStructure targetStructure, bool forced = false)
@@ -306,13 +257,18 @@ public class Walker
         }
     }
     
-    protected void HandleMovement() {
-        
+    protected void HandleMovement()
+    {
+        if (targetStructure == null)
+        {
+            //Debug.Log("no target struct");
+            return;
+        }
         if (checkNextNode())
             return;
         
         //Debug.Log("freee");
-        if (pathVectorList != null && pathVectorList.Count != 0) {
+        if (pathVectorList != null && pathVectorList.Count != 0 && pathVectorList.Count != currentPathIndex) {
             Vector3 targetPosition = pathVectorList[currentPathIndex];
             
             if (Vector3.Distance(transform.position, targetPosition) > 0.01f){
@@ -323,8 +279,8 @@ public class Walker
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.fixedDeltaTime);
             } else {
                 currentPathIndex++;
-                if (currentPathIndex >= pathVectorList.Count) {
-                    Debug.Log("Path ended");
+                if (currentPathIndex + 1 >= pathVectorList.Count) {
+                    //Debug.Log("Path ended: currentPathIndex: " + currentPathIndex + ", pathVectorListCount: " + pathVectorList.Count);
                     StopAction();
                     //animatedWalker.SetMoveVector(Vector3.zero);
                 }
@@ -333,15 +289,14 @@ public class Walker
     }
     private bool checkNextNode()
     {
-        if (pathVectorList != null && pathVectorList.Count > 0)
+        if (pathVectorList != null && pathVectorList.Count > 0 && pathVectorList.Count > currentPathIndex)
         {
+            //Debug.Log("count: " + pathVectorList.Count  + ", index: " + currentPathIndex);
             PathNode pathNode = objectToWalk.getBay().getPathNode(pathVectorList[currentPathIndex]);
             if (!pathNode.isWalkable)
             {
                 targetStructure = pathNode.structure;
-                ActionEnd = setStatusMining;
-                StopAction();
-                return true;
+                DecideNextAction();
             } 
         }
         //Debug.Log("pathVectorList "+ pathVectorList.Count +" index " + currentPathIndex);
@@ -353,8 +308,7 @@ public class Walker
     
     public void StopAction()
     {
-        
-        ActionEnd?.Invoke(this,EventArgs.Empty);
+        DecideNextAction();
     }
 
     public JobCall getActiveJobCall()
@@ -383,10 +337,7 @@ public interface IWalker
 public enum WalkerStatus
 {
     CollectingBlocks,
-    GoingToTargetStructure,
-    Mining,
-    TradingItems,
-    DoingNothing
+    InventoryCalls
 }
 
 

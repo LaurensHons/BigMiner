@@ -184,8 +184,7 @@ public class Miner : IWalker
     {
         if (walker.targetStructure == null || walker.targetStructure.isDestroyed())
         {
-            walker.setStatusCollectingBlocks(this, EventArgs.Empty);
-            walker.StopAction();
+            walker.DecideNextAction();
             return;
         }
         MININGTIMEMOUT = 0;
