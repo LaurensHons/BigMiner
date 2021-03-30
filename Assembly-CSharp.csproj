@@ -89,6 +89,7 @@
      <Compile Include="Assets\Scripts\model\bay\miner\MinerStation.cs" />
      <Compile Include="Assets\Scripts\view\uiscripts\ui\tabs\TabGroup.cs" />
      <Compile Include="Assets\Scripts\view\uiscripts\ui\tabs\TabButton.cs" />
+     <Compile Include="Assets\Scripts\view\controllers\bay\IMenuController.cs" />
      <Compile Include="Assets\Scripts\view\uiscripts\ui\UpgradePanelScript.cs" />
      <Compile Include="Assets\Scripts\model\bay\blocks\Resource\DirtBlock.cs" />
      <Compile Include="Assets\Scripts\view\controllers\general\GameController.cs" />

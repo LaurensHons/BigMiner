@@ -11,7 +11,7 @@ public class UIController : MonoBehaviour
     private Vector3 cameraOriginPosition;
     private Vector3 cameraDifference;
     private bool Drag = false;
-    private GameObject SubPanel = null;
+    private IMenuController SubPanel = null;
     public bool EditMode => EditController.EditMode;
 
     private Vector3 dragOrigin;
@@ -23,18 +23,18 @@ public class UIController : MonoBehaviour
     public SiloController SiloController;
     public MinerController MinerController;
     public EditController EditController;
+    public BuildingController BuildingController;
     
     public GameObject MenuPanel;
-    public GameObject ScannerMenu;
-    public GameObject SiloMenu;
-    public GameObject MinerMenu;
-    public GameObject MinerToolMenu;
-    public GameObject MinerUpgradeMenu;
+    
+    
+    
+    
     public GameObject BuildingsMenu;
     
     public Text ScreenRes;
 
-    private GameObject activeMenu;
+    private IMenuController activeMenu;
     private MinerStation activeMinerStation;
 
     private Action CloseButton;
@@ -54,13 +54,7 @@ public class UIController : MonoBehaviour
         Bay = BayGameObject.GetComponent<Bay>();
 
         MenuPanel.SetActive(false);
-        ScannerMenu.SetActive(false);
-        SiloMenu.SetActive(false);
-        MinerMenu.SetActive(false);
-        MinerToolMenu.SetActive(false);
-        MinerUpgradeMenu.SetActive(false);
-
-
+        
         Vector3 cameraPos = new Vector3((Bay.gridSize.x - 1) / 2f, (Bay.gridSize.y - 1) / 2f, -10);
         camera.transform.position = cameraPos;
     }
@@ -89,55 +83,50 @@ public class UIController : MonoBehaviour
         }
     }
 
-    private void setActivePanel(GameObject panel)
+    private void setActiveMenu(IMenuController panel)
     {
         if (activeMenu != null)
         {
-            activeMenu.SetActive(false);
+            activeMenu.setActive(false);
         }
         else
             setActiveMenuPanel();
 
         activeMenu = panel;
-        activeMenu.SetActive(true);
+        activeMenu.setActive(true);
     }
 
     public void OpenScannerMenu()   //Activated by scanner button
     {
-        setActivePanel(ScannerMenu);
+        setActiveMenu(ScannerController);
     }
 
     public void OpenSiloMenu()
     {
-        setActivePanel(SiloMenu);
-        SiloController.setActive(true);
+        setActiveMenu(SiloController);
     }
 
     public void OpenMinerMenu(MinerStation minerStation, bool forced = false)   //Activated by tapping on miner station
     {
         if (activeMenu != null && !forced) return;
-        MinerController.setMinerStation(minerStation);
-        MinerController.setActive(true);
-        setActivePanel(MinerMenu);
+        setActiveMenu(MinerController.MinerStation(minerStation));
     }
 
     public void OpenToolMenu() //Activated by Toolbutton
     {
-        MinerController.loadTools();
-        setActivePanel(MinerToolMenu);
-        SubPanel = MinerMenu;
+        setActiveMenu(MinerController.loadTools());
+        SubPanel = MinerController;
     }
 
     public void OpenUpgradeMenu() //Activated by UpgradesButton
     {
-        setActivePanel(MinerUpgradeMenu);
-        MinerController.loadUpgrades();
-        SubPanel = MinerMenu;
+        setActiveMenu(MinerController.loadUpgrades());
+        SubPanel = MinerController;
     }
 
     public void OpenBuildingsMenu()
     {
-        setActivePanel(BuildingsMenu);
+        setActiveMenu(BuildingController);
     }
 
     public void EditButton()   //Activated by Edit Button
@@ -162,20 +151,20 @@ public class UIController : MonoBehaviour
 
     public void CloseMenu()
     {
-        if (activeMenu == MinerMenu)
+        if (activeMenu == (IMenuController) MinerController)
             MinerController.setActive(false);
         
-        if (activeMenu == SiloMenu)
+        if (activeMenu == (IMenuController) SiloController)
             SiloController.setActive(false);
 
         if (SubPanel != null)
         {
-            setActivePanel(SubPanel);
+            setActiveMenu(SubPanel);
             SubPanel = null;
         }
         else
         {
-            activeMenu.SetActive(false);
+            activeMenu.setActive(false);
             activeMenu = null;
             MenuPanel.SetActive(false);   
         }

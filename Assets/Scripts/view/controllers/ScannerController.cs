@@ -7,10 +7,10 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Slider = UnityEngine.UI.Slider;
 
-public class ScannerController : MonoBehaviour
+public class ScannerController : MonoBehaviour, IMenuController
 {
     public UIController UIControllerObject;
-    
+    public GameObject ScannerMenu;
     private UIController UIController;
     public GameObject BayGameObject;
     private Bay Bay;
@@ -27,6 +27,7 @@ public class ScannerController : MonoBehaviour
 
     private void Start()
     {
+        ScannerMenu.SetActive(false);
         UIController = UIControllerObject.GetComponent<UIController>();
         Scanner.Instance.setUiController(UIController);
         
@@ -104,5 +105,23 @@ public class ScannerController : MonoBehaviour
     {
         Scanner.Instance.SearchCapcacity *= 1.5f;
     }
-    
+
+    public void setActive(bool active)
+    {
+        ScannerMenu.SetActive(active);
+        for (int i = 0; i < ScannerPanelList.transform.GetChildCount(); i++)
+        {
+            Destroy(ScannerPanelList.transform.GetChild(i).gameObject);
+        }
+        
+        
+        foreach (var BlockType in Enum.GetNames(typeof(BlockTypes)))
+        {
+            slider_BlockPrefab.gameObject.name = "Slider" + BlockType.ToString();
+            GameObject Slider_BlockPrefab = Instantiate(slider_BlockPrefab, Vector3.zero, Quaternion.identity, ScannerPanelList.transform);
+            Slider_BlockPrefab.name = "Slider" + BlockType.ToString();
+            Slider_BlockPrefab.GetComponent<ScannerSlider>().ScannerController = this;
+        }
+        updateSliders();
+    }
 }

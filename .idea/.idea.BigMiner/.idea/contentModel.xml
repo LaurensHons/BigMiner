@@ -61,6 +61,7 @@
               <e p="bay" t="Include">
                 <e p="BuildingController.cs" t="Include" />
                 <e p="EditController.cs" t="Include" />
+                <e p="IMenuController.cs" t="Include" />
                 <e p="MinerController.cs" t="Include" />
                 <e p="SiloController.cs" t="Include" />
               </e>

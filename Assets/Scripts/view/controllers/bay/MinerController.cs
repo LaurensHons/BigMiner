@@ -9,9 +9,17 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 using Random = System.Random;
 
-public class MinerController : MonoBehaviour
+public class MinerController : MonoBehaviour, IMenuController
 {
+    public GameObject MinerMenu;
+    public GameObject MinerToolMenu;
+    public GameObject MinerUpgradeMenu;
     private MinerStation minerstation;
+    public MinerController MinerStation(MinerStation minerStation)
+    {
+        this.minerstation = minerStation;
+        return this;
+    }
 
     public Text BigMinerNameText;
 
@@ -51,12 +59,15 @@ public class MinerController : MonoBehaviour
     private float DefaultBatteryWidth;      //gets battery width at starts and scales the battery according to this value;
 
     private List<Tuple<Item, GameObject>> InventoryItemObjects = new List<Tuple<Item, GameObject>>();
-    
-    
+
+    private bool subPanel = false;
     
     
     public void Start()
     {
+        MinerMenu.SetActive(false);
+        MinerToolMenu.SetActive(false);
+        MinerToolMenu.SetActive(false);
         BatteryImage.gameObject.AddComponent<BatteryClickController>();
         DefaultBatteryWidth = BatteryImage.GetComponent<RectTransform>().rect.width;
         
@@ -72,6 +83,11 @@ public class MinerController : MonoBehaviour
 
     public void setActive(bool Active)
     {
+        MinerMenu.SetActive(Active);
+        MinerToolMenu.SetActive(Active);
+        MinerToolMenu.SetActive(Active);
+        
+        if (subPanel) return;
         if (Active)
         {
             minerstation.Miner.MinerXpUpdate += updateXpBar;
@@ -168,7 +184,7 @@ public class MinerController : MonoBehaviour
         setBatteryString(batteryHours + " Hrs until empty");
     }
     
-    public void loadTools()
+    public MinerController loadTools()
     {
         if (ToolPanelPrefab == null) throw new Exception("Tool Panel Prefab not found");
         
@@ -182,19 +198,25 @@ public class MinerController : MonoBehaviour
             Debug.Log(tool.GetType());
             toolPanels[tool].setActive(true, this, tool);
         }
+
+        subPanel = true;
+        return this;
     }
 
-    public void loadUpgrades()
+    public MinerController loadUpgrades()
     {
         int amountOfPanels = UpgradeList.transform.childCount;
         for (int i = 0; i < amountOfPanels; i++)
         {
-            if (minerstation.Miner.upgrades == null || i >= minerstation.Miner.upgrades.Count) return;
+            if (minerstation.Miner.upgrades == null || i >= minerstation.Miner.upgrades.Count) return this;
             MinerUpgrade upgrade = minerstation.Miner.upgrades[i];
             if (upgrade != null)
                 UpgradeList.transform.GetChild(i).gameObject.GetComponent<UpgradePanelScript>().LoadUpgrade(upgrade);
-            else return;
+            else return this;
         }
+
+        subPanel = true;
+        return this;
     }
 
     private void updateInventory()
