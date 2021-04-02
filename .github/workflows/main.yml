@@ -22,7 +22,7 @@ jobs:
       - name: Cache actions
         uses: actions/cache@v2
         with:
-          path: |
+          path: \
           key: Library-BigMiner-Android
           restore-keys: |
             Library-BigMiner-
