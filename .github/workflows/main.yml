@@ -1,4 +1,4 @@
-name: Actions <img draggable="false" role="img" class="emoji" alt="😎" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f60e.svg">
+name: Build apk
  
 on:
   pull_request: {}
@@ -9,7 +9,7 @@ env:
  
 jobs:
   build:
-    name: Build my project <img draggable="false" role="img" class="emoji" alt="✨" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/2728.svg">
+    name: Compile Project
     runs-on: ubuntu-latest
     steps:
      
