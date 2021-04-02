@@ -78,16 +78,25 @@
                 <e p="MultiBlockGameObjectScript.cs" t="Include" />
               </e>
               <e p="UI" t="Include">
+                <e p="builderMenu" t="Include">
+                  <e p="ActiveBuildingPanelScript.cs" t="Include" />
+                </e>
                 <e p="ButtonTextPrefab.cs" t="Include" />
-                <e p="ScannerMainInfoPanel.cs" t="Include" />
-                <e p="ScannerSlider.cs" t="Include" />
-                <e p="SiloItemPrefabScript.cs" t="Include" />
+                <e p="minerMenu" t="Include">
+                  <e p="ToolPanelScript.cs" t="Include" />
+                  <e p="UpgradePanelScript.cs" t="Include" />
+                </e>
+                <e p="scannerMenu" t="Include">
+                  <e p="ScannerMainInfoPanel.cs" t="Include" />
+                  <e p="ScannerSlider.cs" t="Include" />
+                </e>
+                <e p="siloMenu" t="Include">
+                  <e p="SiloItemPrefabScript.cs" t="Include" />
+                </e>
                 <e p="tabs" t="Include">
                   <e p="TabButton.cs" t="Include" />
                   <e p="TabGroup.cs" t="Include" />
                 </e>
-                <e p="ToolPanelScript.cs" t="Include" />
-                <e p="UpgradePanelScript.cs" t="Include" />
               </e>
             </e>
           </e>

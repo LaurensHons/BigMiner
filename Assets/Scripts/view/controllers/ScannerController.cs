@@ -109,7 +109,7 @@ public class ScannerController : MonoBehaviour, IMenuController
     public void setActive(bool active)
     {
         ScannerMenu.SetActive(active);
-        for (int i = 0; i < ScannerPanelList.transform.GetChildCount(); i++)
+        for (int i = 0; i < ScannerPanelList.transform.childCount; i++)
         {
             Destroy(ScannerPanelList.transform.GetChild(i).gameObject);
         }

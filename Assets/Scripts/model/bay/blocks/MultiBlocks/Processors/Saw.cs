@@ -18,6 +18,11 @@ public class Saw : Processor
         return "Assets/Addressables/Blocks/Saw.png";
     }
 
+    public override string getName()
+    {
+        return currentTier + " Saw";
+    }
+
     public override Item[] getBaseInputItems()
     {
         return new Item[]

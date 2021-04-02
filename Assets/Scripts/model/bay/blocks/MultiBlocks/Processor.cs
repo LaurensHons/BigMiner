@@ -5,12 +5,12 @@ using UnityEngine;
 
 public abstract class Processor : MultiBlock, IJobCallStructure
 {
-    private float ItemsPerSecond = 1f;
-    private int maxInventory;
-    private Tier currentTier;
+    protected float ItemsPerSecond = 1f;
+    protected int maxInventory;
+    protected Tier currentTier;
 
-    private Inventory InputInventory;
-    private Inventory OutputInventory;
+    protected Inventory InputInventory;
+    protected Inventory OutputInventory;
     
     
     public Processor(float x, float y, float speed, Tier tier) : base(x, y)
@@ -141,17 +141,18 @@ public abstract class Processor : MultiBlock, IJobCallStructure
     {
         
     }
-    
+
     public override bool isResource() { return false; }
     public abstract override Vector2 getDimensions();
     public abstract override string getSpritePath();
-
+    public abstract String getName();
+    
     public Item[] getActualInputItems()
     {
         List<Item> returnItems = new List<Item>();
         foreach (var baseInputItem in getBaseInputItems())
         {
-            Item returnItem = baseInputItem * Int32.Parse(currentTier.ToString());
+            Item returnItem = baseInputItem * getTierMultiplier(currentTier);
             returnItems.Add(returnItem);
         }
 
@@ -168,6 +169,21 @@ public abstract class Processor : MultiBlock, IJobCallStructure
         Gold = 6,
         Titanium = 5,
         Diamond = 4
+    }
+
+    public int getTierMultiplier(Tier tier)
+    {
+        switch (tier)
+        {
+            case Tier.Bronze: return 10;
+            case Tier.Iron: return 8;
+            case Tier.Silver: return 7;
+            case Tier.Gold: return 6;
+            case Tier.Titanium: return 5;
+            case Tier.Diamond: return 4;
+            default: return 10;
+        }
+        
     }
 
     

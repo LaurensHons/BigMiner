@@ -13,6 +13,7 @@ public class Bay : MonoBehaviour
 {
     private List<Miner> minerList = new List<Miner>();
     private List<IStructure> structures = new List<IStructure>();
+    private List<Processor> processors = new List<Processor>();
 
     public EventHandler UpdateObservers;
     public void FixedUpdate()
@@ -50,7 +51,7 @@ public class Bay : MonoBehaviour
 
         Vector2 SawPos = new Vector2(0, 2);
         Saw saw = new Saw(SawPos.x, SawPos.y, 2, Processor.Tier.Bronze);
-        addStructureToGrid(saw);
+        addProcessorToGrid(saw);
         
         
         
@@ -178,6 +179,12 @@ public class Bay : MonoBehaviour
 
         return true;
     }
+
+    public void addProcessorToGrid(Processor processor)
+    {
+        processors.Add(processor);
+        addStructureToGrid(processor);
+    }
     
     public void addStructureToGrid(MultiBlock structure)
     {
@@ -242,6 +249,11 @@ public class Bay : MonoBehaviour
         }
 
         return returnList;
+    }
+
+    public List<Processor> getProcessors()
+    {
+        return processors;
     }
 
     public PathNode getPathNode(int x, int y)
