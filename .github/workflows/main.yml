@@ -18,6 +18,16 @@ jobs:
         uses: actions/checkout@v2
         with:
           lfs: true
+          
+      - name: Cache actions
+        uses: actions/cache@v2
+        with:
+          path: |
+          key: Library-BigMiner-Android
+          restore-keys: |
+            Library-BigMiner-
+            Library-
+
      
       # Cache
       - uses: actions/cache@v1.1.0
