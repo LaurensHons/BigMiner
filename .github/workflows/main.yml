@@ -2,8 +2,8 @@ name: Build apk
  
 on:
   push:
-    branches:
-    - release
+    tags:
+    - 'v*'
  
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
