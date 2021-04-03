@@ -1,0 +1,62 @@
+name: Build apk
+ 
+on:
+  pull_request: {}
+  push: { branches: [release] }
+ 
+env:
+  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+ 
+jobs:
+  build:
+    name: Compile Project
+    runs-on: ubuntu-latest
+    steps:
+     
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+          
+      - name: Cache actions
+        uses: actions/cache@v2
+        with:
+          path: \
+          key: Library-BigMiner-Android
+          restore-keys: |
+            Library-BigMiner-
+            Library-
+
+     
+      # Cache
+      - uses: actions/cache@v1.1.0
+        with:
+          path: Library
+          key: Library
+ 
+ 
+      # Build
+      - uses: game-ci/unity-builder@v2
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          targetPlatform: Android
+          versioning: Semantic
+ 
+      # Output 
+      - uses: actions/upload-artifact@v1
+        with:
+          name: BigMiner.apk
+          path: build
+          
+      - name: Create PreRelease
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: true
