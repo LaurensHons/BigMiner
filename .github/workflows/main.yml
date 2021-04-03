@@ -45,6 +45,7 @@ jobs:
     steps:
 
       - name: Bump version and push tag
+        id: tag_bump
         uses: moble/github-tag-action@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -76,13 +77,14 @@ jobs:
       
       
       - name: Create a GitHub release
+        id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: apk${{ steps.tag_version.outputs.new_tag }}
-          release_name: Release ${{ steps.tag_version.outputs.new_tag }}
-          body: ${{ steps.tag_version.outputs.changelog }}
+          tag_name: apk.${{ steps.tag_bump.outputs.tag }}
+          release_name: Release ${{ steps.tag_bump.outputs.tag }}
+          body: ${{ steps.tag_bump.outputs.changelog }}
           
           
       - name: Upload Release Asset
