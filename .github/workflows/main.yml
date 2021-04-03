@@ -2,8 +2,8 @@ name: Build apk
  
 on:
   push:
-    tags:
-    - 'v*'
+    branches:
+    - release
  
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -70,21 +70,21 @@ jobs:
           targetPlatform: Android
           versioning: Semantic
      
-        
-      - name: Git Release
-        # You may pin to the exact commit or the version.
-        # uses: anton-yurchenko/git-release@7a1349223bc56b846390a268b5c9948d8db70e7d
-        uses: anton-yurchenko/git-release@v3.4.4
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v5.4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create a GitHub release
+        uses: actions/create-release@v1
         env:
-          GITHUB_REF: refs/tags/v0.0.${{ github.run_number}}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DRAFT_RELEASE: "false"
-          PRE_RELEASE: "false"
-          ALLOW_TAG_PREFIX: "true"
-          ALLOW_EMPTY_CHANGELOG: "true"
-        with: 
-          args: build
-          
+        with:
+          tag_name: ${{ steps.tag_version.outputs.new_tag }}
+          release_name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: ${{ steps.tag_version.outputs.changelog }}
+      
+                
       # Output 
       - uses: actions/upload-artifact@v1
         with:
