@@ -22,13 +22,12 @@ jobs:
           
       
           
-      - name: Cache actions
-        uses: actions/cache@v2
+      - uses: actions/cache@v2
         with:
-          path: \
-          key: Library-BigMiner-Android
+          path: ${{ matrix.projectPath }}/Library
+          key: Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}
           restore-keys: |
-            Library-BigMiner-
+            Library-${{ matrix.projectPath }}-
             Library-
 
      
@@ -56,6 +55,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DRAFT_RELEASE: "false"
           PRE_RELEASE: "false"
+          ALLOW_EMPTY_CHANGELOG: "true"
         with: 
           args: build/*.apk
           
