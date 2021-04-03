@@ -49,6 +49,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DRAFT_RELEASE: "false"
           PRE_RELEASE: "false"
+          ALLOW_TAG_PREFIX: "true"
           ALLOW_EMPTY_CHANGELOG: "true"
         with: 
           args: build
