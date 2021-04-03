@@ -47,8 +47,6 @@ jobs:
           targetPlatform: Android
           versioning: Semantic
      
-      - name: Checkout
-        uses: actions/checkout@v2  
         
       - name: Git Release
         # You may pin to the exact commit or the version.
