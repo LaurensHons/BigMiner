@@ -2,7 +2,7 @@ name: Build apk
  
 on:
   pull_request: {}
-  push: { branches: [master] }
+  push: { branches: [release] }
  
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -49,3 +49,14 @@ jobs:
         with:
           name: BigMiner.apk
           path: build
+          
+      - name: Create PreRelease
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: true
