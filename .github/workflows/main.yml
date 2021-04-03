@@ -46,6 +46,7 @@ jobs:
         # uses: anton-yurchenko/git-release@7a1349223bc56b846390a268b5c9948d8db70e7d
         uses: anton-yurchenko/git-release@v3.4.4
         env:
+          GITHUB_REF: refs/tags/release
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DRAFT_RELEASE: "false"
           PRE_RELEASE: "false"
