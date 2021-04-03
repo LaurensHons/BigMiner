@@ -20,16 +20,7 @@ jobs:
         with:
           lfs: true
           
-      - name: Create PreRelease
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.job }}
-          release_name: Release ${{ github.run_id }}
-          draft: false
-          prerelease: true
+      
           
       - name: Cache actions
         uses: actions/cache@v2
@@ -55,20 +46,22 @@ jobs:
         with:
           targetPlatform: Android
           versioning: Semantic
- 
-      # Output 
-        #- uses: actions/upload-artifact@v1
-          #with:
-          #name: BigMiner.apk
-          #path: build
           
-      
-      
-      - uses: actions/checkout@v2 
-      - name: Upload Release Asset
-        uses: quabug/create-upm-release@v1
+      - name: Create PreRelease
+        id: create_release
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upm_package_path: Packages/manifest.json
-          upm_tag_prefix: BigMiner/v
+          tag_name: ${{ github.job }}
+          release_name: Release ${{ github.run_id }}
+          draft: false
+          prerelease: true
+          
+      # Output 
+      - uses: actions/upload-artifact@v1
+        with:
+          name: BigMiner.apk
+          #path: build
+          
+
