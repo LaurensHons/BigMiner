@@ -58,8 +58,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DRAFT_RELEASE: "false"
           PRE_RELEASE: "false"
-        with: | 
-          build/*.apk
+        with: 
+          args: build/*.apk
           
       # Output 
       - uses: actions/upload-artifact@v1
