@@ -9,7 +9,7 @@ env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
  
 jobs:
-  build: 
+  showMe: 
     name: Show Environment variables
     runs-on: ubuntu-latest
     steps:
