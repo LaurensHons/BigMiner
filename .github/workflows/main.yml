@@ -1,17 +1,48 @@
 name: Build apk
  
 on:
-  pull_request: {}
-  push: { branches: [release] }
+  push:
+    tags:
+    - 'v*'
  
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
  
 jobs:
+  showMe: 
+    name: Show Environment variables
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Dump job context
+        env:
+          JOB_CONTEXT: ${{ toJSON(job) }}
+        run: echo "$JOB_CONTEXT"
+      - name: Dump steps context
+        env:
+          STEPS_CONTEXT: ${{ toJSON(steps) }}
+        run: echo "$STEPS_CONTEXT"
+      - name: Dump runner context
+        env:
+          RUNNER_CONTEXT: ${{ toJSON(runner) }}
+        run: echo "$RUNNER_CONTEXT"
+      - name: Dump strategy context
+        env:
+          STRATEGY_CONTEXT: ${{ toJSON(strategy) }}
+        run: echo "$STRATEGY_CONTEXT"
+      - name: Dump matrix context
+        env:
+          MATRIX_CONTEXT: ${{ toJSON(matrix) }}
+        run: echo "$MATRIX_CONTEXT"
+        
   build:
     name: Compile Project
     runs-on: ubuntu-latest
     steps:
+        
      
       # Checkout
       - name: Checkout repository
@@ -19,22 +50,17 @@ jobs:
         with:
           lfs: true
           
-      - name: Cache actions
-        uses: actions/cache@v2
+      
+          
+      - uses: actions/cache@v2
         with:
-          path: \
-          key: Library-BigMiner-Android
+          path: ${{ matrix.projectPath }}/Library
+          key: Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}
           restore-keys: |
-            Library-BigMiner-
+            Library-${{ matrix.projectPath }}-
             Library-
 
-     
-      # Cache
-      - uses: actions/cache@v1.1.0
-        with:
-          path: Library
-          key: Library
- 
+  
  
       # Build
       - uses: game-ci/unity-builder@v2
@@ -43,31 +69,26 @@ jobs:
         with:
           targetPlatform: Android
           versioning: Semantic
- 
+     
+        
+      - name: Git Release
+        # You may pin to the exact commit or the version.
+        # uses: anton-yurchenko/git-release@7a1349223bc56b846390a268b5c9948d8db70e7d
+        uses: anton-yurchenko/git-release@v3.4.4
+        env:
+          GITHUB_REF: refs/tags/v0.0.${{ github.run_number}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRAFT_RELEASE: "false"
+          PRE_RELEASE: "false"
+          ALLOW_TAG_PREFIX: "true"
+          ALLOW_EMPTY_CHANGELOG: "true"
+        with: 
+          args: build
+          
       # Output 
       - uses: actions/upload-artifact@v1
         with:
           name: BigMiner.apk
-          path: build
-          
-      - name: Create PreRelease
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: true
-          
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ./build/BigMiner.apk
-          asset_name: BigMiner.apk
-          asset_content_type: application/apk
+          #path: build
+          warn: Build Acction Failed    
+
