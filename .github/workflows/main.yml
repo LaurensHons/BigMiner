@@ -30,13 +30,7 @@ jobs:
             Library-${{ matrix.projectPath }}-
             Library-
 
-     
-      # Cache
-      - uses: actions/cache@v1.1.0
-        with:
-          path: Library
-          key: Library
- 
+  
  
       # Build
       - uses: game-ci/unity-builder@v2
@@ -57,7 +51,7 @@ jobs:
           PRE_RELEASE: "false"
           ALLOW_EMPTY_CHANGELOG: "true"
         with: 
-          args: build/*.apk
+          args: build
           
       # Output 
       - uses: actions/upload-artifact@v1
