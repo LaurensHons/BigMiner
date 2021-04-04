@@ -67,7 +67,6 @@
      <Compile Include="Assets\Scripts\model\bay\PathFinding\PathNode.cs" />
      <Compile Include="Assets\Scripts\view\uiscripts\ui\scannerMenu\ScannerMainInfoPanel.cs" />
      <Compile Include="Assets\Scripts\view\uiscripts\bay\MinerStationClickController.cs" />
-     <Compile Include="Assets\Scripts\view\uiscripts\ui\siloMenu\SiloItemPrefabScript.cs" />
      <Compile Include="Assets\Scripts\model\bay\PathFinding\Grid.cs" />
      <Compile Include="Assets\Scripts\model\resourceManagement\Inventory.cs" />
      <Compile Include="Assets\Scripts\model\bay\miner\Walker.cs" />
@@ -97,6 +96,7 @@
      <Compile Include="Assets\Scripts\model\bay\blocks\MultiBlocks\Processor.cs" />
      <Compile Include="Assets\Scripts\model\bay\miner\MinerUpgrades\Upgrade1To10.cs" />
      <Compile Include="Assets\Scripts\model\resourceManagement\JobController.cs" />
+     <Compile Include="Assets\Scripts\view\uiscripts\ui\siloMenu\SiloItemPrefabScript.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.2.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
