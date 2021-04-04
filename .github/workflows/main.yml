@@ -85,20 +85,16 @@ jobs:
           release_name: Release ${{ steps.tag_bump.outputs.tag }}
           body: ${{ steps.tag_bump.outputs.changelog }}
     
-      - name: Upload the artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: Android.apk
-          path: build/Android/Android.apk
-          
-      - name: Create GitHub release
-        uses: Roang-zero1/github-upload-release-artifacts-action@master
-        with:
-          args: build/Android/Android.apk
-          created_tag: apk.${{ steps.tag_bump.outputs.tag }}.${{ github.run_number }}
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REF: ${{ steps.create_release.id }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: build/Android
+          asset_name: Android.apk
+          asset_content_type: application/apk
 
 
 
