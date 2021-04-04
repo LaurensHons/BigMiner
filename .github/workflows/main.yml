@@ -73,8 +73,7 @@ jobs:
         with:
           targetPlatform: ${{ env.TARGETPLATFORM }}
           versioning: Semantic     
-                
-      
+               
       
       - name: Create a GitHub release
         id: create_release
