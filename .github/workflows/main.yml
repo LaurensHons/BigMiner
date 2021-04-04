@@ -94,8 +94,8 @@ jobs:
       - name: Create GitHub release
         uses: Roang-zero1/github-upload-release-artifacts-action@master
         with:
-          created_tag: ${{ steps.create_release.id }}
           args: build/Android/Android.apk
+          created_tag: apk.${{ steps.tag_bump.outputs.tag }}.${{ github.run_number }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REF: ${{ steps.create_release.id }}
