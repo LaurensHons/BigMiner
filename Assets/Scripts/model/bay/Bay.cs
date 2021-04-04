@@ -276,6 +276,4 @@ public class Bay : MonoBehaviour
     {
         return structures;
     }
-
-    
 }
