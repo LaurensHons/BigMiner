@@ -9,18 +9,19 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
 
-public class Miner : IWalker
+public class Miner : MonoBehaviour, IWalker
 {
     private MinerStation minerStation;
-
-    protected GameObject minerObject;
-    private Sprite minerSprite;
+    
 
     public EventHandler MinerXpUpdate;
     public EventHandler MinerLevelUpdate;
+
+    public Sprite minerImage;
     
     public float speed => (float) (Math.Pow(1.01f, getLevel(out double d) - 1) + speedUpgradesFlat) * speedUpgradesPercent;
     private float speedUpgradesFlat = 0;
@@ -65,19 +66,6 @@ public class Miner : IWalker
     {
         get => (int) Math.Round(maxBatteryMinutes * 60 * (1/Time.fixedDeltaTime));
     }
-
-    public String name
-    {
-        get
-        {
-            return minerObject.name;
-        }
-
-        set
-        {
-            minerObject.name = value;
-        }
-    }
     
     private Walker walker;
 
@@ -89,10 +77,8 @@ public class Miner : IWalker
     public EventHandler toolSwitchUpdate;
     public List<Tool> toolList = new List<Tool>();
 
-    public Miner(Vector2 pos, MinerStation minerStation)
+    public Miner Instantiate(Vector2 pos, MinerStation minerStation)
     {
-        HandleSpriteLoading();
-
         Battery = maxBatteryMinutes * 60 * (int) Math.Round(1/Time.fixedDeltaTime);
 
         this.minerStation = minerStation;
@@ -106,43 +92,25 @@ public class Miner : IWalker
         
         Inventory = new Inventory(5);
         walker = new Walker(this, speed);
-        minerObject = new GameObject("Miner 1");
-        minerObject.transform.localPosition = pos;
-        minerObject.AddComponent<SpriteRenderer>();
-        minerObject.transform.localScale = Vector3.one * GameController.getBlockScale();
-        minerObject.transform.SetParent(getBay().transform);
+        
+        //GetComponent<SpriteRenderer>().sprite = minerImage;
+        transform.position = pos;
+        transform.localScale = Vector3.one * GameController.getBlockScale();
+        transform.SetParent(getBay().transform);
 
         upgrades = new List<MinerUpgrade> { new Upgrade1(this), new Upgrade2(this) };
 
         MinerLevelUpdate += recalculateStats;
         activeTool.ToolDamageUpdate += recalculateStats;
         recalculateStats += updateStatCalculations;
+        return this;
     }
-
-    private void HandleSpriteLoading()
-    {
-        AsyncOperationHandle<Sprite> minerSpriteHandler = Addressables.LoadAssetAsync<Sprite>(getSpritePath());
-        minerSpriteHandler.Completed += LoadminerSpriteWhenReady;
-    }
-
-    private void LoadminerSpriteWhenReady(AsyncOperationHandle<Sprite> obj)
-    {
-        if (obj.Status == AsyncOperationStatus.Succeeded)
-        {
-            minerSprite = obj.Result;
-            
-            if (minerSprite == null) throw new Exception("No block sprite found, maybe file named wrong?");
-            minerObject.GetComponent<SpriteRenderer>().sprite = minerSprite;
-        }
-        else throw new Exception("Loading sprite failed");
-    }
-
 
     private int MININGTIMEMOUT = -1;
     private int DEPOSITINGTIMEOUT = -1;
     private int TAKINGTIMEOUT = -1;
     
-    public void FixedUpdate(object sender, EventArgs eventArgs)
+    private void FixedUpdate()
     {
         if (Battery >= 0)
             Battery -= 1;
@@ -381,7 +349,7 @@ public class Miner : IWalker
 
     public Transform getTransform()
     {
-        return minerObject.transform;
+        return transform;
     }
 
     public Block getNextTarget()

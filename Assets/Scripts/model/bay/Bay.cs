@@ -126,7 +126,7 @@ public class Bay : MonoBehaviour
             bool occupied = false;
             foreach (var miner in minerList)
             {
-                if (Vector3.Distance(miner.getTransform().position, pos) < 1.01) occupied = true;
+                if (Vector3.Distance(miner.transform.position, pos) < 1.01) occupied = true;
             }
             
 
@@ -269,7 +269,6 @@ public class Bay : MonoBehaviour
     public void registerMiner(Miner miner)
     {
         minerList.Add(miner);
-        UpdateObservers += miner.FixedUpdate;
     }
 
     public List<IStructure> getStructureList()

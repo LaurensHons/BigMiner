@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Grid;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using Random = UnityEngine.Random;
 
 
@@ -19,17 +21,24 @@ public class MinerStation : MultiBlock
     {
         InstantiateMiner();
     }
-    
+
     private void InstantiateMiner()
     {
-        Vector2 pos = new Vector2(0, 1);
-        while (!bay.getPathNode(pos).isWalkable)
+        AsyncOperationHandle<GameObject> MinerPrefabHandler = Addressables.LoadAssetAsync<GameObject>("Assets/Addressables/Prefabs/MinerPrefab.prefab");
+        MinerPrefabHandler.Completed += obj =>
         {
-            pos.y += 1;
-            if (bay.getPathNode(pos) == null) throw new Exception("No valid space found for Instantiating miner");
-        }
-        Miner = new Miner(pos, this);
-        bay.registerMiner(Miner);
+            Vector2 pos = new Vector2(0, 1);
+            while (!bay.getPathNode(pos).isWalkable)
+            {
+                pos.y += 1;
+                if (bay.getPathNode(pos) == null) throw new Exception("No valid space found for instantiating miner");
+            }
+
+            GameObject minerGameObjectPrefab = obj.Result;
+            GameObject minerGameObject = GameObject.Instantiate(minerGameObjectPrefab);
+            Miner = minerGameObject.GetComponent<Miner>().Instantiate(pos, this);
+            bay.registerMiner(Miner);
+        };
     }
 
     public Block getNextTarget()
@@ -46,13 +55,13 @@ public class MinerStation : MultiBlock
         switch (Miner.miningStrategy)
         {
             case MiningStrategy.Random:
-                return new RandomMiningStrategy().selectNextBlock(bay.getBlockList(), Miner.getTransform().position);
+                return new RandomMiningStrategy().selectNextBlock(bay.getBlockList(), Miner.transform.position);
             case MiningStrategy.Closest:
-                return new ClosestMiningStrategy().selectNextBlock(bay.getBlockList(), Miner.getTransform().position);
+                return new ClosestMiningStrategy().selectNextBlock(bay.getBlockList(), Miner.transform.position);
             case MiningStrategy.MinValue:
-                return new LowestMiningStrategy().selectNextBlock(bay.getBlockList(), Miner.getTransform().position); 
+                return new LowestMiningStrategy().selectNextBlock(bay.getBlockList(), Miner.transform.position); 
             case MiningStrategy.MaxValue:
-                return new HighestMiningStrategy().selectNextBlock(bay.getBlockList(), Miner.getTransform().position);
+                return new HighestMiningStrategy().selectNextBlock(bay.getBlockList(), Miner.transform.position);
         }
 
         throw new Exception("Very weird");
