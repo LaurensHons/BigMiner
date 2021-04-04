@@ -91,12 +91,7 @@ jobs:
           name: Android.apk
           path: build/Android/Android.apk
       
-      - name: Download the artifact
-        uses: actions/download-artifact@v1
-        with:
-          name: Android.apk
-          path: ./build/Android
-      
+        
       
       - name: Create GitHub release
         uses: Roang-zero1/github-upload-release-artifacts-action@master
