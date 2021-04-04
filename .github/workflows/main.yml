@@ -97,7 +97,8 @@ jobs:
           INPUT_CREATED_TAG: ${{ steps.create_release.id }}
           args: build/Android/Android.apk
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REF: ${{ steps.create_release.id }}
 
 
 
