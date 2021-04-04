@@ -90,13 +90,16 @@ jobs:
         with:
           name: Android.apk
           path: build/Android/Android.apk
-      
-        
-      
+          
       - name: Create GitHub release
         uses: Roang-zero1/github-upload-release-artifacts-action@master
         with:
-          created_tag: ${{ steps.create_release.id }}
+          INPUT_CREATED_TAG: ${{ steps.create_release.id }}
           args: build/Android/Android.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+
+
+
+
+
