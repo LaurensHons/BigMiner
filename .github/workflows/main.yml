@@ -90,7 +90,14 @@ jobs:
         with:
           name: Android.apk
           path: build/Android/Android.apk
-          
+      
+      - name: Download the artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: Android.apk
+          path: ./build/Android
+      
+      
       - name: Upload Release Asset
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1
