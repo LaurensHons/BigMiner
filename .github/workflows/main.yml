@@ -99,7 +99,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           artifacts: "Android.apk/Android.apk"
           body: ${{ github.event.head_commit.message }}
-          tag_name: apk.${{ steps.tag_bump.outputs.tag }}.${{ github.run_number }}
+          tag: apk.${{ steps.tag_bump.outputs.tag }}.${{ github.run_number }}
           name: Build ${{ steps.tag_bump.outputs.tag }}
 
       
