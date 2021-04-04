@@ -93,7 +93,12 @@ jobs:
           tag_name: apk.${{ steps.tag_bump.outputs.tag }}.${{ github.run_number }}
           release_name: Release ${{ steps.tag_bump.outputs.tag }}
           body: ${{ steps.tag_bump.outputs.changelog }}
-          
+    
+      - name: Display structure of files
+        run: ls -R 
+      
+      - name: Make .apk uploadable
+        run: chmod +rw ./build
           
       - name: Upload Release Asset
         id: upload-release-asset 
