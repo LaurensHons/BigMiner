@@ -50,14 +50,7 @@ jobs:
         with:
           lfs: true
           
-      - name: Load Cached Library
-        uses: actions/cache@v2
-        with:
-          path: /home/runner/work/BigMiner/BigMiner/Library
-          key: Library-MyProjectName-TargetPlatform
-          restore-keys: |
-            Library-MyProjectName-
-            Library-
+      
        
       # Build
       - uses: game-ci/unity-builder@v2
