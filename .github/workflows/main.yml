@@ -50,12 +50,7 @@ jobs:
         with:
           lfs: true
           
-      - uses: actions/cache@v2
-        with:
-          path: Library
-          key: Library-${{ env.TARGETPLATFORM }}
-          restore-keys: |
-            Library-${{ env.TARGETPLATFORM }}
+      
        
       # Build
       - uses: game-ci/unity-builder@v2
