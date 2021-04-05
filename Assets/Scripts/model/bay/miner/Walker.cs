@@ -287,6 +287,7 @@ public class Walker
             Debug.Log(outstring + "path found from [" + Math.Round(transform.position.x) + "," + Math.Round(transform.position.y) + "] to closest structure node [" + 
                       closestNode.getPos().x +", " + closestNode.getPos().y + "]");
             success = false;
+            return;
         }
         for (int i = 0; i < pathVectorList.Count - 1; i++)
         {
@@ -334,8 +335,8 @@ public class Walker
             PathNode pathNode = objectToWalk.getBay().getPathNode(pathVectorList[currentPathIndex]);
             if (!pathNode.isWalkable)
             {
-                targetStructure = pathNode.structure;
-                DecideNextAction();
+                SetTargetPosition(pathNode.structure, out bool success);
+                if (success) objectToWalk.Mine();
             } 
         }
         //Debug.Log("pathVectorList "+ pathVectorList.Count +" index " + currentPathIndex);

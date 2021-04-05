@@ -169,12 +169,12 @@ public class Miner : MonoBehaviour, IWalker
     {
         //String outstring = "Additinal mining pos:\n";
 
-        if (walker.targetStructure.isDestroyed())
+        if (walker.targetStructure == null || walker.targetStructure.isDestroyed())
         {
             walker.StopAction();
             return;
         }
-
+        Debug.Log(walker.targetStructure);
         Block block = (Block) walker.targetStructure;
         foreach (var v2 in activeTool.getAdditionalMiningPos(block.getPos() - (Vector2) getTransform().position).ToArray())
         {
@@ -248,6 +248,8 @@ public class Miner : MonoBehaviour, IWalker
         {
             ((IJobCallStructure) walker.getActiveJobCall().targetStructure).deliverJobCall(walker.getActiveJobCall().itemToBeDelivered, Inventory); 
         }
+
+        walker.targetStructure = null;
         walker.StopAction();
     }
 
@@ -259,6 +261,7 @@ public class Miner : MonoBehaviour, IWalker
         JobCall jobCall = walker.getActiveJobCall();
         
         ((IJobCallStructure) jobCall.originStructure).pickUpJobCall(jobCall.itemToBeDelivered, Inventory);
+        walker.targetStructure = null;
         walker.StopAction();
     }
 

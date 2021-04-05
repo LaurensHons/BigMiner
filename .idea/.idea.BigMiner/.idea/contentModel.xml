@@ -61,17 +61,21 @@
             <e p="controllers" t="Include">
               <e p="bay" t="Include">
                 <e p="BuildingController.cs" t="Include" />
-                <e p="EditController.cs" t="Include" />
-                <e p="IMenuController.cs" t="Include" />
-                <e p="MinerController.cs" t="Include" />
+                <e p="miner" t="Include">
+                  <e p="MinerController.cs" t="Include" />
+                  <e p="MinerToolController.cs" t="Include" />
+                  <e p="MinerUpgradeController.cs" t="Include" />
+                </e>
+                <e p="ScannerController.cs" t="Include" />
                 <e p="SiloController.cs" t="Include" />
               </e>
               <e p="general" t="Include">
                 <e p="DebugDrawer.cs" t="Include" />
+                <e p="EditController.cs" t="Include" />
                 <e p="GameController.cs" t="Include" />
                 <e p="UIController.cs" t="Include" />
               </e>
-              <e p="ScannerController.cs" t="Include" />
+              <e p="IMenuController.cs" t="Include" />
             </e>
             <e p="UIScripts" t="Include">
               <e p="bay" t="Include">

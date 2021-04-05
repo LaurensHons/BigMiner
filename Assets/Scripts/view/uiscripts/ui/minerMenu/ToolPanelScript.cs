@@ -22,11 +22,11 @@ public class ToolPanelScript : MonoBehaviour
     public Button UpgradeDamageButton;
 
     private Tool tool;
-    private MinerController minerController;
+    private MinerToolController minerController;
 
-    public void setActive(bool active, MinerController minerController = null, Tool tool = null)
+    public void setActive(bool active, MinerToolController minerToolController = null, Tool tool = null)
     {
-        if (minerController != null) this.minerController = minerController;
+        if (minerToolController != null) this.minerController = minerToolController;
         if (tool != null) this.tool = tool;
         if (active)
         {
@@ -35,7 +35,7 @@ public class ToolPanelScript : MonoBehaviour
             BaseDamageText.text = "Base Damage\n" + Math.Round(tool.getBaseDamage(), 2);
 
             updateSelected(tool.isSelected);
-            minerController.getMinerStation().Miner.toolSwitchUpdate += updateSelected;
+            minerToolController.getMinerStation().Miner.toolSwitchUpdate += updateSelected;
             
             
             tool.ToolDamageUpdate += updateDamageText;

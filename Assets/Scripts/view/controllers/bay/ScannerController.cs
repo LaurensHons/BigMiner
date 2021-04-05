@@ -124,4 +124,9 @@ public class ScannerController : MonoBehaviour, IMenuController
         }
         updateSliders();
     }
+
+    public GameObject getSubpanel()
+    {
+        return null;
+    }
 }

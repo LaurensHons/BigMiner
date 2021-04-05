@@ -57,7 +57,7 @@
      <Compile Include="Assets\Scripts\view\controllers\bay\SiloController.cs" />
      <Compile Include="Assets\Scripts\model\bay\blocks\MultiBlocks\Silo.cs" />
      <Compile Include="Assets\Scripts\model\bay\blocks\MultiBlocks\Processors\Saw.cs" />
-     <Compile Include="Assets\Scripts\view\controllers\ScannerController.cs" />
+     <Compile Include="Assets\Scripts\view\controllers\bay\ScannerController.cs" />
      <Compile Include="Assets\Scripts\view\uiscripts\ui\siloMenu\SiloItemPrefabScript.cs" />
      <Compile Include="Assets\Scripts\model\scanner\Scanner.cs" />
      <Compile Include="Assets\Scripts\view\uiscripts\ui\scannerMenu\ScannerSlider.cs" />
@@ -71,7 +71,7 @@
      <Compile Include="Assets\Scripts\model\bay\PathFinding\Grid.cs" />
      <Compile Include="Assets\Scripts\model\resourceManagement\Inventory.cs" />
      <Compile Include="Assets\Scripts\model\bay\miner\Walker.cs" />
-     <Compile Include="Assets\Scripts\view\controllers\bay\EditController.cs" />
+     <Compile Include="Assets\Scripts\view\controllers\general\EditController.cs" />
      <Compile Include="Assets\Scripts\model\bay\miner\Tool\Pickaxe.cs" />
      <Compile Include="Assets\Scripts\view\uiscripts\bay\MultiBlockGameObjectScript.cs" />
      <Compile Include="Assets\Scripts\model\bay\blocks\Resource\StoneBlock.cs" />
@@ -82,7 +82,7 @@
      <Compile Include="Assets\Scripts\model\bay\miner\MinerUpgrades\MinerUpgrade.cs" />
      <Compile Include="Assets\Scripts\model\bay\PathFinding\Pathfinding.cs" />
      <Compile Include="Assets\Scripts\model\bay\blocks\Resource\Block.cs" />
-     <Compile Include="Assets\Scripts\view\controllers\bay\MinerController.cs" />
+     <Compile Include="Assets\Scripts\view\controllers\bay\miner\MinerController.cs" />
      <Compile Include="Assets\Scripts\model\bay\blocks\MultiBlocks\MultiBlock.cs" />
      <Compile Include="Assets\Scripts\view\uiscripts\ui\ButtonTextPrefab.cs" />
      <Compile Include="Assets\Scripts\view\controllers\general\UIController.cs" />
@@ -90,13 +90,15 @@
      <Compile Include="Assets\Scripts\model\bay\miner\MinerStation.cs" />
      <Compile Include="Assets\Scripts\view\uiscripts\ui\tabs\TabGroup.cs" />
      <Compile Include="Assets\Scripts\view\uiscripts\ui\tabs\TabButton.cs" />
-     <Compile Include="Assets\Scripts\view\controllers\bay\IMenuController.cs" />
+     <Compile Include="Assets\Scripts\view\controllers\IMenuController.cs" />
      <Compile Include="Assets\Scripts\view\uiscripts\ui\minerMenu\UpgradePanelScript.cs" />
      <Compile Include="Assets\Scripts\model\bay\blocks\Resource\DirtBlock.cs" />
      <Compile Include="Assets\Scripts\view\controllers\general\GameController.cs" />
      <Compile Include="Assets\Scripts\model\bay\blocks\MultiBlocks\Processor.cs" />
      <Compile Include="Assets\Scripts\model\bay\miner\MinerUpgrades\Upgrade1To10.cs" />
      <Compile Include="Assets\Scripts\model\resourceManagement\JobController.cs" />
+     <Compile Include="Assets\Scripts\view\controllers\bay\miner\MinerToolController.cs" />
+     <Compile Include="Assets\Scripts\view\controllers\bay\miner\MinerUpgradeController.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.2.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>

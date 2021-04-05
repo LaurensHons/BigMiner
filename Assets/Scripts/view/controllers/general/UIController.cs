@@ -22,14 +22,16 @@ public class UIController : MonoBehaviour
     public ScannerController ScannerController;
     public SiloController SiloController;
     public MinerController MinerController;
+    public MinerUpgradeController MinerUpgradeController;
+    public MinerToolController MinerToolController;
     public EditController EditController;
     public BuildingController BuildingController;
     
     public GameObject MenuPanel;
+
+    public MinerStation selectedMinerStation { get; private set; }
     
-    
-    
-    
+
     public GameObject BuildingsMenu;
     
     public Text ScreenRes;
@@ -83,17 +85,16 @@ public class UIController : MonoBehaviour
         }
     }
 
-    private void setActiveMenu(IMenuController panel)
+    private void setActiveMenu(IMenuController menuController)
     {
-        if (activeMenu != null)
-        {
+        if (activeMenu == null)
+            MenuPanel.SetActive(true);
+        else 
             activeMenu.setActive(false);
-        }
-        else
-            setActiveMenuPanel();
+        
 
-        activeMenu = panel;
-        activeMenu.setActive(true);
+        menuController.setActive(true);
+        activeMenu = menuController;
     }
 
     public void OpenScannerMenu()   //Activated by scanner button
@@ -103,25 +104,27 @@ public class UIController : MonoBehaviour
 
     public void OpenSiloMenu()
     {
+        if (activeMenu != null) return;
         setActiveMenu(SiloController);
     }
 
     public void OpenMinerMenu(MinerStation minerStation, bool forced = false)   //Activated by tapping on miner station
     {
         if (activeMenu != null && !forced) return;
+        selectedMinerStation = minerStation;
         setActiveMenu(MinerController.MinerStation(minerStation));
     }
 
     public void OpenToolMenu() //Activated by Toolbutton
     {
-        setActiveMenu(MinerController.loadTools());
-        SubPanel = MinerController;
+        if (selectedMinerStation == null) throw new Exception("Cannot go to tools menu if no minerstation is selected");
+        setActiveMenu(MinerToolController.MinerStation(selectedMinerStation));
     }
 
     public void OpenUpgradeMenu() //Activated by UpgradesButton
     {
-        setActiveMenu(MinerController.loadUpgrades());
-        SubPanel = MinerController;
+        if (selectedMinerStation == null) throw new Exception("Cannot go to tools menu if no minerstation is selected");
+        setActiveMenu(MinerUpgradeController.MinerStation(selectedMinerStation));
     }
 
     public void OpenBuildingsMenu()
@@ -144,22 +147,15 @@ public class UIController : MonoBehaviour
     }
     
 
-    private void setActiveMenuPanel()
-    {
-        MenuPanel.SetActive(true);
-    }
+    
 
     public void CloseMenu()
     {
-        if (activeMenu == (IMenuController) MinerController)
-            MinerController.setActive(false);
-        
-        if (activeMenu == (IMenuController) SiloController)
-            SiloController.setActive(false);
-
-        if (SubPanel != null)
+        if (activeMenu.getSubpanel() != null)
         {
-            setActiveMenu(SubPanel);
+            IMenuController subPanel = activeMenu.getSubpanel().GetComponent<IMenuController>();
+            if (subPanel == null) throw new ArgumentException("penis in my asshole");
+            setActiveMenu(subPanel);
             SubPanel = null;
         }
         else

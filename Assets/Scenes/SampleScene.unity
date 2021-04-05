@@ -204,7 +204,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &191331955
 GameObject:
@@ -508,7 +508,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 480, y: -46.57}
+  m_AnchoredPosition: {x: 480, y: -46.569992}
   m_SizeDelta: {x: 960, y: 93.14}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &212740229
@@ -703,6 +703,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 245678830}
   m_CullTransparentMesh: 1
+--- !u!1 &272877564
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 272877566}
+  - component: {fileID: 272877565}
+  m_Layer: 0
+  m_Name: MinerToolMenuController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &272877565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272877564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 048667ab37e945dd807f43e9b00bf33c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MinerToolMenu: {fileID: 1008697776}
+  ToolList: {fileID: 1005943160}
+  SubPanel: {fileID: 1192068310}
+  ToolPanelPrefab: {fileID: 7727449365562369126, guid: a885609cd4df123488fdb7724c1185cb, type: 3}
+--- !u!4 &272877566
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272877564}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &275985429
 GameObject:
   m_ObjectHideFlags: 0
@@ -956,7 +1003,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 480, y: -46.57}
+  m_AnchoredPosition: {x: 480, y: -46.570007}
   m_SizeDelta: {x: 960, y: 93.14}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &310011099
@@ -1076,6 +1123,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 310230618}
   m_CullTransparentMesh: 1
+--- !u!1 &314750067
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 314750069}
+  - component: {fileID: 314750068}
+  m_Layer: 0
+  m_Name: MinerUpgradeMenuController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &314750068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314750067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 900f262321c8481bab95f665e88fb89b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MinerUpgradeMenu: {fileID: 2022476998}
+  UpgradeList: {fileID: 1496684097}
+  SubPanel: {fileID: 1192068310}
+  UpgradePanelPrefab: {fileID: 4514857479338876692, guid: 554b869a5c1681f499b86d2ae7a2df41, type: 3}
+--- !u!4 &314750069
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314750067}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &334474814
 GameObject:
   m_ObjectHideFlags: 0
@@ -1806,7 +1900,7 @@ GameObject:
   - component: {fileID: 446615925}
   - component: {fileID: 446615924}
   m_Layer: 0
-  m_Name: BuildingController
+  m_Name: BuildingMenuController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1825,10 +1919,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BuildingMenu: {fileID: 202919127}
-  ActiveBuildingList: {fileID: 0}
-  InActiveBuildingList: {fileID: 0}
+  ActiveBuildingList: {fileID: 1019114344}
+  InActiveBuildingList: {fileID: 500974153}
   ActiveBuildingPanelScripts: []
-  ActiveBuildingPanelPrefab: {fileID: 0}
+  ActiveBuildingPanelPrefab: {fileID: 7552842748362127259, guid: 23d9f325176f6bc4dbd76d73a628bbba, type: 3}
 --- !u!4 &446615925
 Transform:
   m_ObjectHideFlags: 0
@@ -1841,7 +1935,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &452882540
 GameObject:
@@ -2837,6 +2931,8 @@ MonoBehaviour:
   ScannerController: {fileID: 1377944154}
   SiloController: {fileID: 1974006088}
   MinerController: {fileID: 1192068311}
+  MinerUpgradeController: {fileID: 314750068}
+  MinerToolController: {fileID: 272877565}
   EditController: {fileID: 79835990}
   BuildingController: {fileID: 446615924}
   MenuPanel: {fileID: 1495363579}
@@ -4580,7 +4676,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 480, y: -241.395}
+  m_AnchoredPosition: {x: 480, y: -241.39502}
   m_SizeDelta: {x: 960, y: 482.79}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1019114346
@@ -5050,7 +5146,7 @@ GameObject:
   - component: {fileID: 1192068312}
   - component: {fileID: 1192068311}
   m_Layer: 0
-  m_Name: MinerController
+  m_Name: MinerMenuController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5069,8 +5165,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MinerMenu: {fileID: 761264204}
-  MinerToolMenu: {fileID: 1008697776}
-  MinerUpgradeMenu: {fileID: 2022476998}
   BigMinerNameText: {fileID: 387230281}
   LVLSlider: {fileID: 454306110}
   levelText: {fileID: 891193294}
@@ -5084,8 +5178,6 @@ MonoBehaviour:
   MiningStrategyText: {fileID: 2066984571}
   InventoryText: {fileID: 1844115729}
   InventoryObject: {fileID: 718865189}
-  ToolList: {fileID: 1005943160}
-  UpgradeList: {fileID: 1496684097}
 --- !u!4 &1192068312
 Transform:
   m_ObjectHideFlags: 0
@@ -6130,7 +6222,7 @@ GameObject:
   - component: {fileID: 1377944155}
   - component: {fileID: 1377944154}
   m_Layer: 0
-  m_Name: ScannerController
+  m_Name: ScannerMenuController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6843,7 +6935,7 @@ Transform:
   - {fileID: 1933697943}
   - {fileID: 416115923}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1508648355
 MonoBehaviour:
@@ -8417,7 +8509,7 @@ GameObject:
   - component: {fileID: 1974006089}
   - component: {fileID: 1974006088}
   m_Layer: 0
-  m_Name: SiloController
+  m_Name: SiloMenuController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8450,7 +8542,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1988540690
 GameObject:

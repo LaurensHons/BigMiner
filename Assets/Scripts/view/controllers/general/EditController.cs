@@ -19,11 +19,12 @@ public class EditController : MonoBehaviour
         {
             EditMode = true;
             EditButton.GetComponentInChildren<Text>().text = "X";
+            CommitButton.gameObject.SetActive(true);
         }
         else
         {
-            EditMode = false;
             CommitButton.gameObject.SetActive(false);
+            EditMode = false;
             EditButton.GetComponentInChildren<Text>().text = "Edit";
             foreach (var multiBlock in temporaryPlacements)
             {
@@ -55,19 +56,23 @@ public class EditController : MonoBehaviour
     
     public void CommitButtonClick()
     {
-        foreach (var multiBlock in temporaryPlacements)
+        if (EditMode)
         {
-            if (!multiBlock.CanPlaceTemporary) return;
-        }
+            foreach (var multiBlock in temporaryPlacements)
+            {
+                if (!multiBlock.CanPlaceTemporary) return;
+            }
 
-        Bay bay = GameObject.FindWithTag("Bay").GetComponent<Bay>();
-        foreach (var multiBlock in temporaryPlacements)
-        {
-            multiBlock.commitTemporaryStructure();
-            bay.updateStructure(multiBlock);
+            Bay bay = GameObject.FindWithTag("Bay").GetComponent<Bay>();
+            foreach (var multiBlock in temporaryPlacements)
+            {
+                multiBlock.commitTemporaryStructure();
+                bay.updateStructure(multiBlock);
+            }
+            CommitButton.gameObject.SetActive(false);
+            EditMode = false;
+            EditButton.GetComponentInChildren<Text>().text = "Edit";
         }
-
-        EditMode = false;
-        EditButton.GetComponentInChildren<Text>().text = "Edit";
+        else Debug.LogError("Committing while not in edit mode");
     }
 }

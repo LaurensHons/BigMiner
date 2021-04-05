@@ -31,6 +31,11 @@ public class SiloController : MonoBehaviour, IMenuController
         }
     }
 
+    public GameObject getSubpanel()
+    {
+        return null;
+    }
+
     private void updateUi()
     {
         foreach (var Item in Silo.Instance.Inventory.getInventory())

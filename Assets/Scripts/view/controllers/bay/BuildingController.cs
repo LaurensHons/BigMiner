@@ -40,4 +40,9 @@ public class BuildingController : MonoBehaviour, IMenuController
             
         }
     }
+
+    public GameObject getSubpanel()
+    {
+        return null;
+    }
 }
