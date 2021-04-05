@@ -16,8 +16,8 @@ public class MinerStation : MultiBlock
     private IMiningStrategy miningStrategy = new RandomMiningStrategy();
 
     private MultiBlockGameObjectScript ClickController;
-
-    public MinerStation(float x, float y, Bay bay) : base(x, y)
+    
+    private void Start()
     {
         InstantiateMiner();
     }

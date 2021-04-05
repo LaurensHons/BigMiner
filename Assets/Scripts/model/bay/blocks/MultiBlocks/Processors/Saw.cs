@@ -3,11 +3,6 @@ using UnityEngine;
 
 public class Saw : Processor
 {
-    public Saw(float x, float y, float speed, Tier tier) : base(x, y, speed, tier)
-    {
-        JobController.Instance.addJobCall(Silo.Instance, this, new DirtBlockItem(3));
-    }
-
     public override Vector2 getDimensions()
     {
         return new Vector2(2, 2);

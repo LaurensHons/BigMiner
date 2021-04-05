@@ -8,60 +8,50 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
-public abstract class Block : IStructure
+public class Block : MonoBehaviour, IStructure
 {
-    protected GameObject BlockObject;
     protected GameObject BlockSpriteRenderer;
     protected GameObject HealthBar;
 
-    private PathNode pathNode;
-
-    private Sprite BlockSprite;
-    private GameObject healthBarPrefab;
+    public Sprite BlockSprite;
+    public GameObject healthBarPrefab;
 
     public float HP;
     public bool isDestroyed { get; private set; } = false;
 
-    protected Block(float x, float y, PathNode pathNode)
+    public IStructure InstantiateBlock(float x, float y)
     {
-        HandleSpriteLoading();
-
-        this.pathNode = pathNode;
-        pathNode.SetStructure(this);
-
-        BlockObject = new GameObject("Block [x:"  + x + ", y:" + y + "]");
-        BlockObject.transform.position = new Vector3(x, y, 0);
-        BlockObject.transform.localScale = Vector3.one;
         
+
+        name = ("Block [x:"  + x + ", y:" + y + "]");
+        transform.position = new Vector3(x, y, 0);
+        transform.localScale = Vector3.one;
+        transform.SetParent(GameObject.FindWithTag("Bay").GetComponent<Bay>().transform, false);
         
         BlockSpriteRenderer = new GameObject("BlockSpriteRenderer");
         BlockSpriteRenderer.transform.localPosition = new Vector3(0, 0, 0);
         BlockSpriteRenderer.AddComponent<Image>();
         BlockSpriteRenderer.layer = 3;
-        BlockSpriteRenderer.transform.SetParent(BlockObject.transform, false);
-
+        BlockSpriteRenderer.transform.SetParent(transform, false);
+        
+        HandleSpriteLoading();
 
         HP = getMaxHealth();
+        return this;
     }
 
     private void HandleSpriteLoading()
     {
-        AsyncOperationHandle<Sprite> BlockSpriteHandler = Addressables.LoadAssetAsync<Sprite>(getSpritePath());
-        BlockSpriteHandler.Completed += LoadBlockSpriteWhenReady;
-        
-        
-        AsyncOperationHandle<GameObject> HealthBaPrefabHandler = Addressables.LoadAssetAsync<GameObject>("Assets/Addressables/Prefabs/HealthBarPrefab.prefab");
-        HealthBaPrefabHandler.Completed += LoadHealthBarWhenReady;
+        BlockSpriteRenderer.GetComponent<Image>().sprite = BlockSprite;
+        BlockSpriteRenderer.GetComponent<RectTransform>().sizeDelta = new Vector2(1, 1);
     }
     
     public void Mine(float hit, out bool destroyed)
     {
         if (HP - hit <= 0)
         {
-            GameObject.Destroy(BlockObject);
-            GameObject.FindWithTag("Bay").GetComponent<Bay>().removeBlock(this);
             destroyed = true;
-            isDestroyed = true;
+            destroy();
         }
         else
         {
@@ -71,31 +61,6 @@ public abstract class Block : IStructure
         }
     }
     
-    private void LoadBlockSpriteWhenReady(AsyncOperationHandle<Sprite> handleToCheck)
-    {
-        if(handleToCheck.Status == AsyncOperationStatus.Succeeded)
-        {
-            BlockSprite = handleToCheck.Result;
-            
-            if (BlockSprite == null) throw new Exception("No block sprite found, maybe file named wrong?");
-            else
-            {
-                BlockSpriteRenderer.GetComponent<Image>().sprite = BlockSprite;
-                BlockSpriteRenderer.GetComponent<RectTransform>().sizeDelta = new Vector2(1, 1);
-            }
-        }
-
-        else throw new Exception("Loading sprite failed");
-    }
-
-    private void LoadHealthBarWhenReady(AsyncOperationHandle<GameObject> handleToCheck)
-    {
-        if(handleToCheck.Status == AsyncOperationStatus.Succeeded)
-        {
-            healthBarPrefab = handleToCheck.Result;
-        }
-        else throw new Exception("Loading HealthBar failed");
-    }
 
     public void UpdateHealthBar()
     {
@@ -103,9 +68,8 @@ public abstract class Block : IStructure
         {
             
             if (healthBarPrefab == null) return;
-            HealthBar = GameObject.Instantiate(healthBarPrefab, Vector3.zero, Quaternion.identity,
-                BlockObject.transform);
-            HealthBar.transform.position = BlockObject.transform.position;
+            HealthBar = Instantiate(healthBarPrefab, Vector3.zero, Quaternion.identity, transform);
+            HealthBar.transform.position = transform.position;
             HealthBar.layer = 5;
             
             HealthBar.transform.localScale = Vector3.one * 0.005517403f;
@@ -124,17 +88,18 @@ public abstract class Block : IStructure
 
     public void setParent(Transform transform)
     {
-        BlockObject.transform.SetParent(transform);
+        transform.SetParent(transform);
     }
 
     public Vector2 getPos()
     {
-        return BlockObject.transform.position;
+        return transform.position;
     }
 
     public List<PathNode> getPathNodeList()
     {
-        return new List<PathNode>{ pathNode };
+        Bay bay = GameObject.FindWithTag("Bay").GetComponent<Bay>();
+        return new List<PathNode> {bay.getPathNode((int) transform.position.x, (int) transform.position.y) };
     }
 
     public bool isResource()                                    
@@ -149,26 +114,43 @@ public abstract class Block : IStructure
 
     public void destroy()
     {
-        GameObject.Destroy(BlockObject);
+        GameObject.FindWithTag("Bay").GetComponent<Bay>().removeBlock(this);
         isDestroyed = true;
+        Destroy(gameObject);
     }
 
     public override string ToString()
     {
-        return "Block: " + this.GetType().Name + ", HP: " + HP + ", Structure: " + GetType() + 
-               "\nPathNode:[" + pathNode.x + "," + pathNode.y + "], GameObject:[" + BlockObject.transform.position.x + "," + BlockObject.transform.position.y;
+        return "Block: " + name + ", HP: " + HP + ", Structure: " + GetType() + 
+               "\nGameObject:[" + transform.position.x + "," + transform.position.y + "]";
     }
 
 
-    public abstract int getMaxHealth();
-    public abstract Inventory getLoot();
+    public virtual int getMaxHealth()
+    {
+        return 1;
+    }
 
-    public abstract int getXpOnMine();
+    public virtual Inventory getLoot()
+    {
+        return null;
+    }
 
-    public abstract string getSpritePath();
+    public virtual int getXpOnMine()
+    {
+        return 0;
+    }
 
-    public abstract int getSearchCost();
-    
+    public virtual string getSpritePath()
+    {
+        return null;
+    }
+
+    public virtual int getSearchCost()
+    {
+        return 1;
+    }
+
 }
 
 public enum BlockTypes

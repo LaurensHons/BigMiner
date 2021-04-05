@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Build Addressables
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Build Addressables
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 102f821e987802042b1f6b6e01b25754
+  m_SerializeEntries:
+  - m_GUID: d3d615e5c42c87246b426e6a3ac5b692
+    m_Address: Assets/Images/DirtBlock.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    - Build
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 20ca2d57799ae2444a069b37802b210c
+    m_Address: Assets/Addressables/Prefabs/HealthBarPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    - Build
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 19bd1cc92d265c44cb5c9063a1e5ea3c
+    m_Address: Assets/Addressables/Prefabs/Slider_Block.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    - Build
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 554b869a5c1681f499b86d2ae7a2df41
+    m_Address: Assets/Addressables/Prefabs/UpgradePanelPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    - Build
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: b2f43ac12c9420449a24248d287bef9d
+    m_Address: Assets/Images/Miner.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    - Build
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: a885609cd4df123488fdb7724c1185cb
+    m_Address: Assets/Addressables/Prefabs/ToolPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    - Build
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: a594253672bad1d47b6abac90bc36c95
+    m_Address: Assets/Addressables/Items/iceCave.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    - Build
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 73c31d5cda8c3d744a351c85f84985be
+    m_Address: Assets/UI_Textures/closedTab.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    - Build
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 0a107d86aa71100458889b48cd557900
+    m_Address: Assets/UI_Textures/tab.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    - Build
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: c1d87038e391e014290516ab3b942ff6
+    m_Address: Assets/Addressables/Prefabs/MinerPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    - Build
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: f74ff28122923544dad13360e719334e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 5e96a48ac2e53e84dbead04421cd5893, type: 2}
+    - {fileID: 11400000, guid: abe63c32fc635ed419945ce97ce4d980, type: 2}

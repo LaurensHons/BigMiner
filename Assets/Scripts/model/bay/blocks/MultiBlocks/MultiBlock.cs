@@ -5,9 +5,8 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
-public abstract class MultiBlock : IStructure
+public class MultiBlock : MonoBehaviour, IStructure
 {
-    protected GameObject BlockObject;
     protected GameObject BlockSpriteRenderer;
     protected Bay bay;
     protected List<PathNode> pathNodeList;
@@ -19,15 +18,16 @@ public abstract class MultiBlock : IStructure
     public bool CanPlaceTemporary => canPlaceTemporary;
     public bool isDestroyed { get; private set; } = false;
 
-    private Sprite BlockSprite;
+    public Sprite BlockSprite;
 
     protected float baseX;
     protected float baseY;
-
-    protected MultiBlock(float x, float y)
+    
+    public IStructure InstantiateBlock(float x, float y)
     {
         this.bay = GameObject.FindWithTag("Bay").GetComponent<Bay>();
         moveBlockStructure(new Vector2(x, y));
+        return this;
     }
 
     public List<PathNode> getPathNodeList()
@@ -58,51 +58,41 @@ public abstract class MultiBlock : IStructure
         baseX = pos.x;
         baseY = pos.y;
         
-        if (BlockObject == null)
-        {
+         
             
-            
-            float width = getDimensions().x, height = getDimensions().y;
+        float width = getDimensions().x, height = getDimensions().y;
 
-            BlockObject =
-                new GameObject("MultiBlock [x:" + baseX + ", y:" + baseY + ", width:" + width + ", height:" + height + "]");
+        name = ("MultiBlock [x:" + baseX + ", y:" + baseY + ", width:" + width + ", height:" + height + "]");
 
-            float xOffset = (width - 1) / 2;
-            float yOffset = (height - 1) / 2;
-            RectTransform rect = BlockObject.AddComponent<RectTransform>();
-            rect.sizeDelta = new Vector2(width, height);
-            BlockObject.transform.SetParent(bay.transform);
-            BlockObject.transform.position = new Vector2(baseX + xOffset, baseY + yOffset);
-            //BlockObject.transform.localScale = new Vector2(width, height);
+        float xOffset = (width - 1) / 2;
+        float yOffset = (height - 1) / 2;
+        RectTransform rect = GetComponent<RectTransform>();
+        rect.sizeDelta = new Vector2(width, height);
+        transform.SetParent(bay.transform);
+        transform.position = new Vector2(baseX + xOffset, baseY + yOffset);
+        //BlockObject.transform.localScale = new Vector2(width, height);
 
-            BlockSpriteRenderer = new GameObject("BlockSpriteRenderer");
-            BlockSpriteRenderer.transform.localPosition = Vector3.zero;
-            BlockSpriteRenderer.layer = 3;
-            BlockSpriteRenderer.transform.SetParent(BlockObject.transform, false);
+        BlockSpriteRenderer = new GameObject("BlockSpriteRenderer");
+        BlockSpriteRenderer.transform.localPosition = Vector3.zero;
+        BlockSpriteRenderer.layer = 3;
+        BlockSpriteRenderer.transform.SetParent(transform, false);
 
 
-            AsyncOperationHandle<Sprite> spriteHandler = Addressables.LoadAssetAsync<Sprite>(getSpritePath());
-            spriteHandler.Completed += obj =>
-            {
-                BlockSpriteRenderer.AddComponent<Image>().sprite = obj.Result;
-                RectTransform rect = BlockSpriteRenderer.GetComponent<RectTransform>();
-                rect.anchoredPosition = BlockObject.transform.position;
-                rect.anchorMin = Vector2.zero;
-                rect.anchorMax = Vector2.zero;
-                rect.localPosition = Vector3.zero;
-                rect.sizeDelta = new Vector2(width, height);
-            };
+        
+        BlockSpriteRenderer.AddComponent<Image>().sprite = BlockSprite;
+        RectTransform rectt = BlockSpriteRenderer.GetComponent<RectTransform>();
+        rectt.anchoredPosition = transform.position;
+        rectt.anchorMin = Vector2.zero;
+        rectt.anchorMax = Vector2.zero;
+        rectt.localPosition = Vector3.zero;
+        rectt.sizeDelta = new Vector2(width, height);
+        
 
-            BlockObject.AddComponent<MultiBlockGameObjectScript>();
-            BlockObject.GetComponent<MultiBlockGameObjectScript>().setStructure(this);
+        gameObject.AddComponent<MultiBlockGameObjectScript>();
+        GetComponent<MultiBlockGameObjectScript>().setStructure(this);
 
-            BoxCollider2D bc = BlockObject.AddComponent<BoxCollider2D>();
-            bc.size = new Vector2(width, height);
-        }
-        else
-        {
-            BlockObject.transform.position = new Vector2(baseX, baseY);  
-        }
+        BoxCollider2D bc = gameObject.AddComponent<BoxCollider2D>();
+        bc.size = new Vector2(width, height);
     }
 
     public void moveTemporaryStructure(Vector2 pos)
@@ -123,17 +113,15 @@ public abstract class MultiBlock : IStructure
             BoxCollider2D bc = temporaryGameObject.AddComponent<BoxCollider2D>();
             bc.size = new Vector2(getDimensions().x, getDimensions().y);
 
-            AsyncOperationHandle<Sprite> spriteHandler = Addressables.LoadAssetAsync<Sprite>(getSpritePath());
-            spriteHandler.Completed += obj =>
-            {
-                temporaryGameObject.AddComponent<Image>().sprite = obj.Result;
-                RectTransform rect = temporaryGameObject.GetComponent<RectTransform>();
-                rect.anchoredPosition = temporaryGameObject.transform.position;
-                rect.anchorMin = Vector2.zero;
-                rect.anchorMax = Vector2.zero;
-                rect.localPosition = Vector3.zero;
-                rect.sizeDelta = new Vector2(getDimensions().x, getDimensions().y);
-            };
+            
+            temporaryGameObject.AddComponent<Image>().sprite = BlockSprite;
+            RectTransform rect = temporaryGameObject.GetComponent<RectTransform>();
+            rect.anchoredPosition = temporaryGameObject.transform.position;
+            rect.anchorMin = Vector2.zero;
+            rect.anchorMax = Vector2.zero;
+            rect.localPosition = Vector3.zero;
+            rect.sizeDelta = new Vector2(getDimensions().x, getDimensions().y);
+            
             
             EditController.addTemporaryPlacement(this);
         }
@@ -164,33 +152,36 @@ public abstract class MultiBlock : IStructure
             baseX = temporaryPos.x;
             baseY = temporaryPos.y;
 
-            BlockObject.transform.position = temporaryPos;
-            GameObject.Destroy(temporaryGameObject);
+            transform.position = temporaryPos;
+            Destroy(temporaryGameObject);
         }
     }
 
     public void cancelTemporaryPlacement()
     {
-        GameObject.Destroy(temporaryGameObject);
+        Destroy(temporaryGameObject);
     }
 
     bool IStructure.isDestroyed()
     {
         return isDestroyed;
     }
-
-    public void destroy() { }
-    
-
-    public abstract void onClick();
-
-    public abstract Vector2 getDimensions();
-    public abstract bool isResource();
-    
     
     public  Vector2 getPos()
     {
         return bay.getPathNode((int) baseX, (int) baseY).getPos();
     }
-    public abstract string getSpritePath();
+
+    public void destroy()
+    {
+        Destroy(this);
+    }
+
+    public virtual void onClick() { }
+
+    public virtual Vector2 getDimensions() { return Vector2.one * 2; }
+
+    public virtual bool isResource() { return false; }
+    
+    public virtual string getSpritePath() { return null; }
 }

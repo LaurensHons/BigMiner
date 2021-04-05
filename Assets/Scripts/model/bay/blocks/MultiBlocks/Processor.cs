@@ -13,14 +13,16 @@ public abstract class Processor : MultiBlock, IJobCallStructure
     protected Inventory OutputInventory;
     
     
-    public Processor(float x, float y, float speed, Tier tier) : base(x, y)
+    public IStructure InstantiateBlock(float x, float y, float speed, Tier tier)
     {
+        InstantiateBlock(x, y);
         ItemsPerSecond = speed;
         smeltercooldown = (int) (ItemsPerSecond / Time.fixedDeltaTime);
         currentTier = tier;
         
         setMaxInventory(tier);
         OutputInventory = new Inventory();
+        return this;
     }
 
     private void setMaxInventory(Tier tier)

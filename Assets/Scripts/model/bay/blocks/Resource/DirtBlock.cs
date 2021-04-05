@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class DirtBlock : Block 
 {
-    public DirtBlock(float x, float y, PathNode pathNode) : base(x, y, pathNode) { }
-
     public override int getMaxHealth()
     {
         return 3;

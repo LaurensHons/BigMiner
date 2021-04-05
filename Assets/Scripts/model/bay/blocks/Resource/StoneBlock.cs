@@ -5,10 +5,6 @@ namespace Blocks
 {
     public class StoneBlock: Block
     {
-        public StoneBlock(float x, float y, PathNode pathNode) : base(x, y, pathNode)
-        {
-        }
-
         public override int getMaxHealth()
         {
             return 5;

@@ -1889,6 +1889,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b65d8e7aaff55344789406bdcd136547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DirtBlockPrefab: {fileID: 4376510501784558970, guid: e0caf781c7dfeef459c77c92eb2715fe, type: 3}
+  StoneBlockPrefab: {fileID: 8465236048746456558, guid: 1c5d7264e75f59d43bda5132c7cc9110, type: 3}
+  SiloPrefab: {fileID: 804986511993091004, guid: 09d75620262bfe44ca3ea4124b1afd75, type: 3}
+  MinerStationPrefab: {fileID: 5361349029602897381, guid: d8e171537e6c27c4fbc09d44449c458a, type: 3}
+  SawPrefab: {fileID: 8380160631375786812, guid: bf957569c672db4448e069dac64e4420, type: 3}
 --- !u!1 &446615923
 GameObject:
   m_ObjectHideFlags: 0

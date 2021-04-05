@@ -9,7 +9,7 @@ public class Silo : MultiBlock, IJobCallStructure
 
     public Inventory Inventory;
 
-    public Silo(float x, float y, Bay bay) : base(x, y)
+    private void Start()
     {
         Instance = this;
         Inventory = new Inventory();

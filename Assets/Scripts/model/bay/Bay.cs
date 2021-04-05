@@ -15,6 +15,16 @@ public class Bay : MonoBehaviour
     private List<IStructure> structures = new List<IStructure>();
     private List<Processor> processors = new List<Processor>();
 
+    public GameObject DirtBlockPrefab;
+    public GameObject StoneBlockPrefab;
+
+
+    public GameObject SiloPrefab;
+    public GameObject MinerStationPrefab;
+    public GameObject SawPrefab;
+    
+    
+
     public EventHandler UpdateObservers;
     public void FixedUpdate()
     {
@@ -44,20 +54,27 @@ public class Bay : MonoBehaviour
             (Grid<PathNode> g, int x, int y) => new PathNode(g, x, y));
 
         Vector2 siloPos = new Vector2(0, 0);
-        new Silo(siloPos.x, siloPos.y, this);
-        addStructureToGrid(Silo.Instance);
+        
+        GameObject siloGameObject = Instantiate(SiloPrefab);
+        IStructure silo = siloGameObject.GetComponent<Silo>();
+        silo.InstantiateBlock(siloPos.x, siloPos.y);
+        addStructureToGrid(silo);
 
-        new JobController();
+        new JobController();       // its yellow but leave it, its fine
 
         Vector2 SawPos = new Vector2(0, 2);
-        Saw saw = new Saw(SawPos.x, SawPos.y, 2, Processor.Tier.Bronze);
+        GameObject sawGameObject = Instantiate(SawPrefab);
+        Saw saw = sawGameObject.GetComponent<Saw>();
+        saw.InstantiateBlock(SawPos.x, SawPos.y, 2, Processor.Tier.Bronze);
         addProcessorToGrid(saw);
         
         
         
         
         Vector2 minerStationPos = new Vector2(2, 0);
-        MinerStation minerStation = new MinerStation(minerStationPos.x, minerStationPos.y, this);
+        GameObject minerStationGameObject = Instantiate(MinerStationPrefab);
+        MinerStation minerStation = minerStationGameObject.GetComponent<MinerStation>();
+        minerStation.InstantiateBlock(minerStationPos.x, minerStationPos.y);
         addStructureToGrid(minerStation);
         
         
@@ -137,29 +154,39 @@ public class Bay : MonoBehaviour
                 {
                     case BlockTypes.DirtBlock:
                     {
-                        block = new DirtBlock(pos.x, pos.y, pathNode);
+                        GameObject blockGameObject = Instantiate(DirtBlockPrefab);
+                        block = blockGameObject.GetComponent<DirtBlock>();
+                        block.InstantiateBlock(pos.x, pos.y);
                         break;
                     }
                     case BlockTypes.StoneBlock:
                     {
-                        block = new StoneBlock(pos.x, pos.y, pathNode);
+                        GameObject blockGameObject = Instantiate(StoneBlockPrefab);
+                        block = blockGameObject.GetComponent<StoneBlock>();
+                        block.InstantiateBlock(pos.x, pos.y);
                         break;
                     }
-                    default:
-                    {
-                        block = new DirtBlock(pos.x, pos.y, pathNode);
-                        break;
-                    }
+                    default: return;
                 }
+                addStructureToGrid(block);
                 block.setParent(transform);
                 structures.Add(pathNode.structure);
             }
         }
     }
 
-    public bool canPlaceStructure(MultiBlock structure, Vector2 pos)
+    public bool canPlaceStructure(IStructure structure, Vector2 pos)
     {
-        float width = structure.getDimensions().x, height = structure.getDimensions().y;
+        if (structure.getPathNodeList().Count <= 1)
+        {
+            PathNode pathNode = structure.getPathNodeList()[0];
+            if (pathNode.structure != null && pathNode.structure != structure) return false;
+            return true;
+        }
+
+        MultiBlock multiBlock = (MultiBlock) structure;
+        
+        float width = multiBlock.getDimensions().x, height = multiBlock.getDimensions().y;
 
         List<PathNode> pathNodes = new List<PathNode>();
 
@@ -186,10 +213,10 @@ public class Bay : MonoBehaviour
         addStructureToGrid(processor);
     }
     
-    public void addStructureToGrid(MultiBlock structure)
+    public void addStructureToGrid(IStructure structure)
     {
         
-        if (!canPlaceStructure(structure, structure.getPos()))
+        if (!canPlaceStructure(structure, structure.getPathNodeList()[0].getPos()))
         {
             Debug.Log("Cannot add structure, pathNode is occupied");
             return;
@@ -218,9 +245,8 @@ public class Bay : MonoBehaviour
 
     public void removeBlock(Block b)
     {
-        if (structures.Contains(b))
-            structures.Remove(b);
-        else throw new Exception("Could not find block to remove");
+        if (!structures.Remove(b)) 
+            Debug.LogError("Could not find block to remove");
     }
 
     public List<PathNode> getBlockList()
@@ -229,7 +255,7 @@ public class Bay : MonoBehaviour
 
         foreach (var structure in structures)
         {
-           if (structure.isResource()) returnList.AddRange(structure.getPathNodeList());
+           if (structure.isResource() && !structure.isDestroyed()) returnList.AddRange(structure.getPathNodeList());
         }
 
         return returnList;
