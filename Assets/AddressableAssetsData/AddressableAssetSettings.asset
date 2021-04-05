@@ -29,6 +29,7 @@ MonoBehaviour:
   m_GroupAssets:
   - {fileID: 11400000, guid: 7c3471f01487906468d962b44f34b12b, type: 2}
   - {fileID: 11400000, guid: ae6c0b71725f79f4ca1a9834bf89c1ec, type: 2}
+  - {fileID: 11400000, guid: bba6bba19cb959a43b8f7aee73104713, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -39,6 +40,20 @@ MonoBehaviour:
     - m_InheritedParent: 
       m_Id: 27bbfbd980e96c449a55200f7ffc0e70
       m_ProfileName: Default
+      m_Values:
+      - m_Id: 1a7c100678b17634280e2f5f69eced89
+        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
+      - m_Id: c9d341fb26ad7ed44bfb3f6108160d76
+        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
+      - m_Id: c45ba4b86196a3d42bf3dc728c9f17b4
+        m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
+      - m_Id: 363d4c857710a9e49a8ef6345bcc171c
+        m_Value: ServerData/[BuildTarget]
+      - m_Id: 329b3001fa40f0e488e32520a8909ee9
+        m_Value: http://localhost/[BuildTarget]
+    - m_InheritedParent: 
+      m_Id: a0a5d530168d8374780618ade958f70d
+      m_ProfileName: DefaultBuild
       m_Values:
       - m_Id: 1a7c100678b17634280e2f5f69eced89
         m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
@@ -69,7 +84,7 @@ MonoBehaviour:
     m_ProfileVersion: 1
   m_LabelTable:
     m_LabelNames:
-    - default
+    - Build
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 73b24b55e410a814086c403ee0409b3c, type: 2}
@@ -83,7 +98,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d7407a76cfb31a44ba2866f6362b87ad, type: 2}
   - {fileID: 11400000, guid: f1ce23e0c0d5ef14e8122a60bcf34793, type: 2}
   - {fileID: 11400000, guid: 806019f9cf983084a8e296898fffd63d, type: 2}
-  m_ActiveProfileId: 27bbfbd980e96c449a55200f7ffc0e70
+  m_ActiveProfileId: a0a5d530168d8374780618ade958f70d
   m_HostingServicesManager:
     m_HostingServiceInfos: []
     m_Settings: {fileID: 11400000}
