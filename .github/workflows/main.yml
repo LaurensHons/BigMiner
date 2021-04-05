@@ -53,7 +53,7 @@ jobs:
       - name: Load Cached Library
         uses: actions/cache@v2
         with:
-          path: ./Library
+          path: /home/runner/work/BigMiner/BigMiner/Library
           key: Library-MyProjectName-TargetPlatform
           restore-keys: |
             Library-MyProjectName-
