@@ -50,12 +50,14 @@ jobs:
         with:
           lfs: true
           
-      - uses: actions/cache@v2
+      - name: Load Cached Library
+        uses: actions/cache@v2
         with:
-          path: Library
-          key: Library-${{ env.TARGETPLATFORM }}
+          path: path/to/your/project/Library
+          key: Library-MyProjectName-TargetPlatform
           restore-keys: |
-            Library-${{ env.TARGETPLATFORM }}
+            Library-MyProjectName-
+            Library-
        
       # Build
       - uses: game-ci/unity-builder@v2
