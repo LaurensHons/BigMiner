@@ -99,6 +99,7 @@
      <Compile Include="Assets\Scripts\model\bay\miner\MinerUpgrades\Upgrade1To10.cs" />
      <Compile Include="Assets\Scripts\model\resourceManagement\JobController.cs" />
      <Compile Include="Assets\Scripts\view\controllers\bay\miner\MinerUpgradeController.cs" />
+     <Compile Include="Assets\Scripts\model\resourceManagement\ItemAssets.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.2.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
@@ -672,14 +673,8 @@
  <Reference Include="Unity.2D.Tilemap.Editor">
  <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
  </Reference>
- <Reference Include="UnityEditor.CacheServer">
- <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/UnityEditor.CacheServer.dll</HintPath>
- </Reference>
  <Reference Include="PsdPlugin">
  <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/PsdPlugin.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Addressables">
- <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.Addressables.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
@@ -704,9 +699,6 @@
  </Reference>
  <Reference Include="Unity.2D.Path.Editor">
  <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.2D.Path.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.ResourceManager">
- <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.ResourceManager.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
@@ -744,17 +736,8 @@
  <Reference Include="Unity.2D.Common.Runtime">
  <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.2D.Common.Runtime.dll</HintPath>
  </Reference>
- <Reference Include="Unity.ScriptableBuildPipeline">
- <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Addressables.Editor">
- <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.Addressables.Editor.dll</HintPath>
- </Reference>
  <Reference Include="Unity.2D.SpriteShape.Editor">
  <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.2D.SpriteShape.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.ScriptableBuildPipeline.Editor">
- <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.Common.Editor">
  <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.2D.Common.Editor.dll</HintPath>

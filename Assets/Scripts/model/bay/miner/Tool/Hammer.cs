@@ -21,9 +21,9 @@ public class Hammer : Tool
         };
     }
 
-    public override string getSpritePath()
+    public override string getSpriteName()
     {
-        return "Assets/Images/Miner.png";
+        return "Hammer";
     }
 
     public override float getBaseDamage()

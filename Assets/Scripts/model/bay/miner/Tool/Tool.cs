@@ -112,7 +112,17 @@ public abstract class Tool
         else return false;
     }
 
-    public abstract string getSpritePath();
+    public Sprite getSprite()
+    {
+        switch (getSpriteName())
+        {
+            default: return null;
+            case("Hammer"): return ItemAssets.Instance.HammerSprite;
+            case("Pickaxe"): return ItemAssets.Instance.PickaxeSprite;
+        }
+    }
+
+    public abstract string getSpriteName();
     public abstract float getBaseDamage();
     public abstract string getDecriptionText();
     

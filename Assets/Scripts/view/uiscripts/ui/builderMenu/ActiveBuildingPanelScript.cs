@@ -1,8 +1,6 @@
 ﻿
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
 public class ActiveBuildingPanelScript : TabGroup
@@ -38,13 +36,8 @@ public class ActiveBuildingPanelScript : TabGroup
                 inputItemGameObjects[i].SetActive(true);
 
                 inputItemGameObjects[i].GetComponentInChildren<Text>().text = inputItems[i].getAmount().ToString();
-                AsyncOperationHandle<Sprite> inputItemImageHandler = Addressables.LoadAssetAsync<Sprite>(inputItems[i].getSpritePath());
-                var i1 = i;
-                inputItemImageHandler.Completed += obj =>
-                {
-                    inputItemGameObjects[i1].GetComponentInChildren<Image>().sprite = obj.Result;
-                };
-                
+                inputItemGameObjects[i].GetComponentInChildren<Image>().sprite = inputItems[i].GetSprite();
+
             }
             else
             {
@@ -60,12 +53,7 @@ public class ActiveBuildingPanelScript : TabGroup
                 outputItemGameObjects[i].SetActive(true);
 
                 outputItemGameObjects[i].GetComponentInChildren<Text>().text = outputItem[i].getAmount().ToString();
-                AsyncOperationHandle<Sprite> outputItemImageHandler = Addressables.LoadAssetAsync<Sprite>(outputItem[i].getSpritePath());
-                var i1 = i;
-                outputItemImageHandler.Completed += obj =>
-                {
-                    outputItemGameObjects[i1].GetComponentInChildren<Image>().sprite = obj.Result;
-                };
+                outputItemGameObjects[i].GetComponentInChildren<Image>().sprite = outputItem[i].GetSprite();
                 
             }
             else

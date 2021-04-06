@@ -6,8 +6,6 @@ using System.Security.Cryptography.X509Certificates;
 using Grid;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
@@ -17,12 +15,10 @@ public class Miner : MonoBehaviour, IWalker
 {
     private MinerStation minerStation;
     
-
     public EventHandler MinerXpUpdate;
     public EventHandler MinerLevelUpdate;
 
-    public Sprite minerImage;
-    
+
     public float speed => (float) (Math.Pow(1.01f, getLevel(out double d) - 1) + speedUpgradesFlat) * speedUpgradesPercent;
     private float speedUpgradesFlat = 0;
     private float speedUpgradesPercent = 1;
@@ -377,6 +373,11 @@ public class Miner : MonoBehaviour, IWalker
     public Bay getBay()
     {
         return minerStation.getBay();
+    }
+
+    public Sprite getSprite()
+    {
+        return GetComponent<SpriteRenderer>().sprite;
     }
 
     public String getSpritePath()

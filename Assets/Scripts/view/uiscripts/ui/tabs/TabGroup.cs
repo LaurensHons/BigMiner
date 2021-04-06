@@ -2,34 +2,15 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
 public class TabGroup : MonoBehaviour
 {
     public List<TabButton> tabButtons;
-    public String tabActiveAddressableString;
-    private Sprite tabActive;
-    public String tabClosedAddressableString;
-    private Sprite tabClosed;
+    public Sprite tabActive;
+    public Sprite tabClosed;
     private TabButton activeButton;
     public List<GameObject> menuPanels;
-
-    private void Start()
-    {
-        AsyncOperationHandle<Sprite> tabActiveSpriteHandler = Addressables.LoadAssetAsync<Sprite>(tabActiveAddressableString);
-        tabActiveSpriteHandler.Completed += obj =>
-        {
-            tabActive = obj.Result;
-        };
-        AsyncOperationHandle<Sprite> tabClosedSpriteHandler = Addressables.LoadAssetAsync<Sprite>(tabClosedAddressableString);
-        tabClosedSpriteHandler.Completed += obj =>
-        {
-            tabClosed = obj.Result;
-        };
-    }
-
     public void Subscribe(TabButton button)
     {
         if (tabButtons == null)

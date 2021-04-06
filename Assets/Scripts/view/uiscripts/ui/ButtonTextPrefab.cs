@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
 public class ButtonTextPrefab : MonoBehaviour
@@ -60,14 +59,6 @@ public class ButtonTextPrefab : MonoBehaviour
     {
         GameObject imagego = ImageObject.transform.GetChild(i).gameObject;
         imagego.SetActive(true);
-        items[i].loadSprite().Completed += obj =>
-        {
-            imagego.GetComponent<Image>().sprite = obj.Result;
-        };
-    }
-
-    private void loadSprite(AsyncOperationHandle<Sprite> obj, int i)
-    {
-        throw new NotImplementedException();
+        imagego.GetComponent<Image>().sprite = items[i].GetSprite();
     }
 }

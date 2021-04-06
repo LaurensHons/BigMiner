@@ -16,7 +16,19 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 34d9347779e6b8242b2bf93791c1068b
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 6ef354b0313f8864cbf737d314477c19
+    m_Address: Assets/Addressables/Blocks/DirtBlock.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: b8020e1671728914098142762e05a04c
+    m_Address: Assets/Addressables/Blocks/stoneWall.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: f74ff28122923544dad13360e719334e, type: 2}
   m_SchemaSet:

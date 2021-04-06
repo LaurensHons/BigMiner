@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 public abstract class Item
 {
@@ -55,13 +53,17 @@ public abstract class Item
     public string getName() { return this.GetType().ToString(); }
     
 
-    public AsyncOperationHandle<Sprite> loadSprite()
+    public Sprite GetSprite()
     {
-        AsyncOperationHandle<Sprite> spriteHandle = Addressables.LoadAssetAsync<Sprite>(getSpritePath());
-        return spriteHandle;
+        switch (getSpriteName())
+        {
+            default: return null;
+            case "DirtBlock":  return ItemAssets.Instance.DirtBlockSprite;
+            case "StoneBlock": return ItemAssets.Instance.StoneBlockSprite;
+        }
     }
     
-    public abstract string getSpritePath();
+    public abstract string getSpriteName();
 }
 
 public class ItemComparator : IEqualityComparer<Item>
@@ -82,9 +84,9 @@ public class DirtBlockItem : Item
 {
     public DirtBlockItem(int amount) : base(amount) { }
 
-    public override string getSpritePath()
+    public override string getSpriteName()
     {
-        return "Assets/Addressables/Blocks/DirtBlock.png";
+        return "DirtBlock";
     }
 }
 
@@ -92,8 +94,8 @@ public class StoneBlockItem : Item
 {
     public StoneBlockItem(int amount) : base(amount) { }
 
-    public override string getSpritePath()
+    public override string getSpriteName()
     {
-        return "Assets/Addressables/Blocks/stoneWall.png";
+        return "StoneBlock";
     }
 }

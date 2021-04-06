@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Analytics;
 using UnityEngine.Animations;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 using Random = System.Random;
 
@@ -80,14 +78,8 @@ public class MinerController : MonoBehaviour, IMenuController
             minerstation.Miner.MinerLevelUpdate?.Invoke(this, EventArgs.Empty);
             minerstation.Miner.activeTool.ToolDamageUpdate?.Invoke(this, EventArgs.Empty);
             updateInventory();
-            
-            
 
-            if (MinerSprite.sprite == null)
-            {
-                AsyncOperationHandle<Sprite> minerSpriteHandler = Addressables.LoadAssetAsync<Sprite>(minerstation.Miner.getSpritePath());
-                minerSpriteHandler.Completed += LoadminerSpriteWhenReady; 
-            }
+            MinerSprite.sprite = minerstation.Miner.getSprite();
 
             InvokeRepeating("updatePerSecond", 0, 1f);
         }
@@ -184,10 +176,7 @@ public class MinerController : MonoBehaviour, IMenuController
                     Debug.Log("spawning object");
                     GameObject g = new GameObject(item.GetType().ToString());
                     g.AddComponent<Image>();
-                    item.loadSprite().Completed += obj =>
-                    {
-                        g.GetComponent<Image>().sprite = obj.Result;
-                    };
+                    g.GetComponent<Image>().sprite = item.GetSprite();
 
                     g.transform.SetParent(InventoryObject.transform);
                     g.transform.localScale = Vector3.one;
@@ -302,19 +291,7 @@ public class MinerController : MonoBehaviour, IMenuController
         return null;
     }
 
-    private void LoadminerSpriteWhenReady(AsyncOperationHandle<Sprite> obj)
-    {
-        if (obj.Status == AsyncOperationStatus.Succeeded)
-        {
-            Sprite minerSprite = obj.Result;
-            
-            if (minerSprite == null) throw new Exception("No block sprite found, maybe file named wrong?");
-            MinerSprite.sprite = minerSprite;
-        }
-        else throw new Exception("Loading sprite failed");
-    }
-    
-    
 
-    
+
+
 }

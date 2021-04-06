@@ -1,9 +1,7 @@
 using System;
 using System.IO;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.PlayerLoop;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
 public class ToolPanelScript : MonoBehaviour
@@ -40,9 +38,8 @@ public class ToolPanelScript : MonoBehaviour
             
             tool.ToolDamageUpdate += updateDamageText;
             updateDamageText(this, EventArgs.Empty);
-
-            AsyncOperationHandle<Sprite> toolSpriteHandler = Addressables.LoadAssetAsync<Sprite>(tool.getSpritePath());
-            toolSpriteHandler.Completed += LoadToolSpriteWhenReady;
+            
+            ToolImage.sprite = tool.getSprite();
         }
         else
         {
@@ -104,19 +101,8 @@ public class ToolPanelScript : MonoBehaviour
     {
         DamageText.text = "Damage\n" + Math.Round((double) tool.damage, 2);
     }
-    private void LoadToolSpriteWhenReady(AsyncOperationHandle<Sprite> obj)
-    {
-        if (obj.Status == AsyncOperationStatus.Succeeded)
-        {
-            Sprite toolSprite = obj.Result;
-            
-            if (toolSprite == null) throw new Exception("No tool sprite found");
-            ToolImage.sprite = toolSprite;
-        }
-        else throw new Exception("Loading sprite failed");
-    }
 
-    
+
 
     public void BuyDamageUpgrade()      //Damage Upgrade Button
     {

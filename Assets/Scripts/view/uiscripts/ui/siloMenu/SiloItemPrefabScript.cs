@@ -2,9 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.PlayerLoop;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
 public class SiloItemPrefabScript : MonoBehaviour
@@ -20,13 +18,9 @@ public class SiloItemPrefabScript : MonoBehaviour
             this.item.ItemUpdate -= updateAmount;
         this.item = item;
         item.ItemUpdate += updateAmount;
-        AsyncOperationHandle<Sprite> spriteHandle = Addressables.LoadAssetAsync<Sprite>(item.getSpritePath());
-        spriteHandle.Completed += obj =>
-        {
-            Image.GetComponent<Image>().sprite = obj.Result;
-        };
 
         NameText.text = item.getName();
+        Image.sprite = item.GetSprite();
         updateAmount();
     }
     private void updateAmount()

@@ -25,7 +25,7 @@ public class DirtBlock : Block
 
     public override string getSpritePath()
     {
-        return "Assets/Addressables/Blocks/DirtBlock.png";
+        return "DirtBlock";
     }
 
     public override int getSearchCost()

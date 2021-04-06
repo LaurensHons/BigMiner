@@ -9,9 +9,9 @@ public class Pickaxe : Tool
         return new List<Vector2>();
     }
 
-    public override string getSpritePath()
+    public override string getSpriteName()
     {
-        return "Assets/Images/Miner.png";
+        return "Pickaxe";
     }
 
     public override float getBaseDamage()

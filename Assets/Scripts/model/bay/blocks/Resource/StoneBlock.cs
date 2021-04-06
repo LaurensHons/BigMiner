@@ -25,7 +25,7 @@ namespace Blocks
 
         public override string getSpritePath()
         {
-            return "Assets/Addressables/Blocks/stoneWall.png";
+            return "StoneBlock";
         }
 
         public override int getSearchCost()

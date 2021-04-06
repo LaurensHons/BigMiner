@@ -50,6 +50,7 @@
             <e p="resourceManagement" t="Include">
               <e p="Inventory.cs" t="Include" />
               <e p="Item.cs" t="Include" />
+              <e p="ItemAssets.cs" t="Include" />
               <e p="JobCall.cs" t="Include" />
               <e p="JobController.cs" t="Include" />
             </e>
