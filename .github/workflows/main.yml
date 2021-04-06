@@ -50,7 +50,11 @@ jobs:
         with:
           lfs: true
 
-
+      - uses: actions/cache@v2
+        with:
+          path: ./Library
+          key: NewLibrary-Android
+          restore-keys: NewLibrary-
 
       # Build
       - uses: game-ci/unity-builder@v2
@@ -58,7 +62,8 @@ jobs:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
           targetPlatform: ${{ env.TARGETPLATFORM }}
-          versioning: Semantic
+          versioning: Custom
+          version: ${{ github.run_number }}
 
       - name: Upload the artifact
         uses: actions/upload-artifact@v1
@@ -82,6 +87,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
+          DRY_RUN: true
           DEFAULT_BUMP: none
 
       - name: Download a Build Artifact
@@ -93,7 +99,7 @@ jobs:
         run: ls -R
 
       - name: Rename .apk files
-        run: mv Android.apk/Android.apk BigMiner.${{ steps.tag_bump.outputs.tag }}.${{ github.run_number }}
+        run: mv Android.apk/Android.apk BigMiner.${{ steps.tag_bump.outputs.tag }}.${{ github.run_number }}.apk
 
       - name: Display structure of downloaded files
         run: ls -R
@@ -102,9 +108,9 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: "*.apk"
+          artifacts: "BigMiner*"
           body: ${{ github.event.head_commit.message }}
           tag: apk.${{ steps.tag_bump.outputs.tag }}.${{ github.run_number }}
-          name: Build ${{ steps.tag_bump.outputs.tag }}
+          name: Build ${{ steps.tag_bump.outputs.tag }} (${{ github.run_number }})
 
 
