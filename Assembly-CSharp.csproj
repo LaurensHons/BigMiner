@@ -81,6 +81,7 @@
      <Compile Include="Assets\Scripts\model\bay\Bay.cs" />
      <Compile Include="Assets\Scripts\model\bay\miner\MinerUpgrades\MinerUpgrade.cs" />
      <Compile Include="Assets\Scripts\model\bay\PathFinding\Pathfinding.cs" />
+     <Compile Include="Assets\Scripts\view\controllers\bay\miner\MinerToolController.cs" />
      <Compile Include="Assets\Scripts\model\bay\blocks\Resource\Block.cs" />
      <Compile Include="Assets\Scripts\view\controllers\bay\miner\MinerController.cs" />
      <Compile Include="Assets\Scripts\model\bay\blocks\MultiBlocks\MultiBlock.cs" />
@@ -97,7 +98,6 @@
      <Compile Include="Assets\Scripts\model\bay\blocks\MultiBlocks\Processor.cs" />
      <Compile Include="Assets\Scripts\model\bay\miner\MinerUpgrades\Upgrade1To10.cs" />
      <Compile Include="Assets\Scripts\model\resourceManagement\JobController.cs" />
-     <Compile Include="Assets\Scripts\view\controllers\bay\miner\MinerToolController.cs" />
      <Compile Include="Assets\Scripts\view\controllers\bay\miner\MinerUpgradeController.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.2.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>

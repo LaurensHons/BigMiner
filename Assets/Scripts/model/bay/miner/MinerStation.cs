@@ -12,6 +12,7 @@ using Random = UnityEngine.Random;
 public class MinerStation : MultiBlock
 {
     public Miner Miner { get; private set; }
+    public GameObject MinerPrefab;
     
     private IMiningStrategy miningStrategy = new RandomMiningStrategy();
 
@@ -24,21 +25,16 @@ public class MinerStation : MultiBlock
 
     private void InstantiateMiner()
     {
-        AsyncOperationHandle<GameObject> MinerPrefabHandler = Addressables.LoadAssetAsync<GameObject>("Assets/Addressables/Prefabs/MinerPrefab.prefab");
-        MinerPrefabHandler.Completed += obj =>
+        Vector2 pos = new Vector2(0, 1);
+        while (!bay.getPathNode(pos).isWalkable)
         {
-            Vector2 pos = new Vector2(0, 1);
-            while (!bay.getPathNode(pos).isWalkable)
-            {
-                pos.y += 1;
-                if (bay.getPathNode(pos) == null) throw new Exception("No valid space found for instantiating miner");
-            }
-
-            GameObject minerGameObjectPrefab = obj.Result;
-            GameObject minerGameObject = GameObject.Instantiate(minerGameObjectPrefab);
-            Miner = minerGameObject.GetComponent<Miner>().Instantiate(pos, this);
-            bay.registerMiner(Miner);
-        };
+            pos.y += 1;
+            if (bay.getPathNode(pos) == null) throw new Exception("No valid space found for instantiating miner");
+        }
+        
+        GameObject minerGameObject = Instantiate(MinerPrefab);
+        Miner = minerGameObject.GetComponent<Miner>().Instantiate(pos, this);
+        bay.registerMiner(Miner);
     }
 
     public Block getNextTarget()
