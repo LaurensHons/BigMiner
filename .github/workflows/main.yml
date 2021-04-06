@@ -50,7 +50,11 @@ jobs:
         with:
           lfs: true
 
-
+      - uses: actions/cache@v2
+        with:
+          path: Library
+          key: Library-Android
+          restore-keys: Library-
 
       # Build
       - uses: game-ci/unity-builder@v2
@@ -59,7 +63,7 @@ jobs:
         with:
           targetPlatform: ${{ env.TARGETPLATFORM }}
           versioning: Custom
-          version: 0.0.0
+          version: ${{ github.run_number }}
 
       - name: Upload the artifact
         uses: actions/upload-artifact@v1
