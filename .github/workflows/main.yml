@@ -81,6 +81,8 @@ jobs:
         with:
           fetch-depth: '0'
 
+      
+
       - name: Bump version and push tag
         id: tag_bump
         uses: moble/github-tag-action@main
@@ -89,7 +91,14 @@ jobs:
           WITH_V: true
           DRY_RUN: true
           DEFAULT_BUMP: none
+      
+      - if: '${{ tag_bump.part }} == "none"'
+        name: delete Previous Release
+        uses: ame-yu/action-delete-latest-release@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
+      
       - name: Download a Build Artifact
         uses: actions/download-artifact@v2.0.8
         with:
@@ -102,7 +111,7 @@ jobs:
         run: mv Android.apk/Android.apk BigMiner.${{ steps.tag_bump.outputs.tag }}.${{ github.run_number }}.apk
 
       - name: Display structure of downloaded files
-        run: ls -R
+        run: ls -R      
 
       - name: Create Release
         uses: ncipollo/release-action@v1
