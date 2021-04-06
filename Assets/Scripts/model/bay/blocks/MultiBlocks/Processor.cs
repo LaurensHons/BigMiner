@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public abstract class Processor : MultiBlock, IJobCallStructure
@@ -11,6 +12,11 @@ public abstract class Processor : MultiBlock, IJobCallStructure
 
     protected Inventory InputInventory;
     protected Inventory OutputInventory;
+
+    [SerializeField]
+    public int InputItems;
+    [SerializeField]
+    public int OutputItems;
     
     
     public IStructure InstantiateBlock(float x, float y, float speed, Tier tier)
@@ -19,6 +25,9 @@ public abstract class Processor : MultiBlock, IJobCallStructure
         ItemsPerSecond = speed;
         smeltercooldown = (int) (ItemsPerSecond / Time.fixedDeltaTime);
         currentTier = tier;
+
+        InputItems = getActualInputItems().Count();
+        OutputItems = getOutputItems().Length;
         
         setMaxInventory(tier);
         OutputInventory = new Inventory();

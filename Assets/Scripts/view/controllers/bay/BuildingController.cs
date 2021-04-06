@@ -9,7 +9,7 @@ public class BuildingController : MonoBehaviour, IMenuController
     public GameObject BuildingMenu;
     public GameObject ActiveBuildingList;
     public GameObject InActiveBuildingList;
-    public List<ActiveBuildingPanelScript> ActiveBuildingPanelScripts;
+    public List<BuildingPanelScript> ActiveBuildingPanelScripts;
 
     public GameObject ActiveBuildingPanelPrefab;
     
@@ -23,14 +23,14 @@ public class BuildingController : MonoBehaviour, IMenuController
     {
         BuildingMenu.SetActive(active);
 
-        if (ActiveBuildingPanelScripts == null) ActiveBuildingPanelScripts = new List<ActiveBuildingPanelScript>();
+        if (ActiveBuildingPanelScripts == null) ActiveBuildingPanelScripts = new List<BuildingPanelScript>();
         destroyAllactiveBuilidingPanels();
         List<Processor> processors = GameObject.FindWithTag("Bay").GetComponent<Bay>().getProcessors();
 
         for (int i = 0; i < processors.Count; i++)
         {
             GameObject ActiveBuildingPrefab = Instantiate(ActiveBuildingPanelPrefab, ActiveBuildingList.transform);
-            ActiveBuildingPanelScript script = ActiveBuildingPrefab.GetComponent<ActiveBuildingPanelScript>();
+            BuildingPanelScript script = ActiveBuildingPrefab.GetComponent<BuildingPanelScript>();
             script.setActive(true, processors[i]); 
             ActiveBuildingPanelScripts.Add(script);
         }
@@ -43,10 +43,10 @@ public class BuildingController : MonoBehaviour, IMenuController
         {
             Destroy(activeBuildingPanelScript.gameObject);
         }
-        ActiveBuildingPanelScripts = new List<ActiveBuildingPanelScript>();
+        ActiveBuildingPanelScripts = new List<BuildingPanelScript>();
     }
     
-    private ActiveBuildingPanelScript getActiveBuildingPanelScript(Processor processor)
+    private BuildingPanelScript getActiveBuildingPanelScript(Processor processor)
     {
         foreach (var activeBuildingPanelScript in ActiveBuildingPanelScripts)
         {

@@ -60,8 +60,9 @@
      <Compile Include="Assets\Scripts\view\controllers\bay\ScannerController.cs" />
      <Compile Include="Assets\Scripts\view\uiscripts\ui\siloMenu\SiloItemPrefabScript.cs" />
      <Compile Include="Assets\Scripts\model\scanner\Scanner.cs" />
+     <Compile Include="Assets\Scripts\model\resourceManagement\ItemAssets.cs" />
      <Compile Include="Assets\Scripts\view\uiscripts\ui\scannerMenu\ScannerSlider.cs" />
-     <Compile Include="Assets\Scripts\view\uiscripts\ui\builderMenu\ActiveBuildingPanelScript.cs" />
+     <Compile Include="Assets\Scripts\view\uiscripts\ui\builderMenu\BuildingPanelScript.cs" />
      <Compile Include="Assets\Scripts\view\uiscripts\ui\minerMenu\ToolPanelScript.cs" />
      <Compile Include="Assets\Scripts\model\bay\miner\Tool\Hammer.cs" />
      <Compile Include="Assets\Scripts\model\bay\miner\Miner.cs" />
@@ -99,7 +100,6 @@
      <Compile Include="Assets\Scripts\model\bay\miner\MinerUpgrades\Upgrade1To10.cs" />
      <Compile Include="Assets\Scripts\model\resourceManagement\JobController.cs" />
      <Compile Include="Assets\Scripts\view\controllers\bay\miner\MinerUpgradeController.cs" />
-     <Compile Include="Assets\Scripts\model\resourceManagement\ItemAssets.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.2.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
@@ -700,14 +700,14 @@
  <Reference Include="Unity.2D.Path.Editor">
  <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.2D.Path.Editor.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.InternalAPIEditorBridge.001">
+ <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.001.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Rider.Editor">
  <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.InternalAPIEditorBridge.001">
- <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.001.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>F:/BigMiner/BigMiner/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>

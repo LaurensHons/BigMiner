@@ -85,7 +85,7 @@
               </e>
               <e p="UI" t="Include">
                 <e p="builderMenu" t="Include">
-                  <e p="ActiveBuildingPanelScript.cs" t="Include" />
+                  <e p="BuildingPanelScript.cs" t="Include" />
                 </e>
                 <e p="ButtonTextPrefab.cs" t="Include" />
                 <e p="minerMenu" t="Include">
