@@ -92,7 +92,7 @@ jobs:
           DRY_RUN: true
           DEFAULT_BUMP: none
       
-      - if: '${{ tag_bump.part }} == "none"'
+      - if: '${{  steps.tag_bump.output.part }} == "none"'
         name: delete Previous Release
         uses: ame-yu/action-delete-latest-release@v2
         with:
