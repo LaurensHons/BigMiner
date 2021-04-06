@@ -53,8 +53,8 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: ./Library
-          key: Library-Android
-          restore-keys: Library-
+          key: NewLibrary-Android
+          restore-keys: NewLibrary-
 
       # Build
       - uses: game-ci/unity-builder@v2
@@ -99,7 +99,7 @@ jobs:
         run: ls -R
 
       - name: Rename .apk files
-        run: mv Android.apk/Android.apk BigMiner.${{ steps.tag_bump.outputs.tag }}.${{ github.run_number }}
+        run: mv Android.apk/Android.apk BigMiner.${{ steps.tag_bump.outputs.tag }}.${{ github.run_number }}.apk
 
       - name: Display structure of downloaded files
         run: ls -R
