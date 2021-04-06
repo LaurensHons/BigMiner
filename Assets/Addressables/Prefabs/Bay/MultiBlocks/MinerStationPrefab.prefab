@@ -49,3 +49,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BlockSprite: {fileID: 21300000, guid: cb36b2420195e5e479956f6bc505476b, type: 3}
+  MinerPrefab: {fileID: 7990780792511673432, guid: c1d87038e391e014290516ab3b942ff6, type: 3}

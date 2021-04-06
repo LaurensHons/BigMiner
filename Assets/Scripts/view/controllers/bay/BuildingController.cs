@@ -24,21 +24,35 @@ public class BuildingController : MonoBehaviour, IMenuController
         BuildingMenu.SetActive(active);
 
         if (ActiveBuildingPanelScripts == null) ActiveBuildingPanelScripts = new List<ActiveBuildingPanelScript>();
+        destroyAllactiveBuilidingPanels();
         List<Processor> processors = GameObject.FindWithTag("Bay").GetComponent<Bay>().getProcessors();
+
         for (int i = 0; i < processors.Count; i++)
         {
-            Debug.Log("One processor");
-            if (!processors[i].isDestroyed)  //Active building prefab
-            {
-                if (ActiveBuildingPanelScripts.Count >= i)
-                {
-                    GameObject ActiveBuildingPrefab = Instantiate(ActiveBuildingPanelPrefab, ActiveBuildingList.transform);
-                    ActiveBuildingPanelScripts.Add(ActiveBuildingPrefab.GetComponent<ActiveBuildingPanelScript>());
-                }
-                ActiveBuildingPanelScripts[i].setActive(true, processors[i]); 
-            }
-            
+            GameObject ActiveBuildingPrefab = Instantiate(ActiveBuildingPanelPrefab, ActiveBuildingList.transform);
+            ActiveBuildingPanelScript script = ActiveBuildingPrefab.GetComponent<ActiveBuildingPanelScript>();
+            script.setActive(true, processors[i]); 
+            ActiveBuildingPanelScripts.Add(script);
         }
+    }
+
+    private void destroyAllactiveBuilidingPanels()
+    {
+        if (ActiveBuildingList == null) return;
+        foreach (var activeBuildingPanelScript in ActiveBuildingPanelScripts)
+        {
+            Destroy(activeBuildingPanelScript.gameObject);
+        }
+        ActiveBuildingPanelScripts = new List<ActiveBuildingPanelScript>();
+    }
+    
+    private ActiveBuildingPanelScript getActiveBuildingPanelScript(Processor processor)
+    {
+        foreach (var activeBuildingPanelScript in ActiveBuildingPanelScripts)
+        {
+            if (activeBuildingPanelScript.Processor.Equals(processor)) return activeBuildingPanelScript;
+        }
+        return null;
     }
 
     public GameObject getSubpanel()

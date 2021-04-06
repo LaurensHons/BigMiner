@@ -85,16 +85,19 @@ public class UIController : MonoBehaviour
         }
     }
 
-    private void setActiveMenu(IMenuController menuController)
+    private void setActiveMenu(IMenuController menuController, bool bayClick = false)
     {
+        if (bayClick && activeMenu != null)
+            return;
+        
         if (activeMenu == null)
             MenuPanel.SetActive(true);
         else 
             activeMenu.setActive(false);
         
-
-        menuController.setActive(true);
         activeMenu = menuController;
+        menuController.setActive(true);
+        
     }
 
     public void OpenScannerMenu()   //Activated by scanner button
@@ -104,15 +107,14 @@ public class UIController : MonoBehaviour
 
     public void OpenSiloMenu()
     {
-        if (activeMenu != null) return;
-        setActiveMenu(SiloController);
+        setActiveMenu(SiloController, true);
     }
 
-    public void OpenMinerMenu(MinerStation minerStation, bool forced = false)   //Activated by tapping on miner station
+    public void OpenMinerMenu(MinerStation minerStation)   //Activated by tapping on miner station
     {
-        if (activeMenu != null && !forced) return;
+        if (activeMenu != null) return;
         selectedMinerStation = minerStation;
-        setActiveMenu(MinerController.MinerStation(minerStation));
+        setActiveMenu(MinerController.MinerStation(selectedMinerStation), true);
     }
 
     public void OpenToolMenu() //Activated by Toolbutton
@@ -151,6 +153,11 @@ public class UIController : MonoBehaviour
 
     public void CloseMenu()
     {
+        if (activeMenu == null)
+        {
+            Debug.LogError("Closing menu while not having an active menu open");
+            return;
+        }
         if (activeMenu.getSubpanel() != null)
         {
             IMenuController subPanel = activeMenu.getSubpanel().GetComponent<IMenuController>();

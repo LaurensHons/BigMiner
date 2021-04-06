@@ -40,8 +40,10 @@ public class SiloController : MonoBehaviour, IMenuController
     {
         foreach (var Item in Silo.Instance.Inventory.getInventory())
         {
+            if (Item == null || Item.getAmount() == 0) continue;
             if (!SiloItems.ContainsKey(Item.getName()))
             {
+                Debug.Log("Item: " + Item.getName() + ", Amount: " + Item.getAmount());
                 GameObject go = Instantiate(SiloItemPrefab, ItemList.transform);
                 SiloItemPrefabScript sips = go.GetComponent<SiloItemPrefabScript>();
                 sips.setItem(Item);

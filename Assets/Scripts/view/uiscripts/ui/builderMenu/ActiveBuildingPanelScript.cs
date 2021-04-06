@@ -18,18 +18,10 @@ public class ActiveBuildingPanelScript : TabGroup
     {
         if (active)
         {
-            this.Processor = processor;
+            Processor = processor;
             nameText.text = processor.getName();
-            AsyncOperationHandle<Sprite> spriteHandle = Addressables.LoadAssetAsync<Sprite>(processor.getSpritePath());
-            spriteHandle.Completed += obj =>
-            {
-                BuildingImage.GetComponent<Image>().sprite = obj.Result;
-            };
-
+            BuildingImage.GetComponent<Image>().sprite = processor.BlockSprite;
             setItemRecipe();
-            
-            
-            
             return;
         }
 
