@@ -58,7 +58,8 @@ jobs:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
           targetPlatform: ${{ env.TARGETPLATFORM }}
-          versioning: Semantic
+          versioning: Custom
+          version: 0.0.0
 
       - name: Upload the artifact
         uses: actions/upload-artifact@v1
