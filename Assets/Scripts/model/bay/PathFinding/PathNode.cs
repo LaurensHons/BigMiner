@@ -61,7 +61,7 @@ public class PathNode {
         Structure = null;
     }
 
-    public void MineBlock(float hit, out bool destroyed, out Inventory loot, out int xp)
+    public void MineBlock(float hit, out bool destroyed, out IInventory loot, out int xp)
     {
         destroyed = true;
         loot = null;

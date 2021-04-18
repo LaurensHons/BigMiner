@@ -1,6 +1,8 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro.EditorUtilities;
 using UnityEngine;
 
 public abstract class Processor : MultiBlock, IJobCallStructure
@@ -9,8 +11,17 @@ public abstract class Processor : MultiBlock, IJobCallStructure
     protected int maxInventory;
     protected Tier currentTier;
 
-    protected Inventory InputInventory;
-    protected Inventory OutputInventory;
+    public IInventory InputInventory { get; set; }
+    public IInventory OutputInventory { get; set; }
+    
+    public bool autoFillItem1 = false;
+    public bool autoFillItem2 = false;
+    public bool autoFillItem3 = false;
+
+    [SerializeField]
+    public int InputItems;
+    [SerializeField]
+    public int OutputItems;
     
     
     public IStructure InstantiateBlock(float x, float y, float speed, Tier tier)
@@ -19,9 +30,12 @@ public abstract class Processor : MultiBlock, IJobCallStructure
         ItemsPerSecond = speed;
         smeltercooldown = (int) (ItemsPerSecond / Time.fixedDeltaTime);
         currentTier = tier;
+
+        InputItems = getActualInputItems().Count();
+        OutputItems = getOutputItems().Length;
         
         setMaxInventory(tier);
-        OutputInventory = new Inventory();
+        OutputInventory = new ItemInventory();
         return this;
     }
 
@@ -50,9 +64,9 @@ public abstract class Processor : MultiBlock, IJobCallStructure
         }
 
         if (InputInventory == null)
-            InputInventory = new Inventory(maxInventory);
+            InputInventory = new ItemInventory();
         else
-            InputInventory.setMaxInventoryWeigh(maxInventory);
+            InputInventory.setMaxInventoryWeight(maxInventory);
 
     }
 
@@ -103,21 +117,21 @@ public abstract class Processor : MultiBlock, IJobCallStructure
         return true;
     }
     
-    public void depositItem(Item item, Inventory minerInventory, int? amount = null)
+    public void depositItem(Item item, IInventory minerInventory, int? amount = null)
     {
         InputInventory.putItem(item, minerInventory, amount);
         checkInputInventory();
     }
 
-    public void takeItem(Item item, Inventory minerInventory, int? amount = null)
+    public void takeItem(Item item, IInventory minerInventory, int? amount = null)
     {
         OutputInventory.TakeItem(item, minerInventory, amount);
     }
-    public Inventory getInputInventory()
+    public IInventory getInputInventory()
     {
         return InputInventory;
     }
-    public Inventory getOutputInventory()
+    public IInventory getOutputInventory()
     {
         return OutputInventory;
     }
@@ -126,13 +140,15 @@ public abstract class Processor : MultiBlock, IJobCallStructure
         
     }
 
-    public void deliverJobCall(Item itemToBeDelivered, Inventory minerInventory)
+    
+
+    public void deliverJobCall(Item itemToBeDelivered, IInventory minerInventory)
     {
         InputInventory.TakeItem(itemToBeDelivered, minerInventory);
         JobController.Instance.successJobCall(this, itemToBeDelivered);
     }
 
-    public void pickUpJobCall(Item itemToBeDelivered, Inventory minerInventory)
+    public void pickUpJobCall(Item itemToBeDelivered, IInventory minerInventory)
     {
         int amount = itemToBeDelivered.getAmount();
         if (amount > minerInventory.getLeftOverInventorySpace()) amount = minerInventory.getLeftOverInventorySpace();

@@ -14,12 +14,11 @@ public class TabGroup : MonoBehaviour
     public void Subscribe(TabButton button)
     {
         if (tabButtons == null)
-        {
             tabButtons = new List<TabButton>();
-            button.backGround.sprite = tabActive;
-        }
-        tabButtons.Add(button);
         
+        tabButtons.Add(button);
+        tabButtons[0].backGround.sprite = tabActive;
+        activeButton = tabButtons[0];
     }
 
     public void onTabSelected(TabButton button)

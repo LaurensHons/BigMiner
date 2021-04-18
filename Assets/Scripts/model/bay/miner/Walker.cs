@@ -91,7 +91,7 @@ public class Walker
 
             case WalkerStatus.InventoryCalls:
             {
-                Inventory inventory = objectToWalk.getItemInventory();
+                IInventory inventory = objectToWalk.getItemInventory();
                 Debug.Log("Status: Inventory Call");
         
                 if (activeJobCall == null)
@@ -364,7 +364,7 @@ public interface IWalker
 
     public void Mine();
 
-    public Inventory getItemInventory();
+    public IInventory getItemInventory();
 
     public void startDepositingItems();
     public void startTakingItems();

@@ -126,7 +126,6 @@ public class Bay : MonoBehaviour
             if (structure.isResource())
             {
                 structure.destroy();
-                removeBlock(structure as Block);
             }
         }
     }

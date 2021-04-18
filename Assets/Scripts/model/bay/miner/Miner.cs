@@ -67,7 +67,7 @@ public class Miner : MonoBehaviour, IWalker
 
     private Vector3 lastPos;
 
-    public Inventory Inventory;
+    public IInventory Inventory;
 
     public Tool activeTool;
     public EventHandler toolSwitchUpdate;
@@ -86,7 +86,8 @@ public class Miner : MonoBehaviour, IWalker
         setActiveTool(pick);
         toolList.Add(new Hammer());
         
-        Inventory = new Inventory(5);
+        Inventory = new ItemInventory();
+        Inventory.setMaxInventoryWeight(5);
         walker = new Walker(this, speed);
         
         //GetComponent<SpriteRenderer>().sprite = minerImage;
@@ -196,7 +197,7 @@ public class Miner : MonoBehaviour, IWalker
     
     private void MineBlock(PathNode pathNode, out bool destroyed)
     {
-        pathNode.MineBlock(activeTool.damage, out destroyed, out Inventory loot, out int xp);
+        pathNode.MineBlock(activeTool.damage, out destroyed, out IInventory loot, out int xp);
         if (destroyed)
         {
             blocksMined++;
@@ -262,7 +263,7 @@ public class Miner : MonoBehaviour, IWalker
     }
 
         
-    public Inventory getItemInventory()
+    public IInventory getItemInventory()
     {
         return Inventory;
     }
@@ -340,7 +341,7 @@ public class Miner : MonoBehaviour, IWalker
 
         if (inventorySize != Inventory.getMaxInventoryweight())
         {
-            Inventory.setMaxInventoryWeigh(inventorySize);
+            Inventory.setMaxInventoryWeight(inventorySize);
         }
         
         updatedStats?.Invoke(this, EventArgs.Empty);
