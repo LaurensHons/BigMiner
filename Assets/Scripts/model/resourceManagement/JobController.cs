@@ -6,8 +6,6 @@ public class JobController
 {
     public static JobController Instance { get; private set; }
     private List<JobCall> JobCalls;
-    
-    
     public JobController()
     {
         Instance = this;
@@ -40,6 +38,13 @@ public class JobController
         if (JobCalls != null && JobCalls.Count >= 1) return JobCalls[0];
         return null;
     }
-    
 
+    public void MarkItemsUnderway(IJobCallStructure structure, Item item)
+    {
+        foreach (var jobCall in JobCalls)
+        {
+            if (jobCall.originStructure.Equals(structure) && jobCall.itemToBeDelivered.getName().Equals(item.getName()))
+                jobCall.itemsInTransit += item.getAmount();
+        }
+    }
 }

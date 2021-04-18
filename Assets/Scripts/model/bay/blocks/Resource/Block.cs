@@ -129,7 +129,7 @@ public class Block : MonoBehaviour, IStructure
         return 1;
     }
 
-    public virtual Inventory getLoot()
+    public virtual IInventory getLoot()
     {
         return null;
     }

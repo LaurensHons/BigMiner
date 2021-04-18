@@ -6,6 +6,7 @@ public class JobCall
     public IStructure targetStructure { get; private set; }
     public IStructure originStructure { get; private set; }
     public Item itemToBeDelivered { get; private set; }
+    public int itemsInTransit { get;  set; }
     private JobController jobController;
 
     public JobCall(IStructure originStructure, IStructure targetStructure, Item item, JobController jobController)
@@ -59,9 +60,11 @@ public class JobCall
 
 public interface IJobCallStructure
 {
-    public void deliverJobCall(Item itemToBeDelivered, Inventory minerInventory);
-    public void pickUpJobCall(Item itemToBeDelivered, Inventory minerInventory);
+    public void deliverJobCall(Item itemToBeDelivered, IInventory minerInventory);
+    public void pickUpJobCall(Item itemToBeDelivered, IInventory minerInventory);
     public void addInventoryCall(Item item);
 }
+    
+
 
 

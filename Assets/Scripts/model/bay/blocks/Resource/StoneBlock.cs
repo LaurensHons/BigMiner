@@ -10,9 +10,9 @@ namespace Blocks
             return 5;
         }
 
-        public override Inventory getLoot()
+        public override IInventory getLoot()
         {
-            Inventory iteminv = new Inventory();
+            IInventory iteminv = new ItemInventory();
             iteminv.AddItem(new StoneBlockItem(1), null);
             return iteminv;
         }

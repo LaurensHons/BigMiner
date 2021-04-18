@@ -7,12 +7,15 @@ public class Silo : MultiBlock, IJobCallStructure
 {
     public static Silo Instance { get; private set; }
 
-    public Inventory Inventory;
+    public IInventory Inventory;
+    
+    public IInventory InputInventory => Inventory;
+    public IInventory OutputInventory  => Inventory;
 
     private void Start()
     {
         Instance = this;
-        Inventory = new Inventory();
+        Inventory = new JobCallInventory(this);
         Inventory.AddItem(new DirtBlockItem(50));
     }
 
@@ -64,13 +67,15 @@ public class Silo : MultiBlock, IJobCallStructure
         return new Vector2(2, 2);
     }
 
-    public void deliverJobCall(Item itemToBeDelivered, Inventory minerInventory)
+    
+
+    public void deliverJobCall(Item itemToBeDelivered, IInventory minerInventory)
     {
         Inventory.TakeItem(itemToBeDelivered, minerInventory);
         JobController.Instance.successJobCall(this, itemToBeDelivered);
     }
 
-    public void pickUpJobCall(Item itemToBeDelivered, Inventory minerInventory)
+    public void pickUpJobCall(Item itemToBeDelivered, IInventory minerInventory)
     {
         int amount = itemToBeDelivered.getAmount();
         if (amount > minerInventory.getLeftOverInventorySpace()) amount = minerInventory.getLeftOverInventorySpace();

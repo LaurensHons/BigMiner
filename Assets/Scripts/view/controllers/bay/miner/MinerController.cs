@@ -72,7 +72,7 @@ public class MinerController : MonoBehaviour, IMenuController
             minerstation.Miner.MinerXpUpdate += updateXpBar;
             minerstation.Miner.MinerLevelUpdate += updateLevelText;
             minerstation.Miner.updatedStats += updateMinerStats;
-            minerstation.Miner.Inventory.InventoryUpdate += updateInventory;
+            minerstation.Miner.Inventory.InventoryChanged += updateInventory;
 
             minerstation.Miner.MinerXpUpdate?.Invoke(this, EventArgs.Empty);
             minerstation.Miner.MinerLevelUpdate?.Invoke(this, EventArgs.Empty);
@@ -88,7 +88,7 @@ public class MinerController : MonoBehaviour, IMenuController
             minerstation.Miner.MinerXpUpdate -= updateXpBar;
             minerstation.Miner.MinerLevelUpdate -= updateLevelText;
             minerstation.Miner.MinerLevelUpdate -= updateMinerStats;
-            minerstation.Miner.Inventory.InventoryUpdate -= updateInventory;
+            minerstation.Miner.Inventory.InventoryChanged -= updateInventory;
 
             
             

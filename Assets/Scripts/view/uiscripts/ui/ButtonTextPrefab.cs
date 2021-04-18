@@ -8,7 +8,7 @@ public class ButtonTextPrefab : MonoBehaviour
     public GameObject AmountObject;
     public GameObject ImageObject;
     private List<Item> items;
-    private void Start() { Silo.Instance.Inventory.InventoryUpdate += update; }
+    private void Start() { Silo.Instance.Inventory.InventoryChanged += update; }
 
     public void Load(List<Item> itemcost)
     {

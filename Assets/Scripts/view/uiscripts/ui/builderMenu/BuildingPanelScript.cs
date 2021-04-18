@@ -9,8 +9,27 @@ public class BuildingPanelScript : TabGroup
     public Text nameText;
     
     public Processor Processor { get; private set; }
+
+    public GameObject RecipeItemPrefab;
+    
     public List<GameObject> inputItemGameObjects;
     public List<GameObject> outputItemGameObjects;
+
+    public GameObject inputItemList;
+    public GameObject outputItemList;
+
+    private void Start()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            inputItemGameObjects.Add(Instantiate(RecipeItemPrefab, inputItemList.transform));
+        }
+        
+        for (int i = 0; i < 3; i++)
+        {
+            outputItemGameObjects.Add(Instantiate(RecipeItemPrefab, outputItemList.transform));
+        }
+    }
 
     public void setActive(bool active, Processor processor)
     {

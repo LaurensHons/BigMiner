@@ -11,9 +11,9 @@ public class DirtBlock : Block
         return 3;
     }
 
-    public override Inventory getLoot()
+    public override IInventory getLoot()
     {
-        Inventory iteminv = new Inventory();
+        IInventory iteminv = new ItemInventory();
         iteminv.AddItem(new DirtBlockItem(1), null);
         return iteminv;
     }
