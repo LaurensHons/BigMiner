@@ -83,7 +83,7 @@ public class Silo : MultiBlock, IJobCallStructure
         
     }
 
-    public void addInventoryCall(Item item)
+    public void addInventoryCall(Item item, int amount)
     {
         throw new NotImplementedException();
     }

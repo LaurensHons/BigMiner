@@ -1,35 +1,18 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class BuildingPanelScript : TabGroup
 {
     public Text nameText;
-    
     public Processor Processor { get; private set; }
-
-    public GameObject RecipeItemPrefab;
     
     public List<GameObject> inputItemGameObjects;
     public List<GameObject> outputItemGameObjects;
-
-    public GameObject inputItemList;
-    public GameObject outputItemList;
-
-    private void Start()
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            inputItemGameObjects.Add(Instantiate(RecipeItemPrefab, inputItemList.transform));
-        }
-        
-        for (int i = 0; i < 3; i++)
-        {
-            outputItemGameObjects.Add(Instantiate(RecipeItemPrefab, outputItemList.transform));
-        }
-    }
 
     public void setActive(bool active, Processor processor)
     {
@@ -46,6 +29,7 @@ public class BuildingPanelScript : TabGroup
     private void setItemRecipes()
     {
         Item[] inputItems = Processor.getActualInputItems();
+        
         for (int i = 0; i < inputItemGameObjects.Count; i++)
         {
             if (i < inputItems.Length)
@@ -64,23 +48,26 @@ public class BuildingPanelScript : TabGroup
                             itemComponent.GetComponent<Image>().sprite = inputItems[i].GetSprite();
                             continue;
                         }
-                        case "RecipeAmount":
+                        case "RecipeCounter":
                         {
                             itemComponent.GetComponent<Text>().text = inputItems[i].getAmount().ToString();
                             continue;
                         }
-                        case "InventoryAmount":
+                        case "InInventoryCounter":
                         {
                             Item inventoryItem = Processor.getInputInventory().TryGetItem(inputItems[i]);
                             String outString = inventoryItem == null ? "0" : inventoryItem.getAmount().ToString();
+                            int amountUnderway = getItemCountUnderway(inputItems[i]);
+                            if (amountUnderway > 0) outString += " (" + amountUnderway + ")";
+                            
                             itemComponent.GetComponent<Text>().text = outString;
                             continue;
                         }
-                        case "SiloAmount":
+                        case "InStorageCounter":
                         {
                             Item siloInventoryItem = Silo.Instance.Inventory.TryGetItem(inputItems[i]);
                             String outString = siloInventoryItem == null ? "0" : siloInventoryItem.getAmount().ToString();
-                            itemComponent.GetComponent<Text>().text = siloInventoryItem.getAmount().ToString();
+                            itemComponent.GetComponent<Text>().text = outString;
                             continue;
                         }
                     }
@@ -107,32 +94,16 @@ public class BuildingPanelScript : TabGroup
 
                     switch (itemComponent.name)
                     {
-                        case "Image":
-                        {
-                            itemComponent.GetComponent<Image>().sprite = outputItems[i].GetSprite();
-                            continue;
-                        }
-                        case "RecipeAmount":
-                        {
-                            itemComponent.GetComponent<Text>().text = outputItems[i].getAmount().ToString();
-                            continue;
-                        }
-                        case "InventoryAmount":
+                        
+                        case "OutputInventoryCounter":
                         {
                             Item inventoryItem = Processor.getInputInventory().TryGetItem(outputItems[i]);
                             String outString = inventoryItem == null ? "0" : inventoryItem.getAmount().ToString();
                             itemComponent.GetComponent<Text>().text = outString;
                             continue;
                         }
-                        case "SiloAmount":
-                        {
-                            Item siloInventoryItem = Silo.Instance.Inventory.TryGetItem(outputItems[i]);
-                            String outString = siloInventoryItem == null ? "0" : siloInventoryItem.getAmount().ToString();
-                            itemComponent.GetComponent<Text>().text = outString;
-                            continue;
-                        }
+                        
                     }
-                    
                 }
             }
             else
@@ -142,4 +113,22 @@ public class BuildingPanelScript : TabGroup
         }
     }
 
+    public void addItemOne()
+    {
+        Processor.addInventoryCall(Processor.getActualInputItems()[0], 1);
+        setItemRecipes();
+    }
+
+    private int getItemCountUnderway(Item item)
+    {
+        List<JobCall> jobCalls = JobController.Instance.getItemsUnderway(Processor);
+        foreach (var jobCall in jobCalls)
+        {
+            if (jobCall.itemToBeDelivered.ToString().Equals(item.ToString()))
+                return item.getAmount();
+        }
+
+        return 0;
+    }
+    
 }

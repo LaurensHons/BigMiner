@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class JobController
 {
@@ -17,6 +18,7 @@ public class JobController
         JobCall jobCall = new JobCall(originStructure, targetStructure, item, this);
         if (jobCall == null) throw new ArgumentException();
         JobCalls.Add(jobCall);
+        Debug.Log("Added new Jobcall: " + jobCall.ToString());
         return jobCall;
     }
     public void successJobCall(IJobCallStructure jobCallStructure, Item item)
@@ -46,5 +48,10 @@ public class JobController
             if (jobCall.originStructure.Equals(structure) && jobCall.itemToBeDelivered.getName().Equals(item.getName()))
                 jobCall.itemsInTransit += item.getAmount();
         }
+    }
+
+    public List<JobCall> getItemsUnderway(IJobCallStructure structure)
+    {
+        return JobCalls.Where(jobCall => jobCall.targetStructure == structure).ToList();
     }
 }

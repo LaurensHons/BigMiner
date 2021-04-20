@@ -56,13 +56,21 @@ public class JobCall
         a.itemToBeDelivered.addAmount(b);
         return a;
     }
+
+    public override string ToString()
+    {
+        String s = "Origin: " + originStructure.getPathNodeList()[0].getPos() + ", Target:" +
+                   targetStructure.getPathNodeList()[0].getPos() + ", Item: " + itemToBeDelivered.getName() + ":" +
+                   itemToBeDelivered.getAmount();
+        return s;
+    }
 }
 
 public interface IJobCallStructure
 {
     public void deliverJobCall(Item itemToBeDelivered, IInventory minerInventory);
     public void pickUpJobCall(Item itemToBeDelivered, IInventory minerInventory);
-    public void addInventoryCall(Item item);
+    public void addInventoryCall(Item item, int amount);
 }
     
 

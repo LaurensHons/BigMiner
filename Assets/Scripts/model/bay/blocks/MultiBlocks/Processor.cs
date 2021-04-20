@@ -154,9 +154,9 @@ public abstract class Processor : MultiBlock, IJobCallStructure
         OutputInventory.putItem(itemToBeDelivered, minerInventory, amount);
     }
 
-    public void addInventoryCall(Item item)
+    public void addInventoryCall(Item item, int amount)
     {
-        
+        JobController.Instance.addJobCall(Silo.Instance, this, Item.CreateItem(item, amount));
     }
 
     public override bool isResource() { return false; }
